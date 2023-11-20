@@ -47,6 +47,18 @@ public class Inmobiliaria {
         System.out.println("Seleccione que desea realizar con los proyectos: \n1. Mostrar proyectos creados.\n2. Crear nuevo proyecto.\n3. Salir");
     }
 
+    //Administrador
+    public static void menuAdministrador(){
+        System.out.println("Bienvenido, administrador");
+        System.out.println("Seleccione dónde quiere acceder: \n1.Panel de control\n2.Proyectos\n3.Configuración");
+    }
+    public static void panelControlAdmin(){
+        System.out.println("Menú del panel de control de usuarios, estos son los usuarios del sistema:");
+        System.out.println("1.gestor\n2.inversor1\n3.inversor2");
+    }
+
+
+
     public static void main(String[] args) {
         do {
             menuUser();
@@ -56,6 +68,26 @@ public class Inmobiliaria {
             if (acceso(usuario, contrasenia))
                 System.out.println("YES"); //Cambiar y poner que sea hasta 3 veces como máximo
             else System.out.println("NO");
+            //
+            if (opcion1==1){
+                menuAdministrador();
+                opcion2=leerOpcionNumerica();
+                switch (opcion2){
+                    case 1:{
+                        panelControlAdmin();
+                    }
+                    case 2:{
+                        menuProyectos();
+                    }
+                    case 3:{
+
+                    }
+                }
+
+
+            }
+
+            //
             if (opcion1 == 2) {
                 menuProyectos();
                 if (leerOpcionNumerica() == 2) {
