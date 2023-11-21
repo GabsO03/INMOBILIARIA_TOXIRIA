@@ -1,5 +1,6 @@
 package CodigoFuente;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Inmobiliaria {
@@ -40,8 +41,10 @@ public class Inmobiliaria {
         return true;
     }
     public static boolean loginInversor (String user, String pass) {
+        System.out.println("Introduzca su contraseña");
+        String passEntry = leerOpcionLiteral();System.out.println("Introduzca");
         int intentos = 3;
-        while (intentos > 0 && !(verification(user, pass))) {
+        while (intentos > 0 && !(passEntry.equals(pass))) {
             intentos--;
             System.out.println("Contraseña incorrecta, Te quedan " + intentos + " intentos.");
         }
@@ -52,20 +55,26 @@ public class Inmobiliaria {
         }
         return true;
     }
-    public static boolean logged (int opcion1, String usuario, String contrasenia) {
+    public static boolean logged (int opcion1, String adminUser, String adminPass,  String gestorUser, String gestorPass,  String inversor1User, String inversor1Pass,  String inversor2User, String inversor2Pass) {
         boolean succesfull = false;
 
-        String adminUser = "adminUser", adminPass = "adminPass",
-                gestorUser = "gestorUser", gestorPass = "gestorPass",
-                inversor1User = "inversor1User", inversor1Pass = "inversor1Pass",
-                inversor2User = "inversor2User", inversor2Pass = "inversor2Pass";
-        boolean logged = switch (opcion1) {
-            case 1 -> loginAdmin(adminUser, adminPass);
-            case 2 -> loginGestor(gestorUser, gestorPass);
-            // case 3 -> System.out.println(0);
-
-            default -> true;
-        };
+        switch (opcion1) {
+            case 1 : {
+                if (loginAdmin(adminUser, adminPass)) succesfull=true;
+            }
+            case 2 : {
+                if (loginGestor(gestorUser, gestorPass)) succesfull=true;
+            }
+            case 3 : {
+                for (int i = 0; i < 3; i++) {
+                    System.out.println("Introduzca su usuario:");
+                    String userEntry = leerOpcionLiteral();
+                    if (userEntry.equals(inversor1User)) if (loginInversor(inversor1User, inversor1Pass)) succesfull=true;
+                    else if (userEntry.equals(inversor2User)) if (loginInversor(inversor2User, inversor2Pass)) succesfull=true;
+                    else System.out.println("Este usuario no existe.");
+                }
+            }
+        }
         return succesfull;
     }
 
@@ -81,7 +90,7 @@ public class Inmobiliaria {
     }
     public static void panelControlAdmin(){
         System.out.println("Menú del panel de control de usuarios, estos son los usuarios del sistema:");
-        System.out.println("1.gestor\n2.inversor1\n3.inversor2");
+        System.out.println("1.gestor\n2.inversor1\n3. inversor2");
     }
 
 
