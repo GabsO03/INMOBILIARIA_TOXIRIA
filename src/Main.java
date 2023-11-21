@@ -1,17 +1,33 @@
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Intro with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        boolean bloqueado = false, logueado = false;
+        String adminUser = "adminUser", adminPass = "adminPass",
+                gestorUser = "gestorUser", gestorPass = "gestorPass",
+                inversor1User = "inversor1User", inversor1Pass = "inversor1Pass",
+                inversor2User = "inversor2User", inverso2Pass = "inversor2Pass";
+        int intentos = 3;
 
-        // Press Mayús+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        Scanner s = new Scanner(System.in);
 
-            // Press Mayús+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
-        }
+        //while(!bloqueado && !logueado && intentos>0){
+            System.out.print("Bienvenido, introduzca su usuario: ");
+            String entradaUsuario = s.nextLine();
+            System.out.print("Introduzca su contraseña: ");
+            String entradaPass = s.nextLine();
+
+            //if(entradaUsuario.equals(usuario) && entradaPass.equals(pass)){
+                logueado = true;
+            //}else{
+                intentos--;
+                System.out.printf("\nDatos incorrectos. Le quedan %d intentos.\n", intentos);
+                if(intentos == 0) bloqueado = true;
+          //  }
+        //}
+
+       // if(logueado) System.out.println("Bienvenido " + usuario);
+        //if(bloqueado) System.out.println("Su usuario ha sido bloqueado");
+
     }
 }
