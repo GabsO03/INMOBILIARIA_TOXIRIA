@@ -100,11 +100,6 @@ public class Inmobiliaria {
             menuUser();
             int opcion1 = leerOpcionNumerica();
             int opcion2, contadorProyectos = 1;
-            String usuario = usuario(opcion1), contrasenia = contrasena(opcion1);
-            if (acceso(usuario, contrasenia))
-                System.out.println("YES"); //Cambiar y poner que sea hasta 3 veces como máximo
-            else System.out.println("NO");
-            //
             if (opcion1==1){
                 menuAdministrador();
                 opcion2=leerOpcionNumerica();
