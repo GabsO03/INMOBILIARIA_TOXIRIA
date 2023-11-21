@@ -42,7 +42,7 @@ public class Inmobiliaria {
     }
     public static boolean loginInversor (String user, String pass) {
         System.out.println("Introduzca su contraseña");
-        String passEntry = leerOpcionLiteral();System.out.println("Introduzca");
+        String passEntry = leerOpcionLiteral();
         int intentos = 3;
         while (intentos > 0 && !(passEntry.equals(pass))) {
             intentos--;
@@ -100,10 +100,8 @@ public class Inmobiliaria {
             menuUser();
             int opcion1 = leerOpcionNumerica();
             int opcion2, contadorProyectos = 1;
-            String usuario = usuario(opcion1), contrasenia = contrasena(opcion1);
-            if (acceso(usuario, contrasenia))
-                System.out.println("YES"); //Cambiar y poner que sea hasta 3 veces como máximo
-            else System.out.println("NO");
+
+
             //
             if (opcion1==1){
                 menuAdministrador();

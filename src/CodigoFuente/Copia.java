@@ -22,7 +22,7 @@ public class Copia {
         return user.equals(usu) && password.equals(con);
     }
     public static boolean loginAdmin (String user, String con) {
-        while (!verification(user, con)) System.out.println("Contraseña incorrecta.");
+        while (!(verification(user, con))) System.out.println("Usuario o contraseña incorrecta.");
         System.out.println("Bienvenid@ " + user);
         return true;
     }
@@ -32,7 +32,7 @@ public class Copia {
             intentos--;
             System.out.println("Contraseña incorrecta, Te quedan " + intentos + " intentos.");
         }
-        if (intentos > 0) System.out.println("Bienvenid@ " + user);
+        if (intentos > 0) System.out.println();
         else {
             System.out.println("Acceso denegado, tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
             return false;
@@ -40,33 +40,55 @@ public class Copia {
         return true;
     }
     public static boolean loginInversor (String user, String pass) {
+        String passEntry;
         int intentos = 3;
-        while (intentos > 0 && !(verification(user, pass))) {
+        do {
+            System.out.println("Introduzca su contraseña");
+            passEntry = leerOpcionLiteral();
             intentos--;
-            System.out.println("Contraseña incorrecta, Te quedan " + intentos + " intentos.");
-        }
+            if (!(passEntry.equals(pass))) System.out.println("Contraseña incorrecta, Te quedan " + intentos + " intentos.");
+        } while (intentos > 0 && !(passEntry.equals(pass)));
         if (intentos > 0) System.out.println("Bienvenid@ " + user);
         else {
-            System.out.println("Acceso denegado, tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
+            System.out.println("Tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
             return false;
         }
         return true;
     }
-    public static boolean logged (int opcion1, String usuario, String contrasenia) {
-        boolean succesfull = false;
+    public static boolean logged (int opcion1, String adminUser, String adminPass,  String gestorUser, String gestorPass,  String inversor1User, String inversor1Pass,  String inversor2User, String inversor2Pass) {
+        int intentosUsuario=3;
+        boolean succesfull=false;
+        String userEntry="";
 
-        String adminUser = "adminUser", adminPass = "adminPass",
-                gestorUser = "gestorUser", gestorPass = "gestorPass",
-                inversor1User = "inversor1User", inversor1Pass = "inversor1Pass",
-                inversor2User = "inversor2User", inversor2Pass = "inversor2Pass";
-        boolean logged = switch (opcion1) {
-            case 1 -> loginAdmin(adminUser, adminPass);
-            case 2 -> loginGestor(gestorUser, gestorPass);
-            // case 3 -> System.out.println(0);
-
-            default -> true;
-        };
-        return succesfull;
+        switch (opcion1) {
+            case 1 : {
+                if (loginAdmin(adminUser, adminPass)) return true;
+                break;
+            }
+            case 2 : {
+                if (loginGestor(gestorUser, gestorPass)) return true;
+                break;
+            }
+            case 3 : {
+                do {
+                    System.out.println("Introduzca su usuario:");
+                    userEntry = leerOpcionLiteral();
+                    if (userEntry.equals(inversor1User)) {
+                        loginInversor(inversor1User, inversor1Pass);
+                        succesfull = true;
+                    } else if (userEntry.equals(inversor2User)) {
+                        loginInversor(inversor2User, inversor2Pass);
+                        succesfull = true;
+                    } else {
+                        System.out.println("Este usuario no existe.");
+                        intentosUsuario--;
+                    }
+                } while (intentosUsuario>0&&!succesfull);
+                break;
+            }
+        }
+        if (succesfull) return true;
+        return false;
     }
 
     //mostrarProyectos
@@ -113,8 +135,9 @@ public class Copia {
         do {
             menuUser();
             seleccionTipoUsuario = leerOpcionNumerica();
-
-
+            boolean entry;
+            entry=logged(seleccionTipoUsuario, userAdmin, passAdmin,  userGestor, passGestor,  userInversor1, passInversor1,  userInversor2, passInversor2);
+            System.out.println(entry);
 
             //
             if (seleccionTipoUsuario==1){
