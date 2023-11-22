@@ -1,6 +1,7 @@
 package CodigoFuente;
 
 import java.util.Scanner;
+//COLORES
 import static Biblioteca.Colores.BLACK;
 import static Biblioteca.Colores.RED;
 import static Biblioteca.Colores.GREEN;
@@ -11,13 +12,19 @@ import static Biblioteca.Colores.PURPLE;
 import static Biblioteca.Colores.CYAN;
 import static Biblioteca.Colores.WHITE;
 
+//MENUS
+import static Biblioteca.Menus.menuUser;
+import static Biblioteca.Menus.menuProyectosGestor;
+import static Biblioteca.Menus.menuAdministrador;
+import static Biblioteca.Menus.menuModificarProyecto;
+import static Biblioteca.Menus.menuInversor;
+import static Biblioteca.Menus.menuConfiguracion;
+
 
 public class Inmobiliaria_toxiria {
 
 
-    public static void menuUser () {
-        System.out.println("Seleccione su tipo de usuario\n1. Administrador.\n2. Gestor.\n3. Inversor.\n4. Salir");
-    }
+
     public static int leerOpcionNumerica () {
         Scanner escaner = new Scanner(System.in);
         return Integer.parseInt(escaner.nextLine());
@@ -110,14 +117,10 @@ public class Inmobiliaria_toxiria {
 
 
     //mostrarProyectos
-    public static void menuProyectosGestor(){
-        System.out.println("Seleccione que desea realizar con los proyectos: \n1. Mostrar proyectos creados.\n2. Crear nuevo proyecto.\n3. Configuración.\n4. Salir");
-    }
+
 
     //Administrador
-    public static void menuAdministrador(){
-        System.out.println("Seleccione dónde quiere acceder: \n1.Panel de control\n2.Proyectos\n3.Configuración\n4.Salir");
-    }
+
 
     public static void mostrarProyectosNoAdmin(String nombreProyecto1, String nombreProyecto2, String nombreProyecto3, String tipoProyecto1, String tipoProyecto2, String tipoProyecto3,
                                                double cantidadNecesariaProyecto1, double cantidadNecesariaProyecto2, double cantidadNecesariaProyecto3,
@@ -140,10 +143,7 @@ public class Inmobiliaria_toxiria {
         System.out.println("Elija cual quiere eliminar o modificar: \n1. Proyecto 1\n2. Proyecto 2\n3. Proyecto 3\n4.Ver más detalles\n5. Ninguno");
     }
     //MODIFICAR PROYECTOS:
-    public static void menuModificarProyecto(){
-        System.out.println("Elija qué quiere modificar: \n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
-                "\n6.Fecha inicio\n7.Fecha fin\n8.Nada");
-    }
+
     public static String cambiarNombreProyecto(){
         System.out.println("Escriba el nuevo nombre del proyecto: ");
         return leerOpcionLiteral();
@@ -186,9 +186,7 @@ public class Inmobiliaria_toxiria {
         System.out.printf("1.gestor %s\n2.inversor1 %s\n3.inversor2 %s\n4.Salir\n",gestorBloqueadoCadena,inversor1BloqueadoCadena,inversor2BloqueadoCadena);
     }
 
-    public static void menuInversor(){
-        System.out.println("Seleccione donde quiere acceder: \n1. Panel de Control\n2. Mis inversiones\n3. Proyectos\n4. Cartera Virtual\n5. Configuración\n6. Salir");
-    }
+
 
     public static void crearNombreProyecto(){
         System.out.print("Introduzca el nombre del proyecto: ");
@@ -243,10 +241,7 @@ public class Inmobiliaria_toxiria {
 
     }
 
-    public static void menuConfiguracion(){
-        System.out.println("Seleccione qué quiere hacer:");
-        System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3.Salir");
-    }
+
     public static String cambiarUsuario(String usuarioAntiguoEnviado){
         String usuarioActual,nuevoUsuario;
         System.out.println("Escriba su usuario actual");
