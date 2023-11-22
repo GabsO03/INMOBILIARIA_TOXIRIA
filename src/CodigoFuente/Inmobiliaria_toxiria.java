@@ -575,7 +575,7 @@ public class Inmobiliaria_toxiria {
                         primerSubmenu = leerOpcionNumerica();
                         switch (primerSubmenu) {
                             case 1 -> {
-                                System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto");
+                                System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto" + RESET);
                                 if(inversor1InvertidoProyecto1){
                                     System.out.println(RED + nombreProyecto1 + "\t\t\t\t" + GREEN + tipoProyecto1 + RESET);
                                 }
@@ -693,7 +693,7 @@ public class Inmobiliaria_toxiria {
                         primerSubmenu=leerOpcionNumerica();
                         switch (primerSubmenu){
                             case 1->{
-                                System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto");
+                                System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto" + RESET);
                                 if(inversor2InvertidoProyecto1){
                                     System.out.println(RED + nombreProyecto1 + "\t\t\t\t" + GREEN + tipoProyecto1 + RESET);
                                 }
