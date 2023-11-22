@@ -11,7 +11,7 @@ public class Menus {
         System.out.println("Seleccione dónde quiere acceder: \n1.Panel de control\n2.Proyectos\n3.Configuración\n4.Salir");
     }
     public static void menuModificarProyecto(){
-        System.out.println("Elija qué quiere modificar: \n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
+        System.out.println("Elija qué quiere modificar:\n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
                 "\n6.Fecha inicio\n7.Fecha fin\n8.Nada");
     }
     public static void menuInversor(){
@@ -21,4 +21,11 @@ public class Menus {
         System.out.println("Seleccione qué quiere hacer:");
         System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3.Salir");
     }
+
+    public static void menuInversiones(String nombreProyecto1,String nombreProyecto2,String nombreProyecto3){
+        System.out.println("Seleccione en qué proyecto quiere invertir: ");
+        System.out.printf("1.%s\n2.%s\n3.%s\n4.Salir\n",nombreProyecto1,nombreProyecto2,nombreProyecto3);
+    }
+
+
 }
