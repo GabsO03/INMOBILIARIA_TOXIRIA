@@ -2,7 +2,7 @@ package Biblioteca;
 
 public class Menus {
     public static void menuUser () {
-        System.out.println("Seleccione su tipo de usuario\n1. Administrador.\n2. Gestor.\n3. Inversor.\n4. Salir");
+        System.out.println("Seleccione su tipo de usuario\n1. Administrador.\n2. Gestor.\n3. Inversor1.\n4. Inversor2\n5. Salir");
     }
     public static void menuProyectosGestor(){
         System.out.println("Seleccione que desea realizar con los proyectos: \n1. Mostrar proyectos creados.\n2. Crear nuevo proyecto.\n3. Configuración.\n4. Salir");

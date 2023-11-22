@@ -2,15 +2,9 @@ package CodigoFuente;
 
 import java.util.Scanner;
 //COLORES
-import static Biblioteca.Colores.BLACK;
 import static Biblioteca.Colores.RED;
 import static Biblioteca.Colores.GREEN;
 import static Biblioteca.Colores.RESET;
-import static Biblioteca.Colores.YELLOW;
-import static Biblioteca.Colores.BLUE;
-import static Biblioteca.Colores.PURPLE;
-import static Biblioteca.Colores.CYAN;
-import static Biblioteca.Colores.WHITE;
 
 //MENUS
 import static Biblioteca.Menus.menuUser;
@@ -22,8 +16,6 @@ import static Biblioteca.Menus.menuConfiguracion;
 
 
 public class Inmobiliaria_toxiria {
-
-
 
     public static int leerOpcionNumerica () {
         Scanner escaner = new Scanner(System.in);
@@ -63,27 +55,21 @@ public class Inmobiliaria_toxiria {
         }
         return true;
     }
-    public static boolean loginInversor (String user, String pass) {
-        String passEntry;
+    public static boolean loginInversor(String user, String pass) {
         int intentos = 3;
-        do {
-            System.out.println("Introduzca su contraseña");
-            passEntry = leerOpcionLiteral();
+        while (intentos > 0 && !(verification(user, pass))) {
             intentos--;
-            if (!(passEntry.equals(pass))) System.out.println("Contraseña incorrecta, Te quedan " + intentos + " intentos.");
-        } while (intentos > 0 && !(passEntry.equals(pass)));
-        if (intentos > 0) System.out.println("Bienvenid@ " + user);
+            System.out.println("Contraseña incorrecta, Te quedan " + intentos + " intentos.");
+        }
+        if (intentos > 0) System.out.println();
         else {
-            System.out.println("Tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
+            System.out.println("Acceso denegado, tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
             return false;
         }
         return true;
     }
-    public static boolean logged (int opcion1, String adminUser, String adminPass,  String gestorUser, String gestorPass,  String inversor1User, String inversor1Pass,  String inversor2User, String inversor2Pass) {
-        int intentosUsuario=3;
-        boolean succesfull=false;
-        String userEntry="";
 
+    public static boolean logged (int opcion1, String adminUser, String adminPass,  String gestorUser, String gestorPass,  String inversor1User, String inversor1Pass,  String inversor2User, String inversor2Pass) {
         switch (opcion1) {
             case 1 : {
                 if (loginAdmin(adminUser, adminPass)) return true;
@@ -94,24 +80,14 @@ public class Inmobiliaria_toxiria {
                 break;
             }
             case 3 : {
-                do {
-                    System.out.println("Introduzca su usuario:");
-                    userEntry = leerOpcionLiteral();
-                    if (userEntry.equals(inversor1User)) {
-                        loginInversor(inversor1User, inversor1Pass);
-                        succesfull = true;
-                    } else if (userEntry.equals(inversor2User)) {
-                        loginInversor(inversor2User, inversor2Pass);
-                        succesfull = true;
-                    } else {
-                        System.out.println("Este usuario no existe.");
-                        intentosUsuario--;
-                    }
-                } while (intentosUsuario>0&&!succesfull);
+                if (loginInversor(inversor1User, inversor1Pass)) return true;
+                break;
+            }
+            case 4: {
+                if (loginInversor(inversor2User, inversor2Pass)) return true;
                 break;
             }
         }
-        if (succesfull) return true;
         return false;
     }
 
@@ -267,7 +243,7 @@ public class Inmobiliaria_toxiria {
 
     public static void main(String[] args) {
         //USUARIOS
-        String userAdmin="administrador",passAdmin="administrador",userGestor="gestor",passGestor="gestor",userInversor1="inversor1"
+        String userAdmin="admin",passAdmin="admin",userGestor="gestor",passGestor="gestor",userInversor1="inversor1"
                 ,passInversor1="inversor1",userInversor2="inversor2",passInversor2="inversor2";
         //BLOQUEOS
         boolean gestorBloqueado=false,inversor1Bloqueado=false,inversor2Bloqueado=false;
@@ -571,103 +547,98 @@ public class Inmobiliaria_toxiria {
                 }
 
             } else if (gestorBloqueado)System.out.println("Su usuario está bloqueado, contacte con el administrador del sistema para desbloquearlo");
-            //INVERSOR
-            if(seleccionTipoUsuario==3){
-                if (userInversor1.equalsIgnoreCase("inversor1")&&!inversor1Bloqueado) {
-                        do{
-                            menuInversor();
-                            primerSubmenu=leerOpcionNumerica();
-                            switch (primerSubmenu){
-                                case 1->{
-                                    System.out.println();
-                                }
-                                case 2->{
 
-                                }
-                                case 3->{
-                                    mostrarProyectosNoAdmin(nombreProyecto1,nombreProyecto2,nombreProyecto3,tipoProyecto1,tipoProyecto2,tipoProyecto3,
-                                            cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3,
-                                            cantidadFinanciadaProyecto1,cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3);
-                                }
-                                case 4->{
-                                    System.out.println("Tienes " + dineroInversor1 + "€");
-                                    System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
-                                    dineroInversor1+=leerOpcionDouble();
-                                }
-                                case 5->{
-                                    do {
-                                        menuConfiguracion();
-                                        segundoSubmenu=leerOpcionNumerica();
-                                        switch (segundoSubmenu){
-                                            case 1->userInversor1=cambiarUsuario(userInversor1);
-
-                                            case 2 ->passInversor1=cambiarcontrasenia(passInversor1);
-                                        }
-
-                                    }while (segundoSubmenu!=3);
-                                }
+            //INVERSOR1
+            if(seleccionTipoUsuario==3&&!inversor1Bloqueado) {
+                if (!entry) inversor1Bloqueado=true;
+                else {
+                    do {
+                        menuInversor();
+                        primerSubmenu = leerOpcionNumerica();
+                        switch (primerSubmenu) {
+                            case 1 -> {
+                                System.out.println();
                             }
-                        }while(primerSubmenu!=6);
+                            case 2 -> {
 
-                } else if (inversor1Bloqueado){
-                    System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
-
-                }
-                if (userInversor2.equalsIgnoreCase("inversor2")&&!inversor2Bloqueado) {
-                    if (!entry) inversor2Bloqueado=true;
-                    else {
-                        do{
-                            menuInversor();
-                            primerSubmenu=leerOpcionNumerica();
-                            switch (primerSubmenu){
-                                case 1->{
-                                    System.out.println();
-                                }
-                                case 2->{
-
-                                }
-                                case 3->{
-                                    mostrarProyectosNoAdmin(nombreProyecto1,nombreProyecto2,nombreProyecto3,tipoProyecto1,tipoProyecto2,tipoProyecto3,
-                                            cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3,
-                                            cantidadFinanciadaProyecto1,cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3);
-                                    System.out.println("¿Quieres ver más detalles sobre los proyectos?");
-                                    respuesta=leerOpcionLiteral();
-                                    if(respuesta.equalsIgnoreCase("si")) proyectosDetallados(nombreProyecto1,nombreProyecto2,nombreProyecto3,
-                                            descripcionProyecto1,descripcionProyecto2,descripcionProyecto3, tipoProyecto1,tipoProyecto2,tipoProyecto3,
-                                            cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3, cantidadFinanciadaProyecto1,
-                                            cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3,fechaInicioProyecto1,fechaInicioProyecto2,fechaInicioProyecto3,
-                                            fechaFinProyecto1,fechaFinProyecto2,fechaFinProyecto3);
-                                }
-                                case 4->{
-                                    System.out.println("Tienes " + dineroInversor2 + "€");
-                                    System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
-                                    dineroInversor2+=leerOpcionDouble();
-                                }
-                                case 5->{
-                                    do {
-                                        menuConfiguracion();
-                                        segundoSubmenu=leerOpcionNumerica();
-                                        switch (segundoSubmenu){
-                                            case 1->passInversor2=cambiarUsuario(passInversor2);
-
-                                            case 2 ->passInversor2=cambiarcontrasenia(passInversor2);
-                                        }
-
-                                    }while (segundoSubmenu!=3);
-                                }
                             }
-                        }while(primerSubmenu!=6);
-                    }
+                            case 3 -> {
+                                mostrarProyectosNoAdmin(nombreProyecto1, nombreProyecto2, nombreProyecto3, tipoProyecto1, tipoProyecto2, tipoProyecto3,
+                                        cantidadNecesariaProyecto1, cantidadNecesariaProyecto2, cantidadNecesariaProyecto3,
+                                        cantidadFinanciadaProyecto1, cantidadFinanciadaProyecto2, cantidadFinanciadaProyecto3);
+                            }
+                            case 4 -> {
+                                System.out.println("Tienes " + dineroInversor1 + "€");
+                                System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
+                                dineroInversor1 += leerOpcionDouble();
+                            }
+                            case 5 -> {
+                                do {
+                                    menuConfiguracion();
+                                    segundoSubmenu = leerOpcionNumerica();
+                                    switch (segundoSubmenu) {
+                                        case 1 -> userInversor1 = cambiarUsuario(userInversor1);
 
-                } else if (inversor2Bloqueado) {
-                    System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
+                                        case 2 -> passInversor1 = cambiarcontrasenia(passInversor1);
+                                    }
+
+                                } while (segundoSubmenu != 3);
+                            }
+                        }
+                    } while (primerSubmenu != 6);
                 }
 
+            }else if (inversor1Bloqueado&&seleccionTipoUsuario==3) System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
 
+            //INVERSOR2
+            if (seleccionTipoUsuario==4&&!inversor2Bloqueado){
+                if (!entry) inversor2Bloqueado=true;
+                else {
+                    do{
+                        menuInversor();
+                        primerSubmenu=leerOpcionNumerica();
+                        switch (primerSubmenu){
+                            case 1->{
+                                System.out.println();
+                            }
+                            case 2->{
 
+                            }
+                            case 3->{
+                                mostrarProyectosNoAdmin(nombreProyecto1,nombreProyecto2,nombreProyecto3,tipoProyecto1,tipoProyecto2,tipoProyecto3,
+                                        cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3,
+                                        cantidadFinanciadaProyecto1,cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3);
+                                System.out.println("¿Quieres ver más detalles sobre los proyectos?");
+                                respuesta=leerOpcionLiteral();
+                                if(respuesta.equalsIgnoreCase("si")) proyectosDetallados(nombreProyecto1,nombreProyecto2,nombreProyecto3,
+                                        descripcionProyecto1,descripcionProyecto2,descripcionProyecto3, tipoProyecto1,tipoProyecto2,tipoProyecto3,
+                                        cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3, cantidadFinanciadaProyecto1,
+                                        cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3,fechaInicioProyecto1,fechaInicioProyecto2,fechaInicioProyecto3,
+                                        fechaFinProyecto1,fechaFinProyecto2,fechaFinProyecto3);
+                            }
+                            case 4->{
+                                System.out.println("Tienes " + dineroInversor2 + "€");
+                                System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
+                                dineroInversor2+=leerOpcionDouble();
+                            }
+                            case 5->{
+                                do {
+                                    menuConfiguracion();
+                                    segundoSubmenu=leerOpcionNumerica();
+                                    switch (segundoSubmenu){
+                                        case 1->passInversor2=cambiarUsuario(passInversor2);
 
-            }
-        }while(seleccionTipoUsuario!=4);
+                                        case 2 ->passInversor2=cambiarcontrasenia(passInversor2);
+                                    }
+
+                                }while (segundoSubmenu!=3);
+                            }
+                        }
+                    }while(primerSubmenu!=6);
+                }
+            } else if (inversor2Bloqueado)System.out.println("Bloqueado");
+
+        }while(seleccionTipoUsuario!=5);
     }
 }
 
