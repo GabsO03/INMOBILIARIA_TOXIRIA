@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="practica grupal:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/practica_grupal_jar</output-path>
+    <root id="archive" name="practica grupal.jar">
+      <element id="module-output" name="practica grupal" />
+    </root>
+  </artifact>
+</component>
