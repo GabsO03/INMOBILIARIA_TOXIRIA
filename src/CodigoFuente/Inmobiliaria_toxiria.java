@@ -258,10 +258,10 @@ public class Inmobiliaria_toxiria {
                 cantidadFinanciadaProyecto1=0,cantidadFinanciadaProyecto2=0,cantidadFinanciadaProyecto3=0;
         boolean proyecto1=false, proyecto2=false, proyecto3=false;
         //INVERSOR
-        double dineroInversor1=0,dineroInversor2=0,respuestaDouble=0, cantidadInvertidaInversor1Proyecto1=0,cantidadInvertidaInversor1Proyecto2=0,cantidadInvertidaInversor1Proyecto3=0,
+        double dineroInversor1=0,dineroInversor2=0,respuestaDouble, cantidadInvertidaInversor1Proyecto1=0,cantidadInvertidaInversor1Proyecto2=0,cantidadInvertidaInversor1Proyecto3=0,
                 cantidadInvertidaInversor2Proyecto1=0,cantidadInvertidaInversor2Proyecto2=0,cantidadInvertidaInversor2Proyecto3=0;
         boolean inversor1InvertidoProyecto1=false,inversor1InvertidoProyecto2=false,inversor1InvertidoProyecto3=false,inversor2InvertidoProyecto1=false,inversor2InvertidoProyecto2=false,inversor2InvertidoProyecto3=false;
-        String respuesta="";
+        String respuesta;
 
 
         //Menus
@@ -794,6 +794,8 @@ public class Inmobiliaria_toxiria {
                     }while(primerSubmenu!=6);
                 }
             } else if (inversor2Bloqueado)System.out.println("Bloqueado");
+
+
 
         }while(seleccionTipoUsuario!=5);
     }
