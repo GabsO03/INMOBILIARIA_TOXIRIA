@@ -95,7 +95,46 @@ public class Login {
             System.out.println("Acceso denegado, tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
             return false;
         }
-        return true;
+        System.out.println("Se va a enviar un código de verificacion a tu correo electronico, un momento...");
+        int codigoRandom = (int) (Math.random()*9999)+1000;
+        if (user.equals("inversor1")){
+            String codigoString=String.valueOf(codigoRandom);
+            String destinatario="inversor1inmobiliaria@yopmail.com";
+            String asunto="Código de verificación inmobiliaria";
+            String cuerpo="Su código de verificación es: "+codigoString+"\nNo comparta este código con nadie";
+            enviarCorreo(destinatario,asunto,cuerpo);
+
+            System.out.println("Escriba su código de verificación que se le ha enviado al correo electrónico: ");
+            String codigo=leerOpcionLiteral();
+            if (codigo.equals(codigoString)) {
+                System.out.println("Código correcto.");
+                return true;
+            }
+            else{
+                System.out.println("Error, código no valido.");
+                return false;
+            }
+        }
+        if (user.equals("inversor2")){
+            String codigoString=String.valueOf(codigoRandom);
+            String destinatario="inversor2inmobiliaria@yopmail.com";
+            String asunto="Código de verificación inmobiliaria";
+            String cuerpo="Su código de verificación es: "+codigoString+"\nNo comparta este código con nadie";
+            enviarCorreo(destinatario,asunto,cuerpo);
+
+            System.out.println("Escriba su código de verificación que se le ha enviado al correo electrónico: ");
+            String codigo=leerOpcionLiteral();
+            if (codigo.equals(codigoString)) {
+                System.out.println("Código correcto.");
+                return true;
+            }
+            else{
+                System.out.println("Error, código no valido.");
+                return false;
+            }
+        }else return false;
+
+
     }
 
     public static boolean logged (int opcion1, String adminUser, String adminPass,  String gestorUser, String gestorPass,  String inversor1User, String inversor1Pass,  String inversor2User, String inversor2Pass) {
