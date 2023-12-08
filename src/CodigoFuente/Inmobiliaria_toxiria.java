@@ -1,5 +1,6 @@
 package CodigoFuente;
 
+
 import java.util.Scanner;
 //COLORES
 import static Biblioteca.Colores.RED;
@@ -632,7 +633,6 @@ public class Inmobiliaria_toxiria {
 
 
         }while(seleccionTipoUsuario!=5);
-        System.out.println("Estoy probando la rama del tema 3");
     }
 }
 

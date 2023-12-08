@@ -1,8 +1,44 @@
 package Biblioteca;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 
+
 public class Login {
+    public static void enviarCorreo(String destinatario, String asunto,String cuerpo){
+        String remitente="adrian.contreras.2706@fernando3martos.com";
+        String clave="chksotcvupynairz";
+        // Propiedades de la conexion
+        Properties props =System.getProperties();
+        props.put("mail.smtp.host","smtp.gmail.com"); //Servidor de google
+        props.put("mail.smtp.user",remitente);
+        props.put("mail.smtp.clave",clave);
+        props.put("mail.smtp.starttls.enable","true");
+        props.put("mail.smtp.port","587");
+
+        Session session=Session.getDefaultInstance(props);
+        try {
+            MimeMessage message=new MimeMessage(session);
+            message.setFrom(new InternetAddress(remitente));
+            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(destinatario));
+            message.setSubject(asunto);
+            message.setText(cuerpo);
+            Transport transport=session.getTransport("smtp");
+            transport.connect("smtp.gmail.com",remitente,clave);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        }catch (MessagingException me){
+            me.printStackTrace();
+        }
+
+    }
     public static boolean verification (String usu, String con) {
         System.out.println("Introduzca su usuario:");
         String user = leerOpcionLiteral();
@@ -26,8 +62,28 @@ public class Login {
             System.out.println("Acceso denegado, tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
             return false;
         }
-        return true;
+        System.out.println("Se va a enviar un código de verificacion a tu correo electronico, un momento...");
+        int codigoRandom = (int) (Math.random()*9999)+1000;
+        String codigoString=String.valueOf(codigoRandom);
+        String destinatario="gestorinmobiliaria@yopmail.com";
+        String asunto="Código de verificación inmobiliaria";
+        String cuerpo="Su código de verificación es: "+codigoString+"\nNo comparta este código con nadie";
+        enviarCorreo(destinatario,asunto,cuerpo);
+
+        System.out.println("Escriba su código de verificación que se le ha enviado al correo electrónico: ");
+        String codigo=leerOpcionLiteral();
+        if (codigo.equals(codigoString)) {
+            System.out.println("Código correcto.");
+            return true;
+        }
+        else{
+            System.out.println("Error, código no valido.");
+            return false;
+        }
+
+
     }
+
     public static boolean loginInversor(String user, String pass) {
         int intentos = 3;
         while (intentos > 0 && !(verification(user, pass))) {
