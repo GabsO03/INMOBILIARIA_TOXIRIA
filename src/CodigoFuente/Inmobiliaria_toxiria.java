@@ -630,7 +630,7 @@ public class Inmobiliaria_toxiria {
                 }
             } else if (inversor2Bloqueado)System.out.println("Bloqueado");
 
-
+            System.out.println("hola");
 
         }while(seleccionTipoUsuario!=5);
     }
