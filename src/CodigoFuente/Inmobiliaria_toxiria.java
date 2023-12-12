@@ -44,7 +44,22 @@ import static Biblioteca.Proyectos.crearCFinanciadaProyecto;
 import static Biblioteca.Proyectos.crearCNecesariaProyecto;
 import static Biblioteca.Proyectos.proyectosDetallados;
 
+/**
+ * Realización de la práctica obligatoria tema 3 en la cuál se ha realizado un programa para una inmobiliaria en la que encontramos
+ * diversas funciones dependientes de la persona que quiera acceder al sistema. Contamos con cuatro usuarios, un administrador, un gestor
+ * y dos inversores.
+ * @author Adrián Contreras Bueno, Gabriela Oria Pinto y Alex Godino Bailen
+ */
+
 public class Inmobiliaria_toxiria {
+
+    /**
+     * Comprueba desde el panel de control del administrador si un usuario está bloqueado o no y lo muestra por pantalla
+     * @author Alex Godino Bailen
+     * @param gestorBloqueado como un boolean
+     * @param inversor1Bloqueado como un boolean
+     * @param inversor2Bloqueado como un boolean
+     */
     public static void panelControlAdmin(boolean gestorBloqueado,boolean inversor1Bloqueado,boolean inversor2Bloqueado){
         String gestorBloqueadoCadena="",inversor1BloqueadoCadena="", inversor2BloqueadoCadena="";
         if (gestorBloqueado) gestorBloqueadoCadena="Bloqueado";
@@ -56,6 +71,12 @@ public class Inmobiliaria_toxiria {
     }
 
 
+    /**
+     * Nos permite cambiar el nombre del Usuario
+     * @author Adrián Contreras Bueno
+     * @param usuarioAntiguoEnviado como una cadena
+     * @return Devuelve una cadena con el nuevo nombre de Usuario introducido por pantalla
+     */
     public static String cambiarUsuario(String usuarioAntiguoEnviado){
         String usuarioActual,nuevoUsuario;
         System.out.println("Escriba su usuario actual");
@@ -67,6 +88,13 @@ public class Inmobiliaria_toxiria {
         }else System.out.println("El usuario actual no es correcto, vuelva a intentarlo");
         return usuarioAntiguoEnviado;
     }
+
+    /**
+     * Nos permite cambiar la contraseña del Usuario
+     * @author Adrián Contreras Bueno
+     * @param contraseniaAntiguaEnviado como una cadena
+     * @return Devuelve una cadena con la nueva contraseña del Usuario introducida por pantalla
+     */
     public static String cambiarcontrasenia(String contraseniaAntiguaEnviado){
         String contraseniaActual,nuevaContrasenia;
         System.out.println("Escriba la contraseña actual");

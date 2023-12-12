@@ -12,6 +12,14 @@ import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 
 
 public class Login {
+
+    /**
+     * Enviamos el correo a la dirección del destinatario con el asunto y cuerpo que deseemos
+     * @author Adrián Contreras Bueno
+     * @param destinatario como una cadena
+     * @param asunto como una cadena
+     * @param cuerpo como una cadena
+     */
     public static void enviarCorreo(String destinatario, String asunto,String cuerpo){
         String remitente="adrian.contreras.2706@fernando3martos.com";
         String clave="chksotcvupynairz";
@@ -39,6 +47,14 @@ public class Login {
         }
 
     }
+
+    /**
+     * Nos indica si el usuario y la contraseña que estamos introduciendo son correctos o no
+     * @author Gabriela Oria Pinto
+     * @param usu como cadena
+     * @param con como cadena
+     * @return true si el usuario y la contraseña son correctos o false si el usuario y la contraseña no son correctos
+     */
     public static boolean verification (String usu, String con) {
         System.out.println("Introduzca su usuario:");
         String user = leerOpcionLiteral();
@@ -46,11 +62,27 @@ public class Login {
         String password = leerOpcionLiteral();
         return user.equals(usu) && password.equals(con);
     }
+
+    /**
+     * Sistema de login del administrador
+     * @author Gabriela Oria Pinto
+     * @param user como cadena
+     * @param con como cadena
+     * @return true si ha conseguido entrar al sistema
+     */
     public static boolean loginAdmin (String user, String con) {
         while (!(verification(user, con))) System.out.println("Usuario o contraseña incorrecta.");
         System.out.println("Bienvenid@ " + user);
         return true;
     }
+
+    /**
+     * Sistema de login del Gestor
+     * @author Gabriela Oria Pinto
+     * @param user como cadena
+     * @param pass como cadena
+     * @return true si ha conseguido entrar al sistema o false si no ha conseguido entrar al sistema porque su usuario ha sido bloqueado
+     */
     public static boolean loginGestor (String user, String pass) {
         int intentos = 3;
         while (intentos > 0 && !(verification(user, pass))) {
@@ -83,6 +115,14 @@ public class Login {
 
 
     }
+
+    /**
+     * Sistema de login de ambos inversores
+     * @author Gabriela Oria Pinto
+     * @param user como cadena
+     * @param pass como cadena
+     * @return true si ha conseguido entrar al sistema o false si no ha conseguido entrar al sistema porque su usuario ha sido bloqueado
+     */
 
     public static boolean loginInversor(String user, String pass) {
         int intentos = 3;
@@ -136,6 +176,21 @@ public class Login {
 
 
     }
+
+    /**
+     * Función que utiliza las otras funciones de login para acceder al sistema. Esta se usa en el main
+     * @author Gabriela Oria Pinto
+     * @param opcion1 como entero
+     * @param adminUser como cadena
+     * @param adminPass como cadena
+     * @param gestorUser como cadena
+     * @param gestorPass como cadena
+     * @param inversor1User como cadena
+     * @param inversor1Pass como cadena
+     * @param inversor2User como cadena
+     * @param inversor2Pass como cadena
+     * @return true si ha conseguido entrar al sistema
+     */
 
     public static boolean logged (int opcion1, String adminUser, String adminPass,  String gestorUser, String gestorPass,  String inversor1User, String inversor1Pass,  String inversor2User, String inversor2Pass) {
         switch (opcion1) {
