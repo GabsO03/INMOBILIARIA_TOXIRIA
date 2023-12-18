@@ -89,9 +89,8 @@ public class Inmobiliaria_toxiria {
         String nombreProyecto1="",nombreProyecto2="",nombreProyecto3="", tipoProyecto1="",tipoProyecto2="",tipoProyecto3="";
         double cantidadNecesariaProyecto1=0,cantidadNecesariaProyecto2=0,cantidadNecesariaProyecto3=0,
                 cantidadFinanciadaProyecto1=0,cantidadFinanciadaProyecto2=0,cantidadFinanciadaProyecto3=0;
-
         //NEW ADD
-        //Proyectos
+
         String[] nombresProyectos = {"TestName","",""};
         String[] descripcionesProyectos = {"TestDesc","",""};
         String[] tiposProyectos = {"TestType","",""};
@@ -104,7 +103,12 @@ public class Inmobiliaria_toxiria {
         boolean[] proyectosHabilitados = {false, false, false};
         proyectosHabilitados[0] = true;
 
-        //Inversor
+
+        //INVERSOR
+        double dineroInversor1=0,dineroInversor2=0,respuestaDoubleA, cantidadInvertidaInversor1Proyecto1=0,cantidadInvertidaInversor1Proyecto2=0,cantidadInvertidaInversor1Proyecto3=0,
+                cantidadInvertidaInversor2Proyecto1=0,cantidadInvertidaInversor2Proyecto2=0,cantidadInvertidaInversor2Proyecto3=0;
+        boolean inversor1InvertidoProyecto1=false,inversor1InvertidoProyecto2=false,inversor1InvertidoProyecto3=false,inversor2InvertidoProyecto1=false,inversor2InvertidoProyecto2=false,inversor2InvertidoProyecto3=false;
+        //String respuesta;
         double[] dinerosInversores = new double[2];
         double[] cantidadesInvertidasProyecto01Inversor = new double[2];
         double[] cantidadesInvertidasProyecto02Inversor = new double[2];
@@ -114,13 +118,6 @@ public class Inmobiliaria_toxiria {
         boolean[] invirtieronProyecto02Inversores = {false, false};
         boolean[] invirtieronProyecto03Inversores = {false, false};
         String respuesta;
-
-
-        //INVERSOR
-        double dineroInversor1=0,dineroInversor2=0,respuestaDoubleA, cantidadInvertidaInversor1Proyecto1=0,cantidadInvertidaInversor1Proyecto2=0,cantidadInvertidaInversor1Proyecto3=0,
-                cantidadInvertidaInversor2Proyecto1=0,cantidadInvertidaInversor2Proyecto2=0,cantidadInvertidaInversor2Proyecto3=0;
-        boolean inversor1InvertidoProyecto1=false,inversor1InvertidoProyecto2=false,inversor1InvertidoProyecto3=false,inversor2InvertidoProyecto1=false,inversor2InvertidoProyecto2=false,inversor2InvertidoProyecto3=false;
-        //String respuesta;
 
 
         //Menus
