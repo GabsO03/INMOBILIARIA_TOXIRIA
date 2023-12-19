@@ -44,22 +44,7 @@ import static Biblioteca.Proyectos.crearCFinanciadaProyecto;
 import static Biblioteca.Proyectos.crearCNecesariaProyecto;
 import static Biblioteca.Proyectos.proyectosDetallados;
 
-/**
- * Realización de la práctica obligatoria tema 3 en la cuál se ha realizado un programa para una inmobiliaria en la que encontramos
- * diversas funciones dependientes de la persona que quiera acceder al sistema. Contamos con cuatro usuarios, un administrador, un gestor
- * y dos inversores.
- * @author Adrián Contreras Bueno, Gabriela Oria Pinto y Alex Godino Bailen
- */
-
 public class Inmobiliaria_toxiria {
-
-    /**
-     * Comprueba desde el panel de control del administrador si un usuario está bloqueado o no y lo muestra por pantalla
-     * @author Alex Godino Bailen
-     * @param gestorBloqueado como un boolean
-     * @param inversor1Bloqueado como un boolean
-     * @param inversor2Bloqueado como un boolean
-     */
     public static void panelControlAdmin(boolean gestorBloqueado,boolean inversor1Bloqueado,boolean inversor2Bloqueado){
         String gestorBloqueadoCadena="",inversor1BloqueadoCadena="", inversor2BloqueadoCadena="";
         if (gestorBloqueado) gestorBloqueadoCadena="Bloqueado";
@@ -71,12 +56,6 @@ public class Inmobiliaria_toxiria {
     }
 
 
-    /**
-     * Nos permite cambiar el nombre del Usuario
-     * @author Adrián Contreras Bueno
-     * @param usuarioAntiguoEnviado como una cadena
-     * @return Devuelve una cadena con el nuevo nombre de Usuario introducido por pantalla
-     */
     public static String cambiarUsuario(String usuarioAntiguoEnviado){
         String usuarioActual,nuevoUsuario;
         System.out.println("Escriba su usuario actual");
@@ -88,13 +67,6 @@ public class Inmobiliaria_toxiria {
         }else System.out.println("El usuario actual no es correcto, vuelva a intentarlo");
         return usuarioAntiguoEnviado;
     }
-
-    /**
-     * Nos permite cambiar la contraseña del Usuario
-     * @author Adrián Contreras Bueno
-     * @param contraseniaAntiguaEnviado como una cadena
-     * @return Devuelve una cadena con la nueva contraseña del Usuario introducida por pantalla
-     */
     public static String cambiarcontrasenia(String contraseniaAntiguaEnviado){
         String contraseniaActual,nuevaContrasenia;
         System.out.println("Escriba la contraseña actual");
@@ -114,16 +86,37 @@ public class Inmobiliaria_toxiria {
         //BLOQUEOS
         boolean gestorBloqueado=false,inversor1Bloqueado=false,inversor2Bloqueado=false;
         //PROYECTOS
-        String nombreProyecto1="",nombreProyecto2="",nombreProyecto3="",descripcionProyecto1="",descripcionProyecto2="",descripcionProyecto3="",
-                tipoProyecto1="",tipoProyecto2="",tipoProyecto3="",fechaInicioProyecto1="",fechaInicioProyecto2="",fechaInicioProyecto3="",
-                fechaFinProyecto1="",fechaFinProyecto2="",fechaFinProyecto3="";
+        String nombreProyecto1="",nombreProyecto2="",nombreProyecto3="", tipoProyecto1="",tipoProyecto2="",tipoProyecto3="";
         double cantidadNecesariaProyecto1=0,cantidadNecesariaProyecto2=0,cantidadNecesariaProyecto3=0,
                 cantidadFinanciadaProyecto1=0,cantidadFinanciadaProyecto2=0,cantidadFinanciadaProyecto3=0;
-        boolean proyecto1=false, proyecto2=false, proyecto3=false;
+        //NEW ADD
+
+        String[] nombresProyectos = {"TestName","",""};
+        String[] descripcionesProyectos = {"TestDesc","",""};
+        String[] tiposProyectos = {"TestType","",""};
+        String[] fechasInicioProyectos = {"TestDate","",""};
+        String[] fechasFinProyectos = {"TestDate","",""};
+        double[] cantidadesNecesariasProyectos = new double[3];
+        cantidadesNecesariasProyectos[0] = 3000.0;
+        double[] cantidadesFinanciadasProyectos = new double[3];
+        cantidadesFinanciadasProyectos[0] = 500.0;
+        boolean[] proyectosHabilitados = {false, false, false};
+        proyectosHabilitados[0] = true;
+
+
         //INVERSOR
-        double dineroInversor1=0,dineroInversor2=0,respuestaDouble, cantidadInvertidaInversor1Proyecto1=0,cantidadInvertidaInversor1Proyecto2=0,cantidadInvertidaInversor1Proyecto3=0,
+        double dineroInversor1=0,dineroInversor2=0,respuestaDoubleA, cantidadInvertidaInversor1Proyecto1=0,cantidadInvertidaInversor1Proyecto2=0,cantidadInvertidaInversor1Proyecto3=0,
                 cantidadInvertidaInversor2Proyecto1=0,cantidadInvertidaInversor2Proyecto2=0,cantidadInvertidaInversor2Proyecto3=0;
         boolean inversor1InvertidoProyecto1=false,inversor1InvertidoProyecto2=false,inversor1InvertidoProyecto3=false,inversor2InvertidoProyecto1=false,inversor2InvertidoProyecto2=false,inversor2InvertidoProyecto3=false;
+        //String respuesta;
+        double[] dinerosInversores = new double[2];
+        double[] cantidadesInvertidasProyecto01Inversor = new double[2];
+        double[] cantidadesInvertidasProyecto02Inversor = new double[2];
+        double[] cantidadesInvertidasProyecto03Inversor = new double[2];
+        double respuestaDouble;
+        boolean[] invirtieronProyecto01Inversores = {false, false};
+        boolean[] invirtieronProyecto02Inversores = {false, false};
+        boolean[] invirtieronProyecto03Inversores = {false, false};
         String respuesta;
 
 
@@ -169,136 +162,47 @@ public class Inmobiliaria_toxiria {
                         case 2->{
                             do {
 
-                                mostrarProyectosAdmin(nombreProyecto1,nombreProyecto2,nombreProyecto3,tipoProyecto1,tipoProyecto2,tipoProyecto3,
-                                        cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3,
-                                        cantidadFinanciadaProyecto1,cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3);
-
+                                mostrarProyectosAdmin(nombresProyectos, tiposProyectos, cantidadesNecesariasProyectos, cantidadesFinanciadasProyectos);
 
                                 segundoSubmenu=leerOpcionNumerica();
-                                switch (segundoSubmenu){
-                                    case 1-> {
-                                        System.out.println(RED+"¿Quiere eliminar el proyecto?"+RESET);
+                                if (segundoSubmenu>0&&segundoSubmenu<4) {
+                                    System.out.println("¿Quiere eliminar el proyecto? [S]í | [N]o");
+                                    respuesta=leerOpcionLiteral();
+
+                                    if (!nombresProyectos[segundoSubmenu-1].isEmpty()&&respuesta.equalsIgnoreCase("s")){
+                                        nombresProyectos[segundoSubmenu-1]="";
+                                        descripcionesProyectos[segundoSubmenu-1]="";
+                                        tiposProyectos[segundoSubmenu-1]="";
+                                        cantidadesFinanciadasProyectos[segundoSubmenu-1]=0;
+                                        cantidadesNecesariasProyectos[segundoSubmenu-1]=0;
+                                        fechasFinProyectos[segundoSubmenu-1]="";
+                                        fechasInicioProyectos[segundoSubmenu-1]="";
+                                        cantidadesInvertidasProyecto01Inversor[0]=0;
+                                        invirtieronProyecto01Inversores[0]=false;
+                                        cantidadesInvertidasProyecto01Inversor[1]=0;
+                                        invirtieronProyecto01Inversores[1]=false;
+                                        contadorProyectos--;
+                                    }else if (respuesta.equalsIgnoreCase("n")){
+                                        System.out.println("¿Quiere modificar el proyecto? [S]í | [N]o");
                                         respuesta=leerOpcionLiteral();
-
-                                        if (!nombreProyecto1.equals("")&&respuesta.equals("si")){
-                                            nombreProyecto1="";
-                                            descripcionProyecto1="";
-                                            tipoProyecto1="";
-                                            cantidadFinanciadaProyecto1=0;
-                                            cantidadNecesariaProyecto1=0;
-                                            fechaFinProyecto1="";
-                                            fechaInicioProyecto1="";
-                                            cantidadInvertidaInversor1Proyecto1=0;
-                                            inversor1InvertidoProyecto1=false;
-                                            cantidadInvertidaInversor2Proyecto1=0;
-                                            inversor2InvertidoProyecto1=false;
-                                            contadorProyectos--;
-                                        }else if (respuesta.equals("no")){
-                                            System.out.println(RED+"¿Quiere modificar el proyecto?"+RESET);
-                                            respuesta=leerOpcionLiteral();
-                                            if (respuesta.equals("si")){
-                                                do {
-                                                    menuModificarProyecto();
-                                                    tercersubmenu=leerOpcionNumerica();
-                                                    switch (tercersubmenu){
-                                                        case 1->nombreProyecto1=cambiarNombreProyecto();
-                                                        case 2->descripcionProyecto1=cambiarDescripcionProyecto();
-                                                        case 3->tipoProyecto1=cambiarTipoProyecto();
-                                                        case 4->cantidadNecesariaProyecto1=cambiarCantidadNecesaria();
-                                                        case 5->cantidadFinanciadaProyecto1=cambiarCantidadFinanciada();
-                                                        case 6->fechaInicioProyecto1=cambiarFechaInicio();
-                                                        case 7->fechaFinProyecto1=cambiarFechaFin();
-                                                    }
-
-                                                }while(tercersubmenu!=8);
-                                            }
+                                        if (respuesta.equalsIgnoreCase("s")){
+                                            do {
+                                                menuModificarProyecto();
+                                                tercersubmenu=leerOpcionNumerica();
+                                                switch (tercersubmenu){
+                                                    case 1->nombresProyectos[segundoSubmenu-1]=cambiarNombreProyecto();
+                                                    case 2->descripcionesProyectos[segundoSubmenu-1]=cambiarDescripcionProyecto();
+                                                    case 3->tiposProyectos[segundoSubmenu-1]=cambiarTipoProyecto();
+                                                    case 4->cantidadesNecesariasProyectos[segundoSubmenu-1]=cambiarCantidadNecesaria();
+                                                    case 5->cantidadesFinanciadasProyectos[segundoSubmenu-1]=cambiarCantidadFinanciada();
+                                                    case 6->fechasInicioProyectos[segundoSubmenu-1]=cambiarFechaInicio();
+                                                    case 7->fechasFinProyectos[segundoSubmenu-1]=cambiarFechaFin();
+                                                }
+                                            } while(tercersubmenu!=8);
                                         }
                                     }
-                                    case 2->{
-                                        System.out.println(RED+"¿Quiere eliminar el proyecto?"+RESET);
-                                        respuesta=leerOpcionLiteral();
-
-                                        if (!nombreProyecto2.equals("")&&respuesta.equals("si")){
-                                            nombreProyecto2="";
-                                            descripcionProyecto2="";
-                                            tipoProyecto2="";
-                                            cantidadFinanciadaProyecto2=0;
-                                            cantidadNecesariaProyecto2=0;
-                                            fechaFinProyecto2="";
-                                            fechaInicioProyecto2="";
-                                            contadorProyectos--;
-                                            cantidadInvertidaInversor1Proyecto2=0;
-                                            inversor1InvertidoProyecto2=false;
-                                            cantidadInvertidaInversor2Proyecto2=0;
-                                            inversor2InvertidoProyecto2=false;
-                                        }else if (respuesta.equals("no")){
-                                            System.out.println(RED+"¿Quiere modificar el proyecto?"+RESET);
-                                            respuesta=leerOpcionLiteral();
-                                            if (respuesta.equals("si")){
-                                                do {
-                                                    menuModificarProyecto();
-                                                    tercersubmenu=leerOpcionNumerica();
-                                                    switch (tercersubmenu){
-                                                        case 1->nombreProyecto2=cambiarNombreProyecto();
-                                                        case 2->descripcionProyecto2=cambiarDescripcionProyecto();
-                                                        case 3->tipoProyecto2=cambiarTipoProyecto();
-                                                        case 4->cantidadNecesariaProyecto2=cambiarCantidadNecesaria();
-                                                        case 5->cantidadFinanciadaProyecto2=cambiarCantidadFinanciada();
-                                                        case 6->fechaInicioProyecto2=cambiarFechaInicio();
-                                                        case 7->fechaFinProyecto2=cambiarFechaFin();
-                                                    }
-
-                                                }while(tercersubmenu!=8);
-                                            }
-                                        }
-                                    }
-                                    case 3->{
-                                        System.out.println(RED+"¿Quiere eliminar el proyecto?"+RESET);
-                                        respuesta=leerOpcionLiteral();
-
-                                        if (!nombreProyecto3.equals("")&&respuesta.equals("si")){
-                                            nombreProyecto3="";
-                                            descripcionProyecto3="";
-                                            tipoProyecto3="";
-                                            cantidadFinanciadaProyecto3=0;
-                                            cantidadNecesariaProyecto3=0;
-                                            fechaFinProyecto3="";
-                                            fechaInicioProyecto3="";
-                                            contadorProyectos--;
-                                            cantidadInvertidaInversor1Proyecto3=0;
-                                            inversor1InvertidoProyecto3=false;
-                                            cantidadInvertidaInversor2Proyecto3=0;
-                                            inversor2InvertidoProyecto3=false;
-                                        }else if (respuesta.equals("no")){
-                                            System.out.println(RED+"¿Quiere modificar el proyecto?"+RESET);
-                                            respuesta=leerOpcionLiteral();
-                                            if (respuesta.equals("si")){
-                                                do {
-                                                    menuModificarProyecto();
-                                                    tercersubmenu=leerOpcionNumerica();
-                                                    switch (tercersubmenu){
-                                                        case 1->nombreProyecto3=cambiarNombreProyecto();
-                                                        case 2->descripcionProyecto3=cambiarDescripcionProyecto();
-                                                        case 3->tipoProyecto3=cambiarTipoProyecto();
-                                                        case 4->cantidadNecesariaProyecto3=cambiarCantidadNecesaria();
-                                                        case 5->cantidadFinanciadaProyecto3=cambiarCantidadFinanciada();
-                                                        case 6->fechaInicioProyecto3=cambiarFechaInicio();
-                                                        case 7->fechaFinProyecto3=cambiarFechaFin();
-                                                    }
-
-                                                }while(tercersubmenu!=8);
-                                            }
-                                        }
-                                    }
-                                    case 4-> proyectosDetallados(nombreProyecto1,nombreProyecto2,nombreProyecto3,
-                                                descripcionProyecto1,descripcionProyecto2,descripcionProyecto3, tipoProyecto1,tipoProyecto2,tipoProyecto3,
-                                                cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3, cantidadFinanciadaProyecto1,
-                                                cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3,fechaInicioProyecto1,fechaInicioProyecto2,fechaInicioProyecto3,
-                                                fechaFinProyecto1,fechaFinProyecto2,fechaFinProyecto3);
-
                                 }
-
-
+                                else if (segundoSubmenu==4) proyectosDetallados(nombresProyectos, descripcionesProyectos, tiposProyectos, cantidadesNecesariasProyectos, cantidadesFinanciadasProyectos, fechasInicioProyectos, fechasFinProyectos);
                             }while (segundoSubmenu!=5);
 
                         }
@@ -308,10 +212,8 @@ public class Inmobiliaria_toxiria {
                                 segundoSubmenu=leerOpcionNumerica();
                                 switch (segundoSubmenu){
                                     case 1->userAdmin=cambiarUsuario(userAdmin);
-
                                     case 2 ->passAdmin=cambiarcontrasenia(passAdmin);
                                 }
-
                             }while (segundoSubmenu!=3);
                         }
                     }
@@ -329,89 +231,46 @@ public class Inmobiliaria_toxiria {
                         menuProyectosGestor();
                         primerSubmenu = leerOpcionNumerica();
                         if (primerSubmenu == 1){
-                            System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto");
-                            if(proyecto1){
-                                System.out.println(RED + nombreProyecto1 + "\t\t\t\t" + GREEN + tipoProyecto1 + RESET);
+                            System.out.println(RED +  "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto");
+                            if(proyectosHabilitados[0]){
+                                System.out.println(RED + nombresProyectos[0] + "\t\t\t\t" + GREEN + tiposProyectos[0] + RESET);
                             }
-                            if(proyecto2){
-                                System.out.println(RED + nombreProyecto2 + "\t\t\t" + GREEN + tipoProyecto2 + RESET);
+                            if(proyectosHabilitados[1]){
+                                System.out.println(RED + nombresProyectos[1] + "\t\t\t" + GREEN + tiposProyectos[1] + RESET);
                             }
-                            if(proyecto3){
-                                System.out.println(RED + nombreProyecto3 + "\t\t\t" + GREEN + tipoProyecto3 + RESET);
+                            if(proyectosHabilitados[2]){
+                                System.out.println(RED + nombresProyectos[2] + "\t\t\t" + GREEN + tiposProyectos[2] + RESET);
                             }
-                            System.out.println(RED+"¿Quieres ver más detalles sobre los proyectos?"+RESET);
+                            System.out.println("¿Quieres ver más detalles sobre los proyectos? [S]í | [N]o");
                             respuesta=leerOpcionLiteral();
-                            if(respuesta.equalsIgnoreCase("si")) proyectosDetallados(nombreProyecto1,nombreProyecto2,nombreProyecto3,
-                                    descripcionProyecto1,descripcionProyecto2,descripcionProyecto3, tipoProyecto1,tipoProyecto2,tipoProyecto3,
-                                    cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3, cantidadFinanciadaProyecto1,
-                                    cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3,fechaInicioProyecto1,fechaInicioProyecto2,fechaInicioProyecto3,
-                                    fechaFinProyecto1,fechaFinProyecto2,fechaFinProyecto3);
+                            if(respuesta.equalsIgnoreCase("s")) proyectosDetallados(nombresProyectos, descripcionesProyectos, tiposProyectos,
+                                    cantidadesNecesariasProyectos, cantidadesFinanciadasProyectos, fechasInicioProyectos, fechasFinProyectos);
+
                         }
                         if (primerSubmenu == 2) {
-                            if (nombreProyecto1.equalsIgnoreCase("")) {
-                                crearNombreProyecto();
-                                nombreProyecto1 = leerOpcionLiteral();
-                                crearDescripcionProyecto();
-                                descripcionProyecto1 = leerOpcionLiteral();
-                                crearTipoProyecto();
-                                tipoProyecto1 = leerOpcionLiteral();
-                                crearCNecesariaProyecto();
-                                cantidadNecesariaProyecto1 = leerOpcionDouble();
+                            int i = 0;
+                            boolean hayPlaza = false;
+                            while (i < nombresProyectos.length&&!hayPlaza) {
+                                if (nombresProyectos[i].isEmpty()) hayPlaza = true;
+                                else i++;
+                            }
+                            if (hayPlaza){
+                                nombresProyectos[i] = crearNombreProyecto(i+1);
+                                descripcionesProyectos[i] = crearDescripcionProyecto(i+1);
+                                tiposProyectos[i] = crearTipoProyecto(i+1);
+                                cantidadesNecesariasProyectos[i] = crearCNecesariaProyecto(i+1);
                                 do {
-                                    crearCFinanciadaProyecto();
-                                    cantidadFinanciadaProyecto1 = leerOpcionDouble();
-                                    if (cantidadFinanciadaProyecto1>cantidadNecesariaProyecto1) System.out.println("No puede ser mayor que la cantdad necesaria");
-                                }while (cantidadFinanciadaProyecto1>cantidadNecesariaProyecto1);
-                                crearFInicioProyecto();
-                                fechaInicioProyecto1 = leerOpcionLiteral();
-                                crearFFinProyecto();
-                                fechaFinProyecto1 = leerOpcionLiteral();
+                                    cantidadesFinanciadasProyectos[i] = crearCFinanciadaProyecto(i+1);
+                                    if (cantidadesFinanciadasProyectos[i] > cantidadesNecesariasProyectos[i])
+                                        System.out.println("El monto excede la cantidad necesaria");
+                                } while (cantidadesFinanciadasProyectos[i] > cantidadesNecesariasProyectos[i]);
+                                fechasInicioProyectos[i] = crearFInicioProyecto(i+1);
+                                fechasFinProyectos[i] = crearFFinProyecto(i+1);
                                 contadorProyectos++;
-                                proyecto1=true;
-                            } else if (nombreProyecto2.equalsIgnoreCase("")) {
-                                crearNombreProyecto();
-                                nombreProyecto2 = leerOpcionLiteral();
-                                crearDescripcionProyecto();
-                                descripcionProyecto2 = leerOpcionLiteral();
-                                crearTipoProyecto();
-                                tipoProyecto2 = leerOpcionLiteral();
-                                crearCNecesariaProyecto();
-                                cantidadNecesariaProyecto2 = leerOpcionDouble();
-                                do {
-                                    crearCFinanciadaProyecto();
-                                    cantidadFinanciadaProyecto2 = leerOpcionDouble();
-                                    if (cantidadFinanciadaProyecto2>cantidadNecesariaProyecto2) System.out.println("No puede ser mayor que la cantdad necesaria");
-                                }while (cantidadFinanciadaProyecto2>cantidadNecesariaProyecto2);
-                                crearFInicioProyecto();
-                                fechaInicioProyecto2 = leerOpcionLiteral();
-                                crearFFinProyecto();
-                                fechaFinProyecto2 = leerOpcionLiteral();
-                                contadorProyectos++;
-                                proyecto2=true;
-                            } else if (nombreProyecto3.equalsIgnoreCase("")) {
-                                crearNombreProyecto();
-                                nombreProyecto3 = leerOpcionLiteral();
-                                crearDescripcionProyecto();
-                                descripcionProyecto3 = leerOpcionLiteral();
-                                crearTipoProyecto();
-                                tipoProyecto3 = leerOpcionLiteral();
-                                crearCNecesariaProyecto();
-                                cantidadNecesariaProyecto3 = leerOpcionDouble();
-
-                                do {
-                                    crearCFinanciadaProyecto();
-                                    cantidadFinanciadaProyecto3 = leerOpcionDouble();
-                                    if (cantidadFinanciadaProyecto3>cantidadNecesariaProyecto3) System.out.println("No puede ser mayor que la cantdad necesaria");
-                                }while (cantidadFinanciadaProyecto3>cantidadNecesariaProyecto3);
-
-                                crearFInicioProyecto();
-                                fechaInicioProyecto3 = leerOpcionLiteral();
-                                crearFFinProyecto();
-                                fechaFinProyecto3 = leerOpcionLiteral();
-                                contadorProyectos++;
-                                proyecto3=true;
-                            } else System.out.println("No se pueden crear más proyectos");
+                                proyectosHabilitados[i] = true;
+                            } else System.out.println("Ya no puedes crear más proyectos");
                         }
+
                         if (primerSubmenu==3){
                             do {
                                 menuConfiguracion();
@@ -439,36 +298,29 @@ public class Inmobiliaria_toxiria {
                         switch (primerSubmenu) {
                             case 1 -> {
                                 System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto" + RESET);
-                                if(inversor1InvertidoProyecto1){
+                                if(invirtieronProyecto01Inversores[0]){
                                     System.out.println(RED + nombreProyecto1 + "\t\t\t\t" + GREEN + tipoProyecto1 + RESET);
                                 }
-                                if(inversor1InvertidoProyecto2){
+                                if(invirtieronProyecto02Inversores[0]){
                                     System.out.println(RED + nombreProyecto2 + "\t\t\t" + GREEN + tipoProyecto2 + RESET);
                                 }
-                                if(inversor1InvertidoProyecto3){
+                                if(invirtieronProyecto01Inversores[0]){
                                     System.out.println(RED + nombreProyecto3 + "\t\t\t" + GREEN + tipoProyecto3 + RESET);
                                 }
                             }
                             case 2 -> {
-                                if (inversor1InvertidoProyecto1) mostrarInversionEnProyecto(nombreProyecto1,tipoProyecto1,cantidadInvertidaInversor1Proyecto1);
-                                if (inversor1InvertidoProyecto2) mostrarInversionEnProyecto(nombreProyecto2,tipoProyecto2,cantidadInvertidaInversor1Proyecto2);
-                                if (inversor1InvertidoProyecto3) mostrarInversionEnProyecto(nombreProyecto3,tipoProyecto3,cantidadInvertidaInversor1Proyecto3);
+                                if (invirtieronProyecto01Inversores[0]) mostrarInversionEnProyecto(nombreProyecto1,tipoProyecto1,cantidadInvertidaInversor1Proyecto1);
+                                if (invirtieronProyecto02Inversores[0]) mostrarInversionEnProyecto(nombreProyecto2,tipoProyecto2,cantidadInvertidaInversor1Proyecto2);
+                                if (invirtieronProyecto01Inversores[0]) mostrarInversionEnProyecto(nombreProyecto3,tipoProyecto3,cantidadInvertidaInversor1Proyecto3);
 
 
                             }
                             case 3 -> {
-                                mostrarProyectosNoAdmin(nombreProyecto1, nombreProyecto2, nombreProyecto3, tipoProyecto1, tipoProyecto2, tipoProyecto3,
-                                        cantidadNecesariaProyecto1, cantidadNecesariaProyecto2, cantidadNecesariaProyecto3,
-                                        cantidadFinanciadaProyecto1, cantidadFinanciadaProyecto2, cantidadFinanciadaProyecto3);
+                                mostrarProyectosNoAdmin(nombresProyectos, tiposProyectos, cantidadesNecesariasProyectos, cantidadesFinanciadasProyectos);
                                 System.out.println(RED+"¿Quieres ver más detalles sobre los proyectos?"+RESET);
                                 respuesta=leerOpcionLiteral();
                                 if(respuesta.equalsIgnoreCase("si")) {
-                                    proyectosDetallados(nombreProyecto1, nombreProyecto2, nombreProyecto3,
-                                            descripcionProyecto1, descripcionProyecto2, descripcionProyecto3, tipoProyecto1, tipoProyecto2, tipoProyecto3,
-                                            cantidadNecesariaProyecto1, cantidadNecesariaProyecto2, cantidadNecesariaProyecto3, cantidadFinanciadaProyecto1,
-                                            cantidadFinanciadaProyecto2, cantidadFinanciadaProyecto3, fechaInicioProyecto1, fechaInicioProyecto2, fechaInicioProyecto3,
-                                            fechaFinProyecto1, fechaFinProyecto2, fechaFinProyecto3);
-
+                                    proyectosDetallados(nombresProyectos, descripcionesProyectos, tiposProyectos, cantidadesNecesariasProyectos, cantidadesFinanciadasProyectos, fechasInicioProyectos, fechasFinProyectos);
                                 }
                                     System.out.println(RED+"¿Quieres invertir en algún proyecto?"+RESET);
                                     respuesta=leerOpcionLiteral();
@@ -573,18 +425,11 @@ public class Inmobiliaria_toxiria {
                                 if (inversor2InvertidoProyecto3) mostrarInversionEnProyecto(nombreProyecto3,tipoProyecto3,cantidadInvertidaInversor2Proyecto3);
                             }
                             case 3->{
-                                mostrarProyectosNoAdmin(nombreProyecto1,nombreProyecto2,nombreProyecto3,tipoProyecto1,tipoProyecto2,tipoProyecto3,
-                                        cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3,
-                                        cantidadFinanciadaProyecto1,cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3);
+                                mostrarProyectosNoAdmin(nombresProyectos, tiposProyectos, cantidadesNecesariasProyectos, cantidadesFinanciadasProyectos);
                                 System.out.println(RED+"¿Quieres ver más detalles sobre los proyectos?"+RESET);
                                 respuesta=leerOpcionLiteral();
-                                if(respuesta.equalsIgnoreCase("si")) {
-                                    proyectosDetallados(nombreProyecto1,nombreProyecto2,nombreProyecto3,
-                                            descripcionProyecto1,descripcionProyecto2,descripcionProyecto3, tipoProyecto1,tipoProyecto2,tipoProyecto3,
-                                            cantidadNecesariaProyecto1,cantidadNecesariaProyecto2,cantidadNecesariaProyecto3, cantidadFinanciadaProyecto1,
-                                            cantidadFinanciadaProyecto2,cantidadFinanciadaProyecto3,fechaInicioProyecto1,fechaInicioProyecto2,fechaInicioProyecto3,
-                                            fechaFinProyecto1,fechaFinProyecto2,fechaFinProyecto3);
-                                }
+                                if(respuesta.equalsIgnoreCase("si")) proyectosDetallados(nombresProyectos, descripcionesProyectos, tiposProyectos, cantidadesNecesariasProyectos, cantidadesFinanciadasProyectos, fechasInicioProyectos, fechasFinProyectos);
+
                                 System.out.println(RED+"¿Quieres invertir en algún proyecto?"+RESET);
                                 respuesta=leerOpcionLiteral();
                                 if (respuesta.equalsIgnoreCase("si")){
@@ -659,7 +504,7 @@ public class Inmobiliaria_toxiria {
             } else if (inversor2Bloqueado)System.out.println("Bloqueado");
 
 
+
         }while(seleccionTipoUsuario!=5);
     }
 }
-
