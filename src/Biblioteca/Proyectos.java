@@ -4,26 +4,44 @@ import static Biblioteca.Lectura_De_Datos.leerOpcionDouble;
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 
 public class Proyectos {
-    public static void mostrarProyectosNoAdmin (String[] nombresProyectos, String[] tiposProyectos,
-                                                double[] cantidadesNecesariasProyectos, double[] cantidadesFinanciadasProyectos){
-
-        System.out.println("\t\t\t\tProyecto 1 \t\t\t Proyecto 2 \t\t\t Proyecto 3");
-        System.out.println("Nombre: \t"+nombresProyectos[0]+nombresProyectos[1]+nombresProyectos[2]);
-        System.out.println("Tipo: \t\t"+tiposProyectos[0]+tiposProyectos[1]+tiposProyectos[2]);
-        System.out.printf("Cantidad Necesaria: %.2f\t %.2f\t %.2f\n",cantidadesNecesariasProyectos[0],cantidadesNecesariasProyectos[1],cantidadesNecesariasProyectos[2]);
-        System.out.printf("Cantidad Financiada: %.2f\t %.2f\t %.2f\n",cantidadesFinanciadasProyectos[0],cantidadesFinanciadasProyectos[1],cantidadesFinanciadasProyectos[2]);
+    public static void mostrarProyectosNoAdmin (String[][] proyectsStringData, double[][] proyectsFinantialData) {
+        System.out.println();
+        System.out.print("Posición: \t\t\t\t");
+        for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i] != null) System.out.print("Proyecto " + (i+1) + "\t\t\t\t");
+        System.out.println();
+        System.out.print("Nombre: \t\t\t\t");
+        for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i] != null) System.out.print(proyectsStringData[0][i] + "\t\t\t\t");
+        System.out.println();
+        System.out.print("Tipo: \t\t\t\t\t");
+        for (int i = 0; i < proyectsStringData[2].length; i++) if (proyectsStringData[2][i] != null) System.out.print(proyectsStringData[2][i] + "\t\t\t\t\t");
+        System.out.println();
+        System.out.print("Cantidad Necesaria:\t\t");
+        for (int i = 0; i < proyectsFinantialData[0].length; i++) if (proyectsFinantialData[0][i] != 0) System.out.print(proyectsFinantialData[0][i] + "\t\t\t\t\t");
+        System.out.println();
+        System.out.print("Cantidad Financiada:\t");
+        for (int i = 0; i < proyectsFinantialData[1].length; i++) if (proyectsFinantialData[1][i] != 0) System.out.print(proyectsFinantialData[1][i] + "\t\t\t\t\t");
+        System.out.println();
     }
 
-    public static void mostrarProyectosAdmin(String[] nombresProyectos, String[] tiposProyectos,
-                                             double[] cantidadesNecesariasProyectos, double[] cantidadesFinanciadasProyectos){
+    public static void mostrarProyectosAdmin(String[][] proyectsStringData, double[][] proyectsFinantialData){
+        System.out.println();
+        System.out.print("Posición: \t\t\t\t");
+        for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i] != null) System.out.print("Proyecto " + (i+1) + "\t\t\t\t");
+        System.out.println();
+        System.out.print("Nombre: \t\t\t\t");
+        for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i] != null) System.out.print(proyectsStringData[0][i] + "\t\t\t\t");
+        System.out.println();
+        System.out.print("Tipo: \t\t\t\t\t");
+        for (int i = 0; i < proyectsStringData[2].length; i++) if (proyectsStringData[2][i] != null) System.out.print(proyectsStringData[2][i] + "\t\t\t\t\t");
+        System.out.println();
+        System.out.print("Cantidad Necesaria:\t\t");
+        for (int i = 0; i < proyectsFinantialData[0].length; i++) if (proyectsFinantialData[0][i] != 0) System.out.print(proyectsFinantialData[0][i] + "\t\t\t\t\t");
+        System.out.println();
+        System.out.print("Cantidad Financiada:\t");
+        for (int i = 0; i < proyectsFinantialData[1].length; i++) if (proyectsFinantialData[1][i] != 0) System.out.print(proyectsFinantialData[1][i] + "\t\t\t\t\t");
+        System.out.println();
 
-        System.out.println("\t\t\t\tProyecto 1 \t\t\t Proyecto 2 \t\t\t Proyecto 3");
-        System.out.println("Nombre: \t"+nombresProyectos[0] +"\t\t\t"+ nombresProyectos[1] +"\t\t\t"+ nombresProyectos[2]);
-        System.out.println("Tipo: \t\t"+tiposProyectos[0] +"\t\t\t"+ tiposProyectos[1] +"\t\t\t"+ tiposProyectos[2]);
-        System.out.printf("Cantidad Necesaria: %.2f\t\t %.2f\t\t %.2f\n",cantidadesNecesariasProyectos[0],cantidadesNecesariasProyectos[1],cantidadesNecesariasProyectos[2]);
-        System.out.printf("Cantidad Financiada: %.2f\t\t %.2f\t\t %.2f\n",cantidadesFinanciadasProyectos[0],cantidadesFinanciadasProyectos[1],cantidadesFinanciadasProyectos[2]);
-
-        System.out.println("Elija cual quiere eliminar o modificar: \n1. Proyecto 1\n2. Proyecto 2\n3. Proyecto 3\n4.Ver más detalles\n5. Ninguno");
+        System.out.println("Escriba 0 para ver más detalles.\nEscriba -1 para salir.\nO digite la posición del proyecto que quiere eliminar o modificar");
     }
 
     public static String cambiarNombreProyecto(){
@@ -92,21 +110,15 @@ public class Proyectos {
 
     }
 
-    public static void proyectosDetallados(String[] nombresProyectos, String[] descripcionesProyectos, String[] tiposProyectos,
-                                           double[] cantidadesNecesariasProyecto, double[] cantidadesFinanciadasProyectos,
-                                           String[] fechasIniciosProyectos, String[] fechasFinProyectos){
-        System.out.println("Proyecto 1: ");
-        System.out.println("Nombre: "+nombresProyectos[0]+"\nDescripción: "+descripcionesProyectos[0]+"\nTipo: "+tiposProyectos[0]+"\nCantidad Necesaria: "+cantidadesNecesariasProyecto[0]+"\nCantidad Financiada: "+cantidadesFinanciadasProyectos[0]+"\nFecha Inicial: "+fechasIniciosProyectos[0]+"\nFecha Final: "+fechasFinProyectos[0]);
-        System.out.println("Gráfico:");
-        crearGrafico(cantidadesFinanciadasProyectos[0],cantidadesFinanciadasProyectos[0]);
-        System.out.println("\nProyecto 2: ");
-        System.out.println("Nombre: "+nombresProyectos[1]+"\nDescripción: "+descripcionesProyectos[1]+"\nTipo: "+tiposProyectos[1]+"\nCantidad Necesaria: "+cantidadesNecesariasProyecto[1]+"\nCantidad Financiada: "+cantidadesFinanciadasProyectos[1]+"\nFecha Inicial: "+fechasIniciosProyectos[1]+"\nFecha Final: "+fechasFinProyectos[1]);
-        System.out.println("Gráfico:");
-        crearGrafico(cantidadesFinanciadasProyectos[1],cantidadesFinanciadasProyectos[1]);
-        System.out.println("\nProyecto 3: ");
-        System.out.println("Nombre: "+nombresProyectos[2]+"\nDescripción: "+descripcionesProyectos[2]+"\nTipo: "+tiposProyectos[2]+"\nCantidad Necesaria: "+cantidadesNecesariasProyecto[2]+"\nCantidad Financiada: "+cantidadesFinanciadasProyectos[2]+"\nFecha Inicial: "+fechasIniciosProyectos[2]+"\nFecha Final: "+fechasFinProyectos[2]);
-        System.out.println("Gráfico:");
-        crearGrafico(cantidadesFinanciadasProyectos[2],cantidadesFinanciadasProyectos[2]);
-        System.out.println();
+    public static void proyectosDetallados(String[][] proyectsStringData, double[][] proyectsFinantialData){
+        for (int i = 0; i < proyectsStringData[0].length; i++) {
+            if (proyectsStringData[0][i] != null) {
+                System.out.println("Proyecto "+(i+1));
+                System.out.println("Nombre: " + proyectsStringData[0][i] + "\nDescripción: " + proyectsStringData[1][i] +"\nTipo: " + proyectsStringData[2][i]  + "\nFecha Inicial: " + proyectsStringData[3][i] + "\nFecha Final: " + proyectsStringData[4][i] + "\nCantidad Necesaria: " + proyectsFinantialData[0][i] + "\nCantidad Financiada: " + proyectsFinantialData[1][i]);
+                System.out.println("Gráfico:");
+                crearGrafico(proyectsFinantialData[0][i], proyectsFinantialData[1][i]);
+                System.out.println();
+            }
+        }
     }
 }
