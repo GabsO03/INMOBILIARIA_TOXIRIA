@@ -1,9 +1,30 @@
 package Biblioteca;
 
 public class Menus {
+    public static void menuInicio(){
+        System.out.println("Seleccione qué quiere hacer: \n1.Registro\n2.Iniciar sesión\n3.Salir");
+    }
+    public static void menuUser (String [] arrayadmins,String [] arrayGestores,String [] arrayInversores) {
+        int contador=1;
+        System.out.println("Seleccione su usuario:\n");
+        for (int i = 0; i < arrayadmins.length; i++) {
+            if (arrayadmins[i]==null) System.out.println(contador + ".Usuario no registrado");
+            else  System.out.println(contador+ "." +arrayadmins[i]);
 
-    public static void menuUser () {
-        System.out.println("Seleccione su usuario:\n0. Registro\n1. Administrador.\n2. Gestor.\n3. Inversor1.\n4. Inversor2\n5. Salir");
+            contador++;
+        }
+        for (int i = 0; i < arrayGestores.length; i++) {
+            if (arrayGestores[i]==null) System.out.println(contador + ".Usuario no registrado");
+            else System.out.println(contador+ "." +arrayGestores[i]);
+
+            contador++;
+        }
+        for (int i = 0; i < arrayInversores.length; i++) {
+            if (arrayInversores[i]==null) System.out.println(contador +".Usuario no registrado");
+            else System.out.println(contador+ "." +arrayInversores[i]);
+            contador++;
+        }
+
     }
     public static void menuProyectosGestor(){
         System.out.println("Seleccione que desea realizar con los proyectos: \n1. Mostrar proyectos creados.\n2. Crear nuevo proyecto.\n3. Configuración.\n4. Salir");
