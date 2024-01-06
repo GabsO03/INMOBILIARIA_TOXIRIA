@@ -170,40 +170,19 @@ public class Login {
                 return false;
             }
         }
-        if (user.equals("inversor2")){
-            String codigoString=String.valueOf(codigoRandom);
-            String destinatario="inversor2inmobiliaria@yopmail.com";
-            String asunto="Código de verificación inmobiliaria";
-            String cuerpo="Su código de verificación es: "+codigoString+"\nNo comparta este código con nadie";
-            enviarCorreo(destinatario,asunto,cuerpo);
-
-            System.out.println("Escriba su código de verificación que se le ha enviado al correo electrónico: ");
-            String codigo=leerOpcionLiteral();
-            if (codigo.equals(codigoString)) {
-                System.out.println("Código correcto.");
-                return true;
-            }
-            else{
-                System.out.println("Error, código no valido.");
-                return false;
-            }
-        }else return false;
-
-
+        return false;
     }
 
     /**
      * Función que utiliza las otras funciones de login para acceder al sistema. Esta se usa en el main
-     * @author Gabriela Oria Pinto
+     * @author Gabriela Oria Pinto, Adrián Contreras Bueno y Alex Godino Bailen
      * @param opcion1 como entero
-     * @param adminUser como cadena
-     * @param adminPass como cadena
-     * @param gestorUser como cadena
-     * @param gestorPass como cadena
-     * @param inversor1User como cadena
-     * @param inversor1Pass como cadena
-     * @param inversor2User como cadena
-     * @param inversor2Pass como cadena
+     * @param adminUsers como array de cadena
+     * @param gestorUsers como array de cadena
+     * @param inversorUsers como array de cadena
+     * @param adminPass como array de cadena
+     * @param gestorpass como array de cadena
+     * @param inversorpass como array de cadena
      * @return true si ha conseguido entrar al sistema
      */
 
@@ -213,16 +192,12 @@ public class Login {
                 if (loginAdmin(adminUsers[opcion1-1], adminPass[opcion1-1])) return true;
                 break;
             }
-            case 2 : {
-                if (loginGestor(gestorUser, gestorPass)) return true;
+            case 3,4,5,6 : {
+                if (loginGestor(gestorUsers,gestorUsers[opcion1-3], gestorpass[opcion1-3], arraycorreosGestor)) return true;
                 break;
             }
-            case 3 : {
-                if (loginInversor(inversor1User, inversor1Pass)) return true;
-                break;
-            }
-            case 4: {
-                if (loginInversor(inversor2User, inversor2Pass)) return true;
+            case 7,8,9,10 : {
+                if (loginInversor(inversorUsers,inversorUsers[opcion1-5], inversorpass[opcion1-5], arraycorreosInversor)) return true;
                 break;
             }
         }
