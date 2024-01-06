@@ -83,7 +83,14 @@ public class Login {
      * @param pass como cadena
      * @return true si ha conseguido entrar al sistema o false si no ha conseguido entrar al sistema porque su usuario ha sido bloqueado
      */
-    public static boolean loginGestor (String user, String pass) {
+    public static boolean loginGestor (String[]todosUsuarios ,String user, String pass,String[] arraycorreos) {
+        int indiceParaCorreo=0;
+        for (int i = 0; i < todosUsuarios.length; i++) {
+            if (todosUsuarios[i].equals(user)){
+                indiceParaCorreo=i;
+                break;
+            }
+        }
         int intentos = 3;
         while (intentos > 0 && !(verification(user, pass))) {
             intentos--;
@@ -97,7 +104,7 @@ public class Login {
         System.out.println("Se va a enviar un código de verificacion a tu correo electronico, un momento...");
         int codigoRandom = (int) (Math.random()*9999)+1000;
         String codigoString=String.valueOf(codigoRandom);
-        String destinatario="gestorinmobiliaria@yopmail.com";
+        String destinatario=arraycorreos[indiceParaCorreo];
         String asunto="Código de verificación inmobiliaria";
         String cuerpo="Su código de verificación es: "+codigoString+"\nNo comparta este código con nadie";
         enviarCorreo(destinatario,asunto,cuerpo);
@@ -124,7 +131,15 @@ public class Login {
      * @return true si ha conseguido entrar al sistema o false si no ha conseguido entrar al sistema porque su usuario ha sido bloqueado
      */
 
-    public static boolean loginInversor(String user, String pass) {
+    public static boolean loginInversor(String[]todosUsuarios ,String user, String pass, String[] arraycorreos) {
+        int indiceParaCorreo=0;
+        for (int i = 0; i < todosUsuarios.length; i++) {
+            if (todosUsuarios[i].equals(user)){
+                indiceParaCorreo=i;
+                break;
+            }
+        }
+
         int intentos = 3;
         while (intentos > 0 && !(verification(user, pass))) {
             intentos--;
@@ -139,7 +154,7 @@ public class Login {
         int codigoRandom = (int) (Math.random()*9999)+1000;
         if (user.equals("inversor1")){
             String codigoString=String.valueOf(codigoRandom);
-            String destinatario="inversor1inmobiliaria@yopmail.com";
+            String destinatario=arraycorreos[indiceParaCorreo];
             String asunto="Código de verificación inmobiliaria";
             String cuerpo="Su código de verificación es: "+codigoString+"\nNo comparta este código con nadie";
             enviarCorreo(destinatario,asunto,cuerpo);
@@ -192,10 +207,10 @@ public class Login {
      * @return true si ha conseguido entrar al sistema
      */
 
-    public static boolean logged (int opcion1, String adminUser, String adminPass,  String gestorUser, String gestorPass,  String inversor1User, String inversor1Pass,  String inversor2User, String inversor2Pass) {
+    public static boolean logged (int opcion1,String[] adminUsers,String[] gestorUsers,String[] inversorUsers,String[] adminPass,String[] gestorpass,String[] inversorpass,String[] arraycorreosGestor,String[] arraycorreosInversor) {
         switch (opcion1) {
-            case 1 : {
-                if (loginAdmin(adminUser, adminPass)) return true;
+            case 1,2 : {
+                if (loginAdmin(adminUsers[opcion1-1], adminPass[opcion1-1])) return true;
                 break;
             }
             case 2 : {

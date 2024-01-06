@@ -17,6 +17,7 @@ import static Biblioteca.Menus.menuModificarProyecto;
 import static Biblioteca.Menus.menuInversor;
 import static Biblioteca.Menus.menuConfiguracion;
 import static Biblioteca.Menus.menuInversiones;
+import static Biblioteca.Menus.menuInicio;
 
 
 import static Biblioteca.Inversiones.mostrarInversionEnProyecto;
@@ -86,18 +87,19 @@ public class Inmobiliaria_toxiria {
     public static void main(String[] args) {
         //USUARIOS
         String userAdmin="admin",passAdmin="admin",userGestor="gestor",passGestor="gestor",userInversor1="inversor1"
-                ,passInversor1="inversor1",userInversor2="inversor2",passInversor2="inversor2";
+                ,passInversor1="inversor1";
         //NEW ADD t04
         int cantidadAdmins = 2, cantidadGestores = 4, cantidadInversores = 4;
         String[] adminsUsers = new String[cantidadAdmins];   String[] adminsPass = new String[cantidadAdmins];
-        String[] gestorUsers = new String[cantidadGestores];   String[] gestorPass = new String[cantidadGestores];
-        String[] inversorUsers = new String[cantidadInversores];   String[] inversorPass = new String[cantidadInversores];
+        String[] gestorUsers = new String[cantidadGestores];   String[] gestorPass = new String[cantidadGestores]; String[] gestorMail= new String[cantidadGestores];
+        String[] inversorUsers = new String[cantidadInversores];   String[] inversorPass = new String[cantidadInversores];String[] inversorMail= new String[cantidadInversores];
 
         //Usuarios que ya existen jejeje
         adminsUsers[0]="admin";         adminsPass[0]="admin";
         adminsUsers[1]="admin2";         adminsPass[0]="admin";
-        gestorUsers[0]="gestor";        gestorPass[0]="gestor";
-        inversorUsers[0]="inversor1";   inversorPass[0]="inversor1";
+        gestorUsers[0]="gestor";        gestorPass[0]="gestor"; gestorMail[0]="gestorinmobiliaria@yopmail.com";
+        inversorUsers[0]="inversor1";   inversorPass[0]="inversor1"; inversorMail[0]="inversorinmobiliaria@yopmail.com";
+
 
         //BLOQUEOS
         boolean gestorBloqueado=false,inversor1Bloqueado=false,inversor2Bloqueado=false;
@@ -139,12 +141,17 @@ public class Inmobiliaria_toxiria {
         boolean[][] invirtioInvesorEnProyecto = new boolean[10][20];
 
         //Menus
-        int seleccionTipoUsuario,codigoUsuario;
+        int seleccionTipoUsuario,seleccionInicial,codigoUsuario;
         int primerSubmenu,segundoSubmenu,tercersubmenu, contadorProyectos = 0;
         for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i]!=null) contadorProyectos++;
         //REGISTRO
         String nombreNuevoUsuario, correoNuevoUsuario,passNuevoUsuario,tipoNuevoUsuario;
         boolean registroCorrecto=false;
+        int contadorInversores=1;
+        int contadorGestores=1;
+        int contadorCorreosGestor=1;
+        int contadorCorreosInversor=1;
+
 
         do {
             menuUser();
