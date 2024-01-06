@@ -28,7 +28,7 @@ import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 import static Biblioteca.Lectura_De_Datos.leerOpcionNumerica;
 
 //LOGIN
-import static Biblioteca.Login.logged;
+import static Biblioteca.Login.login;
 
 //PROYECTOS
 import static Biblioteca.Proyectos.mostrarProyectosAdmin;
@@ -95,10 +95,32 @@ public class Inmobiliaria_toxiria {
         String[] inversorUsers = new String[cantidadInversores];   String[] inversorPass = new String[cantidadInversores];String[] inversorMail= new String[cantidadInversores];
 
         //Usuarios que ya existen jejeje
-        adminsUsers[0]="admin";         adminsPass[0]="admin";
-        adminsUsers[1]="admin2";         adminsPass[0]="admin";
-        gestorUsers[0]="gestor";        gestorPass[0]="gestor"; gestorMail[0]="gestorinmobiliaria@yopmail.com";
-        inversorUsers[0]="inversor1";   inversorPass[0]="inversor1"; inversorMail[0]="inversorinmobiliaria@yopmail.com";
+        String[][] datosAdmins = new String[5][cantidadAdmins];
+        String[][] datosGestores = new String[5][cantidadGestores];
+        String[][] datosInversores = new String[5][cantidadInversores];
+
+        datosAdmins[0][0]= "Adrian";
+        datosAdmins[0][1]= "Eladio";
+        datosAdmins[1][0]= "adrianCb";
+        datosAdmins[1][1]= "eladioBl";
+        datosAdmins[2][0]= "5565sf6d$";
+        datosAdmins[2][1]= "hjdsfn74";
+
+        datosGestores[0][0]= "Gabriel";
+        datosGestores[0][1]= "Alex";
+        datosGestores[1][0]= "gabOp";
+        datosGestores[1][1]= "alexGb";
+        datosGestores[2][0]= "ncfv55&%%";
+        datosGestores[2][1]= "ghvh8858";
+
+        datosInversores[0][0]= "Alejandro";
+        datosInversores[0][1]= "Jesús";
+        datosInversores[1][0]= "aloOp";
+        datosInversores[1][1]= "jesusMm";
+        datosInversores[2][0]= "jbhk5&84";
+        datosInversores[2][1]= "fx55fxh$43";
+        datosInversores[3][0]= "inversor1inmobiliaria@yopmail.com";
+        datosInversores[3][1]= "inversor2inmobiliaria@yopmail.com";
 
 
         //BLOQUEOS
@@ -183,7 +205,6 @@ public class Inmobiliaria_toxiria {
                         if (codigoEnviado == codigoUsuario) {
                             System.out.println("Usuario registrado correctamente");
                             if (tipoNuevoUsuario.equalsIgnoreCase("G")){
-
                                 gestorMail[contadorCorreosGestor]=correoNuevoUsuario;
                                 gestorUsers[contadorGestores]=nombreNuevoUsuario;
                                 gestorPass[contadorGestores]=passNuevoUsuario;
@@ -210,7 +231,7 @@ public class Inmobiliaria_toxiria {
                     menuUser(adminsUsers,gestorUsers,inversorUsers);
                     seleccionTipoUsuario = leerOpcionNumerica();
                     boolean entry;
-                    entry = logged(seleccionTipoUsuario, adminsUsers, gestorUsers, inversorUsers, adminsPass, gestorPass, inversorPass,gestorMail,inversorMail);
+                    entry = login(seleccionTipoUsuario, datosAdmins, datosGestores, datosInversores);
 
 
                     //ADMINISTRADOR
