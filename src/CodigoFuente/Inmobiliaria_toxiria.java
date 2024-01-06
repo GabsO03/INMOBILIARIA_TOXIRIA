@@ -1,6 +1,7 @@
 package CodigoFuente;
 
 
+import java.rmi.MarshalException;
 import java.util.Arrays;
 //COLORES
 import static Biblioteca.Colores.RED;
@@ -8,6 +9,7 @@ import static Biblioteca.Colores.GREEN;
 import static Biblioteca.Colores.RESET;
 
 //MENUS
+import static Biblioteca.Login.enviarCorreo;
 import static Biblioteca.Menus.menuUser;
 import static Biblioteca.Menus.menuProyectosGestor;
 import static Biblioteca.Menus.menuAdministrador;
@@ -15,6 +17,7 @@ import static Biblioteca.Menus.menuModificarProyecto;
 import static Biblioteca.Menus.menuInversor;
 import static Biblioteca.Menus.menuConfiguracion;
 import static Biblioteca.Menus.menuInversiones;
+
 
 import static Biblioteca.Inversiones.mostrarInversionEnProyecto;
 import static Biblioteca.Inversiones.mostrarCantidades;
@@ -88,13 +91,13 @@ public class Inmobiliaria_toxiria {
         int cantidadAdmins = 2, cantidadGestores = 4, cantidadInversores = 4;
         String[] adminsUsers = new String[cantidadAdmins];   String[] adminsPass = new String[cantidadAdmins];
         String[] gestorUsers = new String[cantidadGestores];   String[] gestorPass = new String[cantidadGestores];
-        String[] inversorUsers = new String[cantidadInversores];   String[] inversorsPass = new String[cantidadInversores];
+        String[] inversorUsers = new String[cantidadInversores];   String[] inversorPass = new String[cantidadInversores];
 
         //Usuarios que ya existen jejeje
         adminsUsers[0]="admin";         adminsPass[0]="admin";
         adminsUsers[1]="admin2";         adminsPass[0]="admin";
         gestorUsers[0]="gestor";        gestorPass[0]="gestor";
-        inversorUsers[0]="inversor1";   inversorsPass[0]="inversor1";
+        inversorUsers[0]="inversor1";   inversorPass[0]="inversor1";
 
         //BLOQUEOS
         boolean gestorBloqueado=false,inversor1Bloqueado=false,inversor2Bloqueado=false;
@@ -136,16 +139,55 @@ public class Inmobiliaria_toxiria {
         boolean[][] invirtioInvesorEnProyecto = new boolean[10][20];
 
         //Menus
-        int seleccionTipoUsuario;
+        int seleccionTipoUsuario,codigoUsuario;
         int primerSubmenu,segundoSubmenu,tercersubmenu, contadorProyectos = 0;
         for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i]!=null) contadorProyectos++;
+        //REGISTRO
+        String nombreNuevoUsuario, correoNuevoUsuario,passNuevoUsuario,tipoNuevoUsuario;
+        boolean registroCorrecto=false;
 
         do {
             menuUser();
             seleccionTipoUsuario = leerOpcionNumerica();
             boolean entry;
             entry=logged(seleccionTipoUsuario, userAdmin, passAdmin,  userGestor, passGestor,  userInversor1, passInversor1,  userInversor2, passInversor2);
+            if (seleccionTipoUsuario==0){
+                do {
+                    int codigoEnviado=(int) (Math.random()*99999)+10000;
+                    do {
+                        System.out.println("Escriba su tipo de usuario (I)Inversor (G)Gestor: ");
+                        tipoNuevoUsuario=leerOpcionLiteral();
+                        if (!tipoNuevoUsuario.equalsIgnoreCase("G")&&!tipoNuevoUsuario.equalsIgnoreCase("I")){
+                            System.out.println("Error, tiene que escribir 'G' o 'I'");
+                        }
+                    }while (!tipoNuevoUsuario.equalsIgnoreCase("G")&&!tipoNuevoUsuario.equalsIgnoreCase("I"));
 
+
+                    System.out.println("Escriba su nombre de usuario: ");
+                    nombreNuevoUsuario=leerOpcionLiteral();
+                    System.out.println("Escriba su contraseña: ");
+                    passNuevoUsuario=leerOpcionLiteral();
+                    //LÓGICA PARA CONTROLAR LA CONTRASEÑA
+
+                    System.out.println("Escriba su correo electrónico:");
+                    correoNuevoUsuario=leerOpcionLiteral();
+                    System.out.println("Se está enviando un correo de verificación para su nuevo usuario...");
+                    enviarCorreo(correoNuevoUsuario,"Correo de verificación","Su código de verificación es:"+codigoEnviado);
+                    System.out.println("Correo enviado, escriba su código de verificación: ");
+                    codigoUsuario=leerOpcionNumerica();
+                    if (codigoEnviado==codigoUsuario){
+                        System.out.println("Usuario registrado correctamente");
+                        //METER EN EL ARRAY EL NUEVO USUARIO
+                        registroCorrecto=true;
+                    }
+                    else System.out.println("El código no es correcto, vuelve a intentarlo: \n");
+                }while (!registroCorrecto);
+
+
+
+
+
+            }
 
             //ADMINISTRADOR
 
