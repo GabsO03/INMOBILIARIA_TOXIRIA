@@ -21,6 +21,7 @@ import static Biblioteca.Lectura_De_Datos.leerOpcionNumerica;
 import static Biblioteca.AccountSettings.login;
 import static Biblioteca.AccountSettings.modificarCuenta;
 import static Biblioteca.AccountSettings.entry;
+import static Biblioteca.funcionesCadenas.comprobarFortalezaPass;
 
 //PROYECTOS
 import static Biblioteca.Menus.*;
@@ -66,6 +67,8 @@ public class Inmobiliaria_toxiria {
         datosGestores[1][1]= "alexGb";
         datosGestores[2][0]= "ncfv55&%%";
         datosGestores[2][1]= "ghvh8858";
+        datosGestores[3][0]="gestorinmobiliaria@yopmail.com";
+        datosGestores[3][1]="gestor2inmobiliaria@yopmail.com";
 
         datosInversores[0][0]= "Alejandro";
         datosInversores[0][1]= "Jesús";
@@ -124,7 +127,7 @@ public class Inmobiliaria_toxiria {
         int primerSubmenu,segundoSubmenu,tercersubmenu, contadorProyectos = 0;
         for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i]!=null) contadorProyectos++;
         //REGISTRO
-        String nombreNuevoUsuario, correoNuevoUsuario,passNuevoUsuario,tipoNuevoUsuario;
+        String nombreNuevoUsuario, correoNuevoUsuario,passNuevoUsuario,passRepetidaNuevoUsuario,tipoNuevoUsuario;
         boolean registroCorrecto=false;
 
 
@@ -132,60 +135,66 @@ public class Inmobiliaria_toxiria {
             menuInicio();
             seleccionInicial=leerOpcionNumerica();
             if (seleccionInicial==1){
+                do {
+                    int codigoEnviado = (int) (Math.random() * 99999) + 10000;
                     do {
-                        int codigoEnviado = (int) (Math.random() * 99999) + 10000;
+                        System.out.println("Escriba su tipo de usuario (I)Inversor (G)Gestor: ");
+                        tipoNuevoUsuario = leerOpcionLiteral();
+                        if (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I")) {
+                            System.out.println("Error, tiene que escribir 'G' o 'I'");
+                        }
+                    } while (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"));
+
+                    int pos = 0;
+                    boolean hayPlaza = false;
+                    if (tipoNuevoUsuario.equalsIgnoreCase("G")){
+                        while (pos < datosGestores[0].length && !hayPlaza) {
+                            if (datosGestores[0][pos] == null) hayPlaza = true;
+                            else pos++;
+                        }
+                    }
+                    else {
+                        while (pos < datosInversores[0].length && !hayPlaza) {
+                            if (datosInversores[0][pos] == null) hayPlaza = true;
+                            else pos++;
+                        }
+                    }
+
+                    if (hayPlaza){
+                        System.out.println("Escriba su nombre de usuario: ");
+                        nombreNuevoUsuario = leerOpcionLiteral();
                         do {
-                            System.out.println("Escriba su tipo de usuario (I)Inversor (G)Gestor: ");
-                            tipoNuevoUsuario = leerOpcionLiteral();
-                            if (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I")) {
-                                System.out.println("Error, tiene que escribir 'G' o 'I'");
-                            }
-                        } while (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"));
-
-                        int pos = 0;
-                        boolean hayPlaza = false;
-                        if (tipoNuevoUsuario.equalsIgnoreCase("G")){
-                            while (pos < datosGestores[0].length && !hayPlaza) {
-                                if (datosGestores[0][pos] == null) hayPlaza = true;
-                                else pos++;
-                            }
-                        }
-                        else {
-                            while (pos < datosInversores[0].length && !hayPlaza) {
-                                if (datosInversores[0][pos] == null) hayPlaza = true;
-                                else pos++;
-                            }
-                        }
-
-                        if (hayPlaza){
-                            System.out.println("Escriba su nombre de usuario: ");
-                            nombreNuevoUsuario = leerOpcionLiteral();
                             System.out.println("Escriba su contraseña: ");
                             passNuevoUsuario = leerOpcionLiteral();
-                            //LÓGICA PARA CONTROLAR LA CONTRASEÑA
+                        }while(!comprobarFortalezaPass(passNuevoUsuario));
+                        do {
+                            System.out.println("Escriba su contraseña de nuevo: ");
+                            passRepetidaNuevoUsuario = leerOpcionLiteral();
+                            if (!passNuevoUsuario.equals(passRepetidaNuevoUsuario)) System.out.println("Las contraseñas no coinciden");
+                        }while(!passRepetidaNuevoUsuario.equals(passNuevoUsuario));
 
-                            System.out.println("Escriba su correo electrónico:");
-                            correoNuevoUsuario = leerOpcionLiteral();
-                            System.out.println("Se está enviando un correo de verificación para su nuevo usuario...");
-                            enviarCorreo(correoNuevoUsuario, "Correo de verificación", "Su código de verificación es:" + codigoEnviado);
-                            System.out.println("Correo enviado, escriba su código de verificación: ");
-                            codigoUsuario = leerOpcionNumerica();
-                            if (codigoEnviado == codigoUsuario) {
-                                System.out.println("Usuario registrado correctamente");
-                                if (tipoNuevoUsuario.equalsIgnoreCase("G")) {
-                                    datosGestores[1][pos] = nombreNuevoUsuario;
-                                    datosGestores[2][pos] = passNuevoUsuario;
-                                    datosGestores[3][pos] = correoNuevoUsuario;
-                                }
-                                if (tipoNuevoUsuario.equalsIgnoreCase("I")) {
-                                    datosInversores[1][pos] = nombreNuevoUsuario;
-                                    datosInversores[2][pos] = passNuevoUsuario;
-                                    datosInversores[3][pos] = correoNuevoUsuario;
-                                }
-                                registroCorrecto = true;
-                            } else System.out.println("El código no es correcto, vuelve a intentarlo: \n");
-                        } else System.out.println("ERROR: CANTIDAD DE USUARIO DE ESTE TIPO EXCEDIDA");
-                    } while (!registroCorrecto);
+                        System.out.println("Escriba su correo electrónico:");
+                        correoNuevoUsuario = leerOpcionLiteral();
+                        System.out.println("Se está enviando un correo de verificación para su nuevo usuario...");
+                        enviarCorreo(correoNuevoUsuario, "Correo de verificación", "Su código de verificación es:" + codigoEnviado);
+                        System.out.println("Correo enviado, escriba su código de verificación: ");
+                        codigoUsuario = leerOpcionNumerica();
+                        if (codigoEnviado == codigoUsuario) {
+                            System.out.println("Usuario registrado correctamente");
+                            if (tipoNuevoUsuario.equalsIgnoreCase("G")) {
+                                datosGestores[1][pos] = nombreNuevoUsuario;
+                                datosGestores[2][pos] = passNuevoUsuario;
+                                datosGestores[3][pos] = correoNuevoUsuario;
+                            }
+                            if (tipoNuevoUsuario.equalsIgnoreCase("I")) {
+                                datosInversores[1][pos] = nombreNuevoUsuario;
+                                datosInversores[2][pos] = passNuevoUsuario;
+                                datosInversores[3][pos] = correoNuevoUsuario;
+                            }
+                            registroCorrecto = true;
+                        } else System.out.println("El código no es correcto, vuelve a intentarlo: \n");
+                    } else System.out.println("ERROR: CANTIDAD DE USUARIO DE ESTE TIPO EXCEDIDA");
+                } while (!registroCorrecto);
 
 
 
