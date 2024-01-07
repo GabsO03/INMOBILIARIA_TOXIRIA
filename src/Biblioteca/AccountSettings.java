@@ -9,10 +9,13 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
+import static Biblioteca.Lectura_De_Datos.leerOpcionNumerica;
+import static Biblioteca.Menus.menuConfiguracion;
 
 
-public class Login {
+public class AccountSettings {
 
+    /* ----------------------------------------------------Login----------------------------------------------------- */
     /**
      * Enviamos el correo a la dirección del destinatario con el asunto y cuerpo que deseemos
      * @author Adrián Contreras Bueno
@@ -64,8 +67,7 @@ public class Login {
 
         System.out.println("Escriba su código de verificación que se le ha enviado al correo electrónico: ");
         String codigo=leerOpcionLiteral();
-        if (codigo.equals(codigoString)) return true;
-        else return false;
+        return codigo.equals(codigoString);
 
     }
 
@@ -74,13 +76,16 @@ public class Login {
      * @author Gabriela Oria Pinto
      * @return true si ha conseguido entrar al sistema
      */
-    public static boolean loginAdmin (String[][] datosAdmins) {
+
+
+    public static int loginAdmin (String[][] datosAdmins) {
         boolean correcto = false, userFound = false;
-        int i = 0;
+        int i;
         do {
+            i = 0;
             System.out.println("Usuario");
             String usuarioAdmin = leerOpcionLiteral();
-            System.out.println("Contra");
+            System.out.println("Contraseña");
             String contraAdmin = leerOpcionLiteral();
             while (!userFound && i < datosAdmins[0].length) {
                 if (usuarioAdmin.equals(datosAdmins[1][i])) userFound=true;
@@ -92,7 +97,7 @@ public class Login {
             }
             else System.out.println("Usuario o contraseña incorrectos, vuelva a intentarlo.");
         } while (!correcto);
-        return true;
+        return i;
     }
 
     /**
@@ -100,14 +105,14 @@ public class Login {
      * @author Gabriela Oria Pinto
      * @return true si ha conseguido entrar al sistema o false si no ha conseguido entrar al sistema porque su usuario ha sido bloqueado
      */
-    public static boolean loginNoAdmin (String[][] datosNoAdmins) {
+    public static int loginNoAdmin (String[][] datosNoAdmins, boolean[] usuariosBloqueados) {
         boolean correcto = false, userFound = false;
         int i = 0, intentos = 3;
         do {
             intentos--;
             System.out.println("Usuario");
             String usuarioAdmin = leerOpcionLiteral();
-            System.out.println("Contra");
+            System.out.println("Contraseña");
             String contraAdmin = leerOpcionLiteral();
             while (!userFound && i < datosNoAdmins[0].length) {
                 if (usuarioAdmin.equals(datosNoAdmins[1][i])) userFound=true;
@@ -121,11 +126,11 @@ public class Login {
             else System.out.println("Usuario o contraseña incorrectos, le quedan " + intentos + " intentos.");
             if (intentos==0) {
                 System.out.println("Acceso denegado, tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
-                return false;
+                usuariosBloqueados[i] = true;
+                return -1;
             }
-
         } while (!correcto && intentos > 0);
-        return true;
+        return i;
     }
     /**
      * Función que utiliza las otras funciones de login para acceder al sistema. Esta se usa en el main
@@ -133,12 +138,64 @@ public class Login {
      * @return true si ha conseguido entrar al sistema
      */
 
-    public static boolean login(int tipo, String[][] datosAdmin, String[][] datosGestores, String[][] datosInversores) {
+    public static int login(int tipo, String[][] datosAdmin, String[][] datosGestores, String[][] datosInversores, boolean[] inversoresBloqueados, boolean[] gestoresBloqueados) {
         return switch (tipo) {
             case 1 -> loginAdmin(datosAdmin);
-            case 2 -> loginNoAdmin(datosGestores);
-            case 3 -> loginNoAdmin(datosInversores);
+            case 2 -> loginNoAdmin(datosGestores, gestoresBloqueados);
+            case 3 -> loginNoAdmin(datosInversores, inversoresBloqueados);
             default -> throw new IllegalStateException("Unexpected value: " + tipo);
         };
     }
+    public static boolean entry (int tipoUsuario, int posicion, int cantidadGestores, int cantidadInversore) {
+        return switch (tipoUsuario) {
+            case 2 -> posicion >= 0 && posicion < cantidadGestores;
+            case 3 -> posicion >= 0 && posicion < cantidadInversore;
+            default -> true;
+        };
+    }
+
+
+    /* ----------------------------------------------------Change----------------------------------------------------- */
+
+    public static int posicionUsuario (String[][] datosAdmins) {
+        boolean correcto = false, userFound = false;
+        int i = 0;
+        do {
+            System.out.println("Introduzca su usuario y contraseña actuales.");
+            System.out.println("Usuario");
+            String usuarioAdmin = leerOpcionLiteral();
+            System.out.println("Contraseña");
+            String contraAdmin = leerOpcionLiteral();
+            while (!userFound && i < datosAdmins[0].length) {
+                if (usuarioAdmin.equals(datosAdmins[1][i])) userFound=true;
+                else i++;
+            }
+            if (userFound&&(contraAdmin.equals(datosAdmins[2][i]))) {
+                correcto=true;
+            }
+            else System.out.println("Usuario o contraseña incorrectos, vuelva a intentarlo.");
+        } while (!correcto);
+        return i;
+    }
+    public static String cambiarUsuario (){
+        System.out.println("Escriba el nuevo usuario");
+        return leerOpcionLiteral();
+    }
+    public static String cambiarcontrasenia (){
+        System.out.println("Escriba la nueva contraseña");
+        return leerOpcionLiteral();
+    }
+    public static void modificarCuenta (String[][] datosUsuario){
+        int pos = posicionUsuario(datosUsuario), opcion;
+        do {
+            menuConfiguracion();
+            opcion = leerOpcionNumerica();
+            switch (opcion) {
+                case 1 -> datosUsuario[1][pos] = cambiarUsuario();
+                case 2 -> datosUsuario[2][pos] = cambiarcontrasenia();
+            }
+        } while (opcion!=3);
+    }
+
+
 }

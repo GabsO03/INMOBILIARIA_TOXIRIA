@@ -1,23 +1,13 @@
 package CodigoFuente;
 
 
-import java.rmi.MarshalException;
-import java.util.Arrays;
 //COLORES
 import static Biblioteca.Colores.RED;
 import static Biblioteca.Colores.GREEN;
 import static Biblioteca.Colores.RESET;
 
 //MENUS
-import static Biblioteca.Login.enviarCorreo;
-import static Biblioteca.Menus.menuUser;
-import static Biblioteca.Menus.menuProyectosGestor;
-import static Biblioteca.Menus.menuAdministrador;
-import static Biblioteca.Menus.menuModificarProyecto;
-import static Biblioteca.Menus.menuInversor;
-import static Biblioteca.Menus.menuConfiguracion;
-import static Biblioteca.Menus.menuInversiones;
-import static Biblioteca.Menus.menuInicio;
+import static Biblioteca.AccountSettings.enviarCorreo;
 
 
 import static Biblioteca.Inversiones.mostrarInversionEnProyecto;
@@ -28,9 +18,12 @@ import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 import static Biblioteca.Lectura_De_Datos.leerOpcionNumerica;
 
 //LOGIN
-import static Biblioteca.Login.login;
+import static Biblioteca.AccountSettings.login;
+import static Biblioteca.AccountSettings.modificarCuenta;
+import static Biblioteca.AccountSettings.entry;
 
 //PROYECTOS
+import static Biblioteca.Menus.*;
 import static Biblioteca.Proyectos.mostrarProyectosAdmin;
 import static Biblioteca.Proyectos.mostrarProyectosNoAdmin;
 import static Biblioteca.Proyectos.cambiarDescripcionProyecto;
@@ -50,52 +43,13 @@ import static Biblioteca.Proyectos.crearCNecesariaProyecto;
 import static Biblioteca.Proyectos.proyectosDetallados;
 
 public class Inmobiliaria_toxiria {
-    public static void panelControlAdmin(boolean gestorBloqueado,boolean inversor1Bloqueado,boolean inversor2Bloqueado){
-        String gestorBloqueadoCadena="",inversor1BloqueadoCadena="", inversor2BloqueadoCadena="";
-        if (gestorBloqueado) gestorBloqueadoCadena="Bloqueado";
-        if (inversor1Bloqueado) inversor1BloqueadoCadena="Bloqueado";
-        if (inversor2Bloqueado) inversor2BloqueadoCadena="Bloqueado";
-        System.out.println("Menú del panel de control de usuarios, estos son los usuarios del sistema:");
-        System.out.println("Seleccione cuál quiere bloquear/desbloquear");
-        System.out.printf("1.gestor %s\n2.inversor1 %s\n3.inversor2 %s\n4.Salir\n",gestorBloqueadoCadena,inversor1BloqueadoCadena,inversor2BloqueadoCadena);
-    }
-
-
-    public static String cambiarUsuario(String usuarioAntiguoEnviado){
-        String usuarioActual,nuevoUsuario;
-        System.out.println("Escriba su usuario actual");
-        usuarioActual=leerOpcionLiteral();
-        if (usuarioActual.equals(usuarioAntiguoEnviado)){
-            System.out.println("Escriba el nuevo usuario");
-            nuevoUsuario=leerOpcionLiteral();
-            return nuevoUsuario;
-        }else System.out.println("El usuario actual no es correcto, vuelva a intentarlo");
-        return usuarioAntiguoEnviado;
-    }
-    public static String cambiarcontrasenia(String contraseniaAntiguaEnviado){
-        String contraseniaActual,nuevaContrasenia;
-        System.out.println("Escriba la contraseña actual");
-        contraseniaActual=leerOpcionLiteral();
-        if (contraseniaActual.equals(contraseniaAntiguaEnviado)){
-            System.out.println("Escriba la nueva contraseña");
-            nuevaContrasenia=leerOpcionLiteral();
-            return nuevaContrasenia;
-        }else System.out.println("La contraseña actual no es correcta, vuelva a intentarlo");
-        return contraseniaAntiguaEnviado;
-    }
 
     public static void main(String[] args) {
         //USUARIOS
-        String userAdmin="admin",passAdmin="admin",userGestor="gestor",passGestor="gestor",userInversor1="inversor1"
-                ,passInversor1="inversor1";
-        //NEW ADD t04
         int cantidadAdmins = 2, cantidadGestores = 4, cantidadInversores = 4;
-        String[] adminsUsers = new String[cantidadAdmins];   String[] adminsPass = new String[cantidadAdmins];
-        String[] gestorUsers = new String[cantidadGestores];   String[] gestorPass = new String[cantidadGestores]; String[] gestorMail= new String[cantidadGestores];
-        String[] inversorUsers = new String[cantidadInversores];   String[] inversorPass = new String[cantidadInversores];String[] inversorMail= new String[cantidadInversores];
 
         //Usuarios que ya existen jejeje
-        String[][] datosAdmins = new String[5][cantidadAdmins];
+        String[][] datosAdmins = new String[4][cantidadAdmins];
         String[][] datosGestores = new String[5][cantidadGestores];
         String[][] datosInversores = new String[5][cantidadInversores];
 
@@ -103,7 +57,7 @@ public class Inmobiliaria_toxiria {
         datosAdmins[0][1]= "Eladio";
         datosAdmins[1][0]= "adrianCb";
         datosAdmins[1][1]= "eladioBl";
-        datosAdmins[2][0]= "5565sf6d$";
+        datosAdmins[2][0]= "easyPass";
         datosAdmins[2][1]= "hjdsfn74";
 
         datosGestores[0][0]= "Gabriel";
@@ -124,11 +78,14 @@ public class Inmobiliaria_toxiria {
 
 
         //BLOQUEOS
-        boolean gestorBloqueado=false,inversor1Bloqueado=false,inversor2Bloqueado=false;
+        boolean[] gestoresBloqueados = new boolean[cantidadGestores];
+        boolean[] inversoresBloqueados = new boolean[cantidadInversores];
+        gestoresBloqueados[0] = true;
+        inversoresBloqueados[1] = true;
+
         //PROYECTOS
         boolean[] proyectosHabilitados = new boolean[20];
 
-        //new add t04 array bidim para los proyectos
         int cantidadProyectos = 20;
         String[][] proyectsStringData = new String[5][cantidadProyectos];
         double[][] proyectsFinantialData = new double[2][cantidadProyectos];
@@ -169,10 +126,6 @@ public class Inmobiliaria_toxiria {
         //REGISTRO
         String nombreNuevoUsuario, correoNuevoUsuario,passNuevoUsuario,tipoNuevoUsuario;
         boolean registroCorrecto=false;
-        int contadorInversores=1;
-        int contadorGestores=1;
-        int contadorCorreosGestor=1;
-        int contadorCorreosInversor=1;
 
 
         do {
@@ -189,37 +142,49 @@ public class Inmobiliaria_toxiria {
                             }
                         } while (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"));
 
-
-                        System.out.println("Escriba su nombre de usuario: ");
-                        nombreNuevoUsuario = leerOpcionLiteral();
-                        System.out.println("Escriba su contraseña: ");
-                        passNuevoUsuario = leerOpcionLiteral();
-                        //LÓGICA PARA CONTROLAR LA CONTRASEÑA
-
-                        System.out.println("Escriba su correo electrónico:");
-                        correoNuevoUsuario = leerOpcionLiteral();
-                        System.out.println("Se está enviando un correo de verificación para su nuevo usuario...");
-                        enviarCorreo(correoNuevoUsuario, "Correo de verificación", "Su código de verificación es:" + codigoEnviado);
-                        System.out.println("Correo enviado, escriba su código de verificación: ");
-                        codigoUsuario = leerOpcionNumerica();
-                        if (codigoEnviado == codigoUsuario) {
-                            System.out.println("Usuario registrado correctamente");
-                            if (tipoNuevoUsuario.equalsIgnoreCase("G")){
-                                gestorMail[contadorCorreosGestor]=correoNuevoUsuario;
-                                gestorUsers[contadorGestores]=nombreNuevoUsuario;
-                                gestorPass[contadorGestores]=passNuevoUsuario;
-                                contadorGestores++;
-                                contadorCorreosGestor++;
+                        int pos = 0;
+                        boolean hayPlaza = false;
+                        if (tipoNuevoUsuario.equalsIgnoreCase("G")){
+                            while (pos < datosGestores[0].length && !hayPlaza) {
+                                if (datosGestores[0][pos] == null) hayPlaza = true;
+                                else pos++;
                             }
-                            if (tipoNuevoUsuario.equalsIgnoreCase("I")){
-                                inversorMail[contadorCorreosInversor]=correoNuevoUsuario;
-                                inversorUsers[contadorInversores]=nombreNuevoUsuario;
-                                inversorPass[contadorInversores]=passNuevoUsuario;
-                                contadorInversores++;
-                                contadorCorreosInversor++;
+                        }
+                        else {
+                            while (pos < datosInversores[0].length && !hayPlaza) {
+                                if (datosInversores[0][pos] == null) hayPlaza = true;
+                                else pos++;
                             }
-                            registroCorrecto = true;
-                        } else System.out.println("El código no es correcto, vuelve a intentarlo: \n");
+                        }
+
+                        if (hayPlaza){
+                            System.out.println("Escriba su nombre de usuario: ");
+                            nombreNuevoUsuario = leerOpcionLiteral();
+                            System.out.println("Escriba su contraseña: ");
+                            passNuevoUsuario = leerOpcionLiteral();
+                            //LÓGICA PARA CONTROLAR LA CONTRASEÑA
+
+                            System.out.println("Escriba su correo electrónico:");
+                            correoNuevoUsuario = leerOpcionLiteral();
+                            System.out.println("Se está enviando un correo de verificación para su nuevo usuario...");
+                            enviarCorreo(correoNuevoUsuario, "Correo de verificación", "Su código de verificación es:" + codigoEnviado);
+                            System.out.println("Correo enviado, escriba su código de verificación: ");
+                            codigoUsuario = leerOpcionNumerica();
+                            if (codigoEnviado == codigoUsuario) {
+                                System.out.println("Usuario registrado correctamente");
+                                if (tipoNuevoUsuario.equalsIgnoreCase("G")) {
+                                    datosGestores[1][pos] = nombreNuevoUsuario;
+                                    datosGestores[2][pos] = passNuevoUsuario;
+                                    datosGestores[3][pos] = correoNuevoUsuario;
+                                }
+                                if (tipoNuevoUsuario.equalsIgnoreCase("I")) {
+                                    datosInversores[1][pos] = nombreNuevoUsuario;
+                                    datosInversores[2][pos] = passNuevoUsuario;
+                                    datosInversores[3][pos] = correoNuevoUsuario;
+                                }
+                                registroCorrecto = true;
+                            } else System.out.println("El código no es correcto, vuelve a intentarlo: \n");
+                        } else System.out.println("ERROR: CANTIDAD DE USUARIO DE ESTE TIPO EXCEDIDA");
                     } while (!registroCorrecto);
 
 
@@ -228,39 +193,19 @@ public class Inmobiliaria_toxiria {
 
             if (seleccionInicial==2){
                 do {
-                    menuUser(adminsUsers,gestorUsers,inversorUsers);
+                    menuUser();
                     seleccionTipoUsuario = leerOpcionNumerica();
-                    boolean entry;
-                    entry = login(seleccionTipoUsuario, datosAdmins, datosGestores, datosInversores);
+                    int posicionAccesoExitoso = login(seleccionTipoUsuario, datosAdmins, datosGestores, datosInversores, gestoresBloqueados, inversoresBloqueados);
+                    boolean entry = entry(seleccionTipoUsuario, posicionAccesoExitoso, cantidadGestores, cantidadInversores);
 
 
                     //ADMINISTRADOR
-
-                    if (seleccionTipoUsuario == 1 || seleccionTipoUsuario == 2) {
+                    if (seleccionTipoUsuario == 1) {
                         do {
                             menuAdministrador();
                             primerSubmenu = leerOpcionNumerica();
                             switch (primerSubmenu) {
-                                case 1 -> {
-                                    do {
-                                        panelControlAdmin(gestorBloqueado, inversor1Bloqueado, inversor2Bloqueado);
-                                        segundoSubmenu = leerOpcionNumerica();
-                                        switch (segundoSubmenu) {
-                                            case 1 -> {
-                                                if (gestorBloqueado) gestorBloqueado = false;
-                                                else gestorBloqueado = true;
-                                            }
-                                            case 2 -> {
-                                                if (inversor1Bloqueado) inversor1Bloqueado = false;
-                                                else inversor1Bloqueado = true;
-                                            }
-                                            case 3 -> {
-                                                if (inversor2Bloqueado) inversor2Bloqueado = false;
-                                                else inversor2Bloqueado = true;
-                                            }
-                                        }
-                                    } while (segundoSubmenu != 4);
-                                }
+                                case 1 ->  panelControlAdmin(datosGestores, datosInversores, gestoresBloqueados, inversoresBloqueados);
                                 case 2 -> {
                                     do {
 
@@ -309,24 +254,14 @@ public class Inmobiliaria_toxiria {
                                             proyectosDetallados(proyectsStringData, proyectsFinantialData);
                                     } while (segundoSubmenu != -1);
                                 }
-                                case 3 -> {
-                                    do {
-                                        menuConfiguracion();
-                                        segundoSubmenu = leerOpcionNumerica();
-                                        switch (segundoSubmenu) {
-                                            case 1 -> userAdmin = cambiarUsuario(userAdmin);
-                                            case 2 -> passAdmin = cambiarcontrasenia(passAdmin);
-                                        }
-                                    } while (segundoSubmenu != 3);
-                                }
+                                case 3 -> modificarCuenta(datosAdmins);
                             }
                         } while (primerSubmenu != 4);
                     }
 
                     // GESTOR
-                    if ((seleccionTipoUsuario == 3 || seleccionTipoUsuario == 4 || seleccionTipoUsuario == 5 || seleccionTipoUsuario == 6) && !gestorBloqueado) {
-                        if (!entry) gestorBloqueado = true;
-                        else {
+                    if ((seleccionTipoUsuario == 2) && entry) {
+                        if (!gestoresBloqueados[posicionAccesoExitoso]) {
                             do {
                                 menuProyectosGestor();
                                 primerSubmenu = leerOpcionNumerica();
@@ -338,8 +273,7 @@ public class Inmobiliaria_toxiria {
                                     }
                                     System.out.println("¿Quieres ver más detalles sobre los proyectos? [S]í | [N]o");
                                     respuesta = leerOpcionLiteral();
-                                    if (respuesta.equalsIgnoreCase("s"))
-                                        proyectosDetallados(proyectsStringData, proyectsFinantialData);
+                                    if (respuesta.equalsIgnoreCase("s")) proyectosDetallados(proyectsStringData, proyectsFinantialData);
 
                                 }
                                 if (primerSubmenu == 2) {
@@ -367,27 +301,15 @@ public class Inmobiliaria_toxiria {
                                     } else System.out.println("Ya no puedes crear más proyectos");
                                 }
 
-                                if (primerSubmenu == 3) {
-                                    do {
-                                        menuConfiguracion();
-                                        segundoSubmenu = leerOpcionNumerica();
-                                        switch (segundoSubmenu) {
-                                            case 1 -> userGestor = cambiarUsuario(userGestor);
-                                            case 2 -> passGestor = cambiarcontrasenia(passGestor);
-                                        }
-
-                                    } while (segundoSubmenu != 3);
-                                }
+                                if (primerSubmenu == 3) modificarCuenta(datosGestores);
                             } while (primerSubmenu != 4);
                         }
 
-                    } else if (gestorBloqueado)
-                        System.out.println("Su usuario está bloqueado, contacte con el administrador del sistema para desbloquearlo");
+                    } else System.out.println("Su usuario está bloqueado, contacte con el administrador del sistema para desbloquearlo");
 
                     //INVERSOR
-                    if ((seleccionTipoUsuario == 7 || seleccionTipoUsuario == 8 || seleccionTipoUsuario == 9 || seleccionTipoUsuario == 10) && !inversor1Bloqueado) {
-                        if (!entry) inversor1Bloqueado = true;
-                        else {
+                    if ((seleccionTipoUsuario == 3) && entry) {
+                        if (!inversoresBloqueados[posicionAccesoExitoso]) {
                             do {
                                 menuInversor();
                                 primerSubmenu = leerOpcionNumerica();
@@ -406,7 +328,7 @@ public class Inmobiliaria_toxiria {
                                         }
                                     }
                                     case 3 -> {
-                                        mostrarProyectosNoAdmin(proyectsStringData, proyectsFinantialData);
+                                        mostrarProyectosNoAdmin(proyectsStringData, proyectsFinantialData, contadorProyectos);
                                         System.out.println(RED + "¿Quieres ver más detalles sobre los proyectos?" + RESET);
                                         respuesta = leerOpcionLiteral();
                                         if (respuesta.equalsIgnoreCase("si")) {
@@ -439,27 +361,14 @@ public class Inmobiliaria_toxiria {
                                         System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
                                         dineroInversores[0] += leerOpcionDouble();
                                     }
-                                    case 5 -> {
-                                        do {
-                                            menuConfiguracion();
-                                            segundoSubmenu = leerOpcionNumerica();
-                                            switch (segundoSubmenu) {
-                                                case 1 -> userInversor1 = cambiarUsuario(userInversor1);
-
-                                                case 2 -> passInversor1 = cambiarcontrasenia(passInversor1);
-                                            }
-
-                                        } while (segundoSubmenu != 3);
-                                    }
+                                    case 5 -> modificarCuenta(datosInversores);
                                 }
                             } while (primerSubmenu != 6);
                         }
 
-                    } else if (inversor1Bloqueado && seleccionTipoUsuario == 3)
-                        System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
+                    } else System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
                 } while (seleccionTipoUsuario != 5);
             }
-
         }while(seleccionInicial!=3);
     }
 }
