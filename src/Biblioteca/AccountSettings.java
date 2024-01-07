@@ -52,9 +52,9 @@ public class AccountSettings {
     }
 
     /**
-     * Nos indica si el usuario y la contraseña que estamos introduciendo son correctos o no
-     * @author Gabriela Oria Pinto
-     * @return true si el usuario y la contraseña son correctos o false si el usuario y la contraseña no son correctos
+     * Función que nos envía al correo el código de verificación que necesitamos para iniciar sesión
+     * @author Adrián Contreras Bueno
+     * @return el código necesario
      */
     public static boolean tokenVerified(String[][] datosNoAdmin, int pos) {
         System.out.println("Se va a enviar un código de verificacion a tu correo electronico, un momento...");
@@ -101,7 +101,7 @@ public class AccountSettings {
     }
 
     /**
-     * Sistema de login del Gestor
+     * Sistema de login del Gestor e Inversor
      * @author Gabriela Oria Pinto
      * @return true si ha conseguido entrar al sistema o false si no ha conseguido entrar al sistema porque su usuario ha sido bloqueado
      */
@@ -157,6 +157,12 @@ public class AccountSettings {
 
     /* ----------------------------------------------------Change----------------------------------------------------- */
 
+    /**
+     * Función para saber la posición de nuestro usuario
+     * @author Gabriela Oria Pinto
+     * @param datosAdmins array de dos dimensiones como cadena
+     * @return la posición de nuestro usuario
+     */
     public static int posicionUsuario (String[][] datosAdmins) {
         boolean correcto = false, userFound = false;
         int i = 0;
@@ -177,14 +183,30 @@ public class AccountSettings {
         } while (!correcto);
         return i;
     }
+
+    /**
+     * Función para cambiar el nombre de usuario
+     * @author Gabriela Oria Pinto
+     * @return el nombre introducido
+     */
     public static String cambiarUsuario (){
         System.out.println("Escriba el nuevo usuario");
         return leerOpcionLiteral();
     }
+    /**
+     * Función para cambiar la contraseña del usuario
+     * @author Gabriela Oria Pinto
+     * @return la contraseña introducida
+     */
     public static String cambiarcontrasenia (){
         System.out.println("Escriba la nueva contraseña");
         return leerOpcionLiteral();
     }
+    /**
+     * Función para modificar los datos de la cuenta
+     * @author Gabriela Oria Pinto
+     * @param datosUsuario array de dos dimensiones como cadena
+     */
     public static void modificarCuenta (String[][] datosUsuario){
         int pos = posicionUsuario(datosUsuario), opcion;
         do {
