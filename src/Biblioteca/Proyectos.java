@@ -4,7 +4,7 @@ import static Biblioteca.Lectura_De_Datos.leerOpcionDouble;
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 
 public class Proyectos {
-    public static void mostrarProyectosNoAdmin (String[][] proyectsStringData, double[][] proyectsFinantialData) {
+    public static void mostrarProyectosNoAdmin (String[][] proyectsStringData, double[][] proyectsFinantialData, int contadorProyectos) {
         System.out.println();
         System.out.print("Posición: \t\t\t\t");
         for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i] != null) System.out.print("Proyecto " + (i+1) + "\t\t\t\t");
@@ -21,6 +21,7 @@ public class Proyectos {
         System.out.print("Cantidad Financiada:\t");
         for (int i = 0; i < proyectsFinantialData[1].length; i++) if (proyectsFinantialData[1][i] != 0) System.out.print(proyectsFinantialData[1][i] + "\t\t\t\t\t");
         System.out.println();
+        System.out.println("Existen " + contadorProyectos + " habilitados.");
     }
 
     public static void mostrarProyectosAdmin(String[][] proyectsStringData, double[][] proyectsFinantialData){
