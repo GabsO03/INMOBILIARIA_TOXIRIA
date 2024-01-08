@@ -127,7 +127,7 @@ public class Inmobiliaria_toxiria {
         int primerSubmenu,segundoSubmenu,tercersubmenu, contadorProyectos = 0;
         for (int i = 0; i < proyectsStringData[0].length; i++) if (proyectsStringData[0][i]!=null) contadorProyectos++;
         //REGISTRO
-        String nombreNuevoUsuario, correoNuevoUsuario,passNuevoUsuario,passRepetidaNuevoUsuario,tipoNuevoUsuario;
+        String nombre, nuevoUsuario, correoNuevoUsuario,passNuevoUsuario,passRepetidaNuevoUsuario,tipoNuevoUsuario;
         boolean registroCorrecto=false;
 
 
@@ -161,8 +161,8 @@ public class Inmobiliaria_toxiria {
                     }
 
                     if (hayPlaza){
-                        System.out.println("Escriba su nombre de usuario: ");
-                        nombreNuevoUsuario = leerOpcionLiteral();
+                        System.out.println("Escriba su usuario: ");
+                        nuevoUsuario = leerOpcionLiteral();
                         do {
                             System.out.println("Escriba su contraseña: ");
                             passNuevoUsuario = leerOpcionLiteral();
@@ -181,15 +181,21 @@ public class Inmobiliaria_toxiria {
                         codigoUsuario = leerOpcionNumerica();
                         if (codigoEnviado == codigoUsuario) {
                             System.out.println("Usuario registrado correctamente");
+                            System.out.println("Escriba su nombre");
+                            nombre=leerOpcionLiteral();
                             if (tipoNuevoUsuario.equalsIgnoreCase("G")) {
-                                datosGestores[1][pos] = nombreNuevoUsuario;
+                                datosGestores[0][pos] = nombre;
+                                datosGestores[1][pos] = nuevoUsuario;
                                 datosGestores[2][pos] = passNuevoUsuario;
                                 datosGestores[3][pos] = correoNuevoUsuario;
+                                gestoresBloqueados[pos] = true;
                             }
                             if (tipoNuevoUsuario.equalsIgnoreCase("I")) {
-                                datosInversores[1][pos] = nombreNuevoUsuario;
+                                datosInversores[0][pos] = nombre;
+                                datosInversores[1][pos] = nuevoUsuario;
                                 datosInversores[2][pos] = passNuevoUsuario;
                                 datosInversores[3][pos] = correoNuevoUsuario;
+                                inversoresBloqueados[pos] = true;
                             }
                             registroCorrecto = true;
                         } else System.out.println("El código no es correcto, vuelve a intentarlo: \n");
@@ -374,7 +380,6 @@ public class Inmobiliaria_toxiria {
                                 }
                             } while (primerSubmenu != 6);
                         }
-
                     } else System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
                 } while (seleccionTipoUsuario != 5);
             }
