@@ -40,6 +40,20 @@ public class funcionesCadenas {
                         }
                     }
                 }
+                else{
+                    System.out.println("La contraseña no cumple los requisitos\n-Debe tener una longitud mínima de 8 caracteres" +
+                            "\n-Contener como mínimo una mayúscula y una minúscula " +
+                            "\n-Contener como mínimo un número " +
+                            "\n-Contener como mínimo un caracter especial (@ - _ * + . ,)");
+                    return false;
+                }
+            }
+            else{
+                System.out.println("La contraseña no cumple los requisitos\n-Debe tener una longitud mínima de 8 caracteres" +
+                        "\n-Contener como mínimo una mayúscula y una minúscula " +
+                        "\n-Contener como mínimo un número " +
+                        "\n-Contener como mínimo un caracter especial (@ - _ * + . ,)");
+                return false;
             }
         }
         else{

@@ -88,6 +88,13 @@ public class Inmobiliaria_toxiria {
 
         //PROYECTOS
         boolean[] proyectosHabilitados = new boolean[20];
+        proyectosHabilitados[0] = true;
+        proyectosHabilitados[1] = true;
+        proyectosHabilitados[15] = true;
+        proyectosHabilitados[19] = true;
+        /*for (int i = 0; i < proyectosHabilitados.length; i++) {
+            proyectosHabilitados[i] = true;
+        }*/
 
         int cantidadProyectos = 20;
         String[][] proyectsStringData = new String[5][cantidadProyectos];
@@ -188,14 +195,14 @@ public class Inmobiliaria_toxiria {
                                 datosGestores[1][pos] = nuevoUsuario;
                                 datosGestores[2][pos] = passNuevoUsuario;
                                 datosGestores[3][pos] = correoNuevoUsuario;
-                                gestoresBloqueados[pos] = true;
+                                gestoresBloqueados[pos] = false;
                             }
                             if (tipoNuevoUsuario.equalsIgnoreCase("I")) {
                                 datosInversores[0][pos] = nombre;
                                 datosInversores[1][pos] = nuevoUsuario;
                                 datosInversores[2][pos] = passNuevoUsuario;
                                 datosInversores[3][pos] = correoNuevoUsuario;
-                                inversoresBloqueados[pos] = true;
+                                inversoresBloqueados[pos] = false;
                             }
                             registroCorrecto = true;
                         } else System.out.println("El código no es correcto, vuelve a intentarlo: \n");
@@ -318,9 +325,8 @@ public class Inmobiliaria_toxiria {
 
                                 if (primerSubmenu == 3) modificarCuenta(datosGestores);
                             } while (primerSubmenu != 4);
-                        }
-
-                    } else System.out.println("Su usuario está bloqueado, contacte con el administrador del sistema para desbloquearlo");
+                        } else System.out.println("Su usuario está bloqueado, contacte con el administrador del sistema para desbloquearlo");
+                    }
 
                     //INVERSOR
                     if ((seleccionTipoUsuario == 3) && entry) {
@@ -355,7 +361,8 @@ public class Inmobiliaria_toxiria {
                                             do {
                                                 menuInversiones(proyectsStringData);
                                                 segundoSubmenu = leerOpcionNumerica();
-                                                if ((segundoSubmenu > 0 && segundoSubmenu <= cantidadProyectos) && proyectosHabilitados[segundoSubmenu]) {
+                                                segundoSubmenu--;
+                                                if (proyectosHabilitados[segundoSubmenu]) {
                                                     mostrarCantidades(proyectsFinantialData, segundoSubmenu);
                                                     System.out.println(RED + "¿Cuánto desea invertir?" + RESET);
                                                     respuestaDouble = leerOpcionDouble();
@@ -374,14 +381,14 @@ public class Inmobiliaria_toxiria {
                                     case 4 -> {
                                         System.out.println("Tienes " + dineroInversores[0] + "€");
                                         System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
-                                        dineroInversores[0] += leerOpcionDouble();
+                                        dineroInversores[posicionAccesoExitoso] += leerOpcionDouble();
                                     }
                                     case 5 -> modificarCuenta(datosInversores);
                                 }
                             } while (primerSubmenu != 6);
-                        }
-                    } else System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
-                } while (seleccionTipoUsuario != 5);
+                        } else System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
+                    }
+                } while (seleccionTipoUsuario != 4);
             }
         }while(seleccionInicial!=3);
     }

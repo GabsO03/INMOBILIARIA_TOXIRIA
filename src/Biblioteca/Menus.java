@@ -6,7 +6,7 @@ public class Menus {
         System.out.println("Seleccione qué quiere hacer: \n1. Registro\n2. Iniciar sesión\n3. Salir");
     }
     public static void menuUser () {
-        System.out.println("Seleccione su tipo usuario:\n1. Administrador.\n2. Gestor.\n3. Inversor.");
+        System.out.println("Seleccione su tipo usuario:\n1. Administrador.\n2. Gestor.\n3. Inversor.\n4. Para Salir.");
     }
     public static void menuProyectosGestor(){
         System.out.println("Seleccione que desea realizar con los proyectos: \n1. Mostrar proyectos creados.\n2. Crear nuevo proyecto.\n3. Configuración.\n4. Salir");
