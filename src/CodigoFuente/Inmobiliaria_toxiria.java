@@ -27,8 +27,6 @@ import static Biblioteca.funcionesCadenas.comprobarFortalezaPass;
 
 //PROYECTOS
 import static Biblioteca.Menus.*;
-import static Biblioteca.Proyectos.mostrarProyectosAdmin;
-import static Biblioteca.Proyectos.mostrarProyectosNoAdmin;
 import static Biblioteca.Proyectos.cambiarDescripcionProyecto;
 import static Biblioteca.Proyectos.cambiarCantidadNecesaria;
 import static Biblioteca.Proyectos.cambiarNombreProyecto;
@@ -36,7 +34,6 @@ import static Biblioteca.Proyectos.cambiarCantidadFinanciada;
 import static Biblioteca.Proyectos.cambiarFechaFin;
 import static Biblioteca.Proyectos.cambiarFechaInicio;
 import static Biblioteca.Proyectos.cambiarTipoProyecto;
-import static Biblioteca.Proyectos.proyectosDetallados;
 
 public class Inmobiliaria_toxiria {
 
@@ -326,11 +323,11 @@ public class Inmobiliaria_toxiria {
                                         }
                                     }
                                     case 3 -> {
-                                        mostrarProyectosNoAdmin(proyectsStringData, proyectsFinantialData, contadorProyectos);
+                                        proyectos.mostrarProyectos(seleccionTipoUsuario);
                                         System.out.println(RED + "¿Quieres ver más detalles sobre los proyectos?" + RESET);
                                         respuesta = leerOpcionLiteral();
                                         if (respuesta.equalsIgnoreCase("si")) {
-                                            proyectosDetallados(proyectsStringData, proyectsFinantialData);
+                                            proyectos.proyectosDetallados();
                                         }
                                         System.out.println(RED + "¿Quieres invertir en algún proyecto?" + RESET);
                                         respuesta = leerOpcionLiteral();
@@ -352,7 +349,7 @@ public class Inmobiliaria_toxiria {
                                                         System.out.println("No cuentas con saldo suficiente para realizar este tipo de operación");
 
                                                 } else System.out.println("Este proyecto no está disponible");
-                                            } while ((segundoSubmenu > 0 && segundoSubmenu <= cantidadProyectos) && proyectosHabilitados[segundoSubmenu]);
+                                            } while ((segundoSubmenu > 0 && segundoSubmenu <= proyectos.getCantidadProyectos()));
                                         }
                                     }
                                     case 4 -> {
