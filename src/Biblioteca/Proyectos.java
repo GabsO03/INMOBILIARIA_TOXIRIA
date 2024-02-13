@@ -1,5 +1,8 @@
 package Biblioteca;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import static Biblioteca.Lectura_De_Datos.leerOpcionDouble;
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 
@@ -54,7 +57,7 @@ public class Proyectos {
         return leerOpcionLiteral();
     }
     public static String cambiarTipoProyecto(){
-        System.out.println("Escriba el nuevo tipo del proyecto");
+        System.out.println("Escriba el nuevo tipo del proyecto (Préstamo, Plusvalía o Alquiler)");
         return leerOpcionLiteral();
     }
     public static double cambiarCantidadNecesaria (){
@@ -65,41 +68,13 @@ public class Proyectos {
         System.out.println("Escriba la nueva cantidad financiada");
         return leerOpcionDouble();
     }
-    public static String cambiarFechaInicio(){
-        System.out.println("Escriba la nueva fecha de inicio");
-        return leerOpcionLiteral();
+    public static LocalDate cambiarFechaInicio(){
+        System.out.println("Escriba la nueva fecha de inicio (dd/mm/aaaa)");
+        return LocalDate.parse(leerOpcionLiteral(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
-    public static String cambiarFechaFin(){
-        System.out.println("Escriba la nueva fecha de fin");
-        return leerOpcionLiteral();
-    }
-    public static String crearNombreProyecto(int posicion){
-        System.out.print("Introduzca el nombre del proyecto "+posicion+": ");
-        return leerOpcionLiteral();
-    }
-    public static String crearDescripcionProyecto(int posicion){
-        System.out.print("Introduzca la descripción del proyecto"+posicion+": ");
-        return leerOpcionLiteral();
-    }
-    public static String crearTipoProyecto(int posicion){
-        System.out.print("Introduzca el Tipo del proyecto (Préstamo, Plusvalía o Alquiler)"+posicion+": ");
-        return leerOpcionLiteral();
-    }
-    public static double crearCNecesariaProyecto(int posicion){
-        System.out.print("Introduzca la cantidad necesaria del proyecto"+posicion+": ");
-        return leerOpcionDouble();
-    }
-    public static double crearCFinanciadaProyecto(int posicion){
-        System.out.print("Introduzca la cantidad financiada hasta el momento del proyecto"+posicion+": ");
-        return leerOpcionDouble();
-    }
-    public static String crearFInicioProyecto(int posicion){
-        System.out.print("Introduzca la fecha de inicio del proyecto (dd/mm/aaaa)"+posicion+": ");
-        return leerOpcionLiteral();
-    }
-    public static String crearFFinProyecto(int posicion){
-        System.out.print("Introduzca la fecha final del proyecto (dd/mm/aaaa)"+posicion+": ");
-        return leerOpcionLiteral();
+    public static LocalDate cambiarFechaFin(){
+        System.out.println("Escriba la nueva fecha de fin (dd/mm/aaaa)");
+        return LocalDate.parse(leerOpcionLiteral(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
     public static void crearGrafico(double cantidadNecesaria,double cantidadFinanciada){
         int porcentaje= (int) ((int) (cantidadFinanciada*100)/cantidadNecesaria);
@@ -108,7 +83,6 @@ public class Proyectos {
         System.out.println("Cantidad financiada hasta el momento: ");
         System.out.print(caracterLleno.repeat(porcentaje));
         System.out.print(caracterVacio.repeat((100-porcentaje)));
-
     }
 
     public static void proyectosDetallados(String[][] proyectsStringData, double[][] proyectsFinantialData){
