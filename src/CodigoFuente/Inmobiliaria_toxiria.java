@@ -11,9 +11,6 @@ import static Biblioteca.Colores.RESET;
 //MENUS
 import static Biblioteca.AccountSettings.enviarCorreo;
 
-
-import static Biblioteca.Inversiones.mostrarInversionEnProyecto;
-import static Biblioteca.Inversiones.mostrarCantidades;
 //LEER TEXTO
 import static Biblioteca.Lectura_De_Datos.leerOpcionDouble;
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
@@ -46,32 +43,6 @@ public class Inmobiliaria_toxiria {
         String[][] datosGestores = new String[5][cantidadGestores];
         String[][] datosInversores = new String[5][cantidadInversores];
 
-        datosAdmins[0][0]= "Adrian";
-        datosAdmins[0][1]= "Eladio";
-        datosAdmins[1][0]= "adrianCb";
-        datosAdmins[1][1]= "eladioBl";
-        datosAdmins[2][0]= "easyPass";
-        datosAdmins[2][1]= "hjdsfn74";
-
-        datosGestores[0][0]= "Gabriel";
-        datosGestores[0][1]= "Alex";
-        datosGestores[1][0]= "gabOp";
-        datosGestores[1][1]= "alexGb";
-        datosGestores[2][0]= "ncfv55&%%";
-        datosGestores[2][1]= "ghvh8858";
-        datosGestores[3][0]="gestorinmobiliaria@yopmail.com";
-        datosGestores[3][1]="gestor2inmobiliaria@yopmail.com";
-
-        datosInversores[0][0]= "Alejandro";
-        datosInversores[0][1]= "Jesús";
-        datosInversores[1][0]= "aloOp";
-        datosInversores[1][1]= "jesusMm";
-        datosInversores[2][0]= "jbhk5&84";
-        datosInversores[2][1]= "fx55fxh$43";
-        datosInversores[3][0]= "inversor1inmobiliaria@yopmail.com";
-        datosInversores[3][1]= "inversor2inmobiliaria@yopmail.com";
-
-
         //BLOQUEOS
         boolean[] gestoresBloqueados = new boolean[cantidadGestores];
         boolean[] inversoresBloqueados = new boolean[cantidadInversores];
@@ -83,39 +54,10 @@ public class Inmobiliaria_toxiria {
         proyectos.crearProyecto("Villa verde", "La villa más fea","Plusvalía", LocalDate.now(), LocalDate.now().plusMonths(5), 4521.56f, 521.56f);
         proyectos.crearProyecto("Villa azul", "La villa más bonita", "Préstamo", LocalDate.now().plusDays(5), LocalDate.now().plusMonths(9), 85112.54, 5112.54);
 
-
-/*        int cantidadProyectos = 20;
-        String[][] proyectsStringData = new String[5][cantidadProyectos];
-        double[][] proyectsFinantialData = new double[2][cantidadProyectos];
-        proyectsStringData[0][0]=;
-        proyectsStringData[0][1]=;
-        proyectsStringData[0][15]="Villa rojo";
-        proyectsStringData[0][19]="Villa pink";
-        proyectsStringData[1][0]=;
-        proyectsStringData[1][1]="La villa más fghjg";
-        proyectsStringData[1][15]="La villa más kokomkk";
-        proyectsStringData[1][19]=;
-        proyectsStringData[2][0]="Tipo 0";
-        proyectsStringData[2][1]="Tipo 1";
-        proyectsStringData[2][15]="Tipo 15";
-        proyectsStringData[2][19]="Tipo 19";
-        proyectsFinantialData[0][0]=;
-        proyectsFinantialData[0][1]=;
-        proyectsFinantialData[0][15]=10000;
-        proyectsFinantialData[0][19]=500;
-        proyectsFinantialData[1][0]=;
-        proyectsFinantialData[1][1]=;
-        proyectsFinantialData[1][15]=100;
-        proyectsFinantialData[1][19]=15;*/
-
-
         //INVERSOR
         double[] dineroInversores = new double[cantidadInversores];
         double respuestaDouble;
         String respuesta;
-
-        double[][] cantidadesInvirtioInversoresProyectos = new double[10][20];
-        boolean[][] invirtioInvesorEnProyecto = new boolean[10][20];
 
         //Menus
         int seleccionTipoUsuario,seleccionInicial,codigoUsuario;
@@ -270,17 +212,7 @@ public class Inmobiliaria_toxiria {
                             do {
                                 menuProyectosGestor();
                                 primerSubmenu = leerOpcionNumerica();
-                                if (primerSubmenu == 1) {
-                                    System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto");
-                                    for (int i = 0; i < cantidadProyectos; i++) {
-                                        if (proyectosHabilitados[i])
-                                            System.out.println(RED + proyectsStringData[0][i] + "\t\t\t\t" + GREEN + proyectsStringData[2][i] + RESET);
-                                    }
-                                    System.out.println("¿Quieres ver más detalles sobre los proyectos? [S]í | [N]o");
-                                    respuesta = leerOpcionLiteral();
-                                    if (respuesta.equalsIgnoreCase("s")) proyectos.proyectosDetallados();
-
-                                }
+                                if (primerSubmenu == 1) proyectos.mostrarNombreTipoProyecto();
                                 if (primerSubmenu == 2) {
                                     String name = cambiarNombreProyecto();
                                     String descripcion = cambiarDescripcionProyecto();
@@ -310,17 +242,17 @@ public class Inmobiliaria_toxiria {
                                 primerSubmenu = leerOpcionNumerica();
                                 switch (primerSubmenu) {
                                     case 1 -> {
-                                        System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto" + RESET);
+                                        /*System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto" + RESET);
                                         for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
                                             if (invirtioInvesorEnProyecto[0][i])
                                                 System.out.println(RED + proyectsStringData[0][i] + "\t\t\t\t" + GREEN + proyectsStringData[2][i] + RESET);
-                                        }
+                                        }*/
                                     }
                                     case 2 -> {
-                                        for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
+                                        /*for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
                                             if (invirtioInvesorEnProyecto[0][i])
                                                 mostrarInversionEnProyecto(proyectsStringData[0][i], proyectsStringData[2][i], cantidadesInvirtioInversoresProyectos[0][i]);
-                                        }
+                                        }*/
                                     }
                                     case 3 -> {
                                         proyectos.mostrarProyectos(seleccionTipoUsuario);
@@ -333,18 +265,17 @@ public class Inmobiliaria_toxiria {
                                         respuesta = leerOpcionLiteral();
                                         if (respuesta.equalsIgnoreCase("si")) {
                                             do {
-                                                menuInversiones(proyectsStringData);
+                                                proyectos.menuProyectos();
                                                 segundoSubmenu = leerOpcionNumerica();
-                                                segundoSubmenu--;
-                                                if (proyectosHabilitados[segundoSubmenu]) {
-                                                    mostrarCantidades(proyectsFinantialData, segundoSubmenu);
+                                                if (proyectos.noEstaVacio(segundoSubmenu)) {
+                                                    proyectos.mostrarCantidades(segundoSubmenu);
                                                     System.out.println(RED + "¿Cuánto desea invertir?" + RESET);
                                                     respuestaDouble = leerOpcionDouble();
                                                     if (respuestaDouble <= dineroInversores[0]) {
-                                                        invirtioInvesorEnProyecto[0][segundoSubmenu] = true;
+                                                    /*    invirtioInvesorEnProyecto[0][segundoSubmenu] = true;
                                                         proyectsFinantialData[1][segundoSubmenu] += respuestaDouble;
                                                         cantidadesInvirtioInversoresProyectos[0][segundoSubmenu] += respuestaDouble;
-                                                        dineroInversores[0] -= respuestaDouble;
+                                                        dineroInversores[0] -= respuestaDouble;*/
                                                     } else
                                                         System.out.println("No cuentas con saldo suficiente para realizar este tipo de operación");
 

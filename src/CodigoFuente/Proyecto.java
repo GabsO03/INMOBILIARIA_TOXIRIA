@@ -49,13 +49,4 @@ public class Proyecto {
     public double getCantidadNecesaria () { return cantidadNecesaria; }
     public double getCantidadFinanciada () { return cantidadFinanciada; }
 
-    //Otros
-
-    public void financiarProyecto (double cantidadFinanciada) { this.cantidadFinanciada += cantidadFinanciada; }
-
-
-
-
-
-
 }

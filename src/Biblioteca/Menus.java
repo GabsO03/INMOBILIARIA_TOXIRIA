@@ -26,12 +26,6 @@ public class Menus {
         System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3.Salir");
     }
 
-    public static void menuInversiones(String[][] proyectsStringData){
-        System.out.println("Seleccione en qué proyecto quiere invertir: ");
-        for (int i = 0; i < proyectsStringData[0].length; i++) {
-            if (proyectsStringData[0][i]!=null) System.out.println((i+1) + proyectsStringData[0][i]);
-        }
-    }
     public static void mostrarListaUsuarios (int opcion, String[][] datosGestores, String[][] datosInversores, boolean[] gestoresBloqueados,boolean[] inversoresBloqueados) {
         switch (opcion) {
             case 1 -> {
