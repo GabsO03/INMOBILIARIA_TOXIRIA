@@ -1,13 +1,6 @@
 package Biblioteca;
 
 public class funcionesCadenas {
-
-    /**
-     * Función para comprobar si nuestra contraseña cumple con ciertos requisitos
-     * @author Adrián Contreras Bueno y Alex Godino Bailen
-     * @param pass como cadena
-     * @return true si cumple los requisitos y false si no los cumple
-     */
     public static boolean comprobarFortalezaPass(String pass){
         char[] abecedarioMay={'A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
         char[] abecedarioMin={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','p','q','r','s','t','u','v','w','x','y','z'};
@@ -47,6 +40,20 @@ public class funcionesCadenas {
                         }
                     }
                 }
+                else{
+                    System.out.println("La contraseña no cumple los requisitos\n-Debe tener una longitud mínima de 8 caracteres" +
+                            "\n-Contener como mínimo una mayúscula y una minúscula " +
+                            "\n-Contener como mínimo un número " +
+                            "\n-Contener como mínimo un caracter especial (@ - _ * + . ,)");
+                    return false;
+                }
+            }
+            else{
+                System.out.println("La contraseña no cumple los requisitos\n-Debe tener una longitud mínima de 8 caracteres" +
+                        "\n-Contener como mínimo una mayúscula y una minúscula " +
+                        "\n-Contener como mínimo un número " +
+                        "\n-Contener como mínimo un caracter especial (@ - _ * + . ,)");
+                return false;
             }
         }
         else{
