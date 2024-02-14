@@ -73,8 +73,6 @@ public class GestionUsuarios {
     }
     public int buscarUsuario(String atributo, String valor, int posicion) {
         int entero;
-        float estatura;
-        boolean llevaGafas;
         atributo = atributo.toLowerCase();
         valor = valor.toLowerCase();
         switch (atributo) {
