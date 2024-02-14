@@ -44,14 +44,15 @@ public class GestionUsuarios {
         return null;
     }
 
-    public void insertarUsuarioGestor ( String nombre, String apellidos, String contrasenia, String email) {
-        arrayUsuarios[numeroUsuariosInsertados++] = new Gestor (nombre, apellidos, contrasenia, email);
+    public void insertarUsuarioGestor ( String nombre, String user, String contrasenia, String email) {
+        arrayUsuarios[numeroUsuariosInsertados++] = new Gestor (nombre, user, contrasenia, email);
         aumentaTamanio();
     }
-    public void insertarUsuarioGestor ( String nombre, String apellidos, String contrasenia, String email, double saldo) {
-        arrayUsuarios[numeroUsuariosInsertados++] = new Inversor (nombre, apellidos, contrasenia, email, saldo);
+    public void insertarUsuarioInversor ( String nombre, String user, String contrasenia, String email) {
+        arrayUsuarios[numeroUsuariosInsertados++] = new Inversor (nombre, user, contrasenia, email, 0);
         aumentaTamanio();
     }
+
     public void aumentaTamanio () {
         if (numeroUsuariosInsertados == arrayUsuarios.length) {
             Usuario[] arrayAux = new Usuario[arrayUsuarios.length + 15];

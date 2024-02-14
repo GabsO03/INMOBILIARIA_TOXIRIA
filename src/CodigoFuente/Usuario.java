@@ -4,7 +4,6 @@ public class Usuario {
     //ATRIBUTOS
     private int codigo;
     private String nombre;
-    private String apellidos;
     private String username;
     private String contrasenia;
     private String email;
@@ -32,7 +31,7 @@ public class Usuario {
     public void setUsername(String username) { this.username = username; }
     public void setContrasenia (String contrasenia) { this.contrasenia = contrasenia; }
     public void setEmail (String email) { this.email = email; }
-    public void setApellidos (String apellidos) { this.apellidos = apellidos; }
+
     public void setCodigo (int codigo) { this.codigo = codigo; }
 
     //getters
@@ -40,6 +39,5 @@ public class Usuario {
     public String getUsername() { return username; }
     public String getContrasenia () { return contrasenia; }
     public String getEmail () { return email; }
-    public String getApellidos () { return apellidos; }
     public int getCodigo () { return codigo; }
 }

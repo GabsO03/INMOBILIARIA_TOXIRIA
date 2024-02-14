@@ -36,18 +36,9 @@ public class Inmobiliaria_toxiria {
 
     public static void main(String[] args) {
         //USUARIOS
-        int cantidadAdmins = 2, cantidadGestores = 4, cantidadInversores = 4;
-
-        //Usuarios que ya existen jejeje
-        String[][] datosAdmins = new String[4][cantidadAdmins];
-        String[][] datosGestores = new String[5][cantidadGestores];
-        String[][] datosInversores = new String[5][cantidadInversores];
-
+        GestionUsuarios usuarios=new GestionUsuarios(50);
         //BLOQUEOS
-        boolean[] gestoresBloqueados = new boolean[cantidadGestores];
-        boolean[] inversoresBloqueados = new boolean[cantidadInversores];
-        gestoresBloqueados[0] = true;
-        inversoresBloqueados[1] = true;
+
 
         //PROYECTOS
         GestionProyectos proyectos = new GestionProyectos(20);
@@ -60,7 +51,7 @@ public class Inmobiliaria_toxiria {
         String respuesta;
 
         //Menus
-        int seleccionTipoUsuario,seleccionInicial,codigoUsuario;
+        int seleccionTipoUsuario,seleccionInicial,codigoUsuario = 0;
         int primerSubmenu,segundoSubmenu,tercersubmenu, contadorProyectos = 0;
         //REGISTRO
         String nombre, nuevoUsuario, correoNuevoUsuario,passNuevoUsuario,passRepetidaNuevoUsuario,tipoNuevoUsuario;
@@ -72,7 +63,6 @@ public class Inmobiliaria_toxiria {
             seleccionInicial=leerOpcionNumerica();
             if (seleccionInicial==1){
                 do {
-                    int codigoEnviado = (int) (Math.random() * 99999) + 10000;
                     do {
                         System.out.println("Escriba su tipo de usuario (I)Inversor (G)Gestor: ");
                         tipoNuevoUsuario = leerOpcionLiteral();
@@ -81,62 +71,65 @@ public class Inmobiliaria_toxiria {
                         }
                     } while (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"));
 
-                    int pos = 0;
-                    boolean hayPlaza = false;
-                    if (tipoNuevoUsuario.equalsIgnoreCase("G")){
-                        while (pos < datosGestores[0].length && !hayPlaza) {
-                            if (datosGestores[0][pos] == null) hayPlaza = true;
-                            else pos++;
-                        }
-                    }
-                    else {
-                        while (pos < datosInversores[0].length && !hayPlaza) {
-                            if (datosInversores[0][pos] == null) hayPlaza = true;
-                            else pos++;
-                        }
-                    }
 
-                    if (hayPlaza){
-                        System.out.println("Escriba su usuario: ");
-                        nuevoUsuario = leerOpcionLiteral();
-                        do {
-                            System.out.println("Escriba su contraseña: ");
-                            passNuevoUsuario = leerOpcionLiteral();
-                        }while(!comprobarFortalezaPass(passNuevoUsuario));
-                        do {
-                            System.out.println("Escriba su contraseña de nuevo: ");
-                            passRepetidaNuevoUsuario = leerOpcionLiteral();
-                            if (!passNuevoUsuario.equals(passRepetidaNuevoUsuario)) System.out.println("Las contraseñas no coinciden");
-                        }while(!passRepetidaNuevoUsuario.equals(passNuevoUsuario));
-
-                        System.out.println("Escriba su correo electrónico:");
-                        correoNuevoUsuario = leerOpcionLiteral();
-                        System.out.println("Se está enviando un correo de verificación para su nuevo usuario...");
-                        enviarCorreo(correoNuevoUsuario, "Correo de verificación", "Su código de verificación es:" + codigoEnviado);
-                        System.out.println("Correo enviado, escriba su código de verificación: ");
-                        codigoUsuario = leerOpcionNumerica();
-                        if (codigoEnviado == codigoUsuario) {
-                            System.out.println("Usuario registrado correctamente");
-                            System.out.println("Escriba su nombre");
-                            nombre=leerOpcionLiteral();
-                            if (tipoNuevoUsuario.equalsIgnoreCase("G")) {
-                                datosGestores[0][pos] = nombre;
-                                datosGestores[1][pos] = nuevoUsuario;
-                                datosGestores[2][pos] = passNuevoUsuario;
-                                datosGestores[3][pos] = correoNuevoUsuario;
-                                gestoresBloqueados[pos] = false;
-                            }
-                            if (tipoNuevoUsuario.equalsIgnoreCase("I")) {
-                                datosInversores[0][pos] = nombre;
-                                datosInversores[1][pos] = nuevoUsuario;
-                                datosInversores[2][pos] = passNuevoUsuario;
-                                datosInversores[3][pos] = correoNuevoUsuario;
-                                inversoresBloqueados[pos] = false;
-                            }
-                            registroCorrecto = true;
-                        } else System.out.println("El código no es correcto, vuelve a intentarlo: \n");
-                    } else System.out.println("ERROR: CANTIDAD DE USUARIO DE ESTE TIPO EXCEDIDA");
                 } while (!registroCorrecto);
+                if (tipoNuevoUsuario.equalsIgnoreCase("G")){
+                    System.out.println("Escriba su nombre comlpeto: ");
+                    nombre=leerOpcionLiteral();
+                    System.out.println("Escriba su nombre de usuario: ");
+                    nuevoUsuario=leerOpcionLiteral();
+                    do {
+                        System.out.println("Escriba su contraseña: ");
+                        passNuevoUsuario=leerOpcionLiteral();
+                        System.out.println("Vuelva a escribir su contraseña: ");
+                        passRepetidaNuevoUsuario=leerOpcionLiteral();
+                        if (!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario)) System.out.println("Error, las contraseñas deben de ser iguales\nVuelva a intentarlo");
+                    }while (!comprobarFortalezaPass(passNuevoUsuario)&&!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario));
+                    System.out.println("Escriba su email: ");
+                    correoNuevoUsuario=leerOpcionLiteral();
+
+                        int codigoEnviado = (int) (Math.random() * 99999) + 10000;
+                        System.out.println("Se está enviando un código de verificacion...");
+                        enviarCorreo(correoNuevoUsuario,"Correo de verificación","Su código de verificación es: "+ codigoEnviado);
+                        System.out.println("Revise su bandeja de entrada y escriba el código");
+                        codigoUsuario=leerOpcionNumerica();
+                        if (codigoEnviado!=codigoUsuario) System.out.println("ERROR, el código no es correcto");
+                        else{
+                            usuarios.insertarUsuarioGestor(nombre,nuevoUsuario,passNuevoUsuario,correoNuevoUsuario);
+                            System.out.println("Usuario registrado correctamente");
+                        }
+
+
+
+                }else {
+                    System.out.println("Escriba su nombre comlpeto: ");
+                    nombre=leerOpcionLiteral();
+                    System.out.println("Escriba su nombre de usuario: ");
+                    nuevoUsuario=leerOpcionLiteral();
+                    do {
+                        System.out.println("Escriba su contraseña: ");
+                        passNuevoUsuario=leerOpcionLiteral();
+                        System.out.println("Vuelva a escribir su contraseña: ");
+                        passRepetidaNuevoUsuario=leerOpcionLiteral();
+                        if (!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario)) System.out.println("Error, las contraseñas deben de ser iguales\nVuelva a intentarlo");
+                    }while (!comprobarFortalezaPass(passNuevoUsuario)&&!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario));
+                    System.out.println("Escriba su email: ");
+                    correoNuevoUsuario=leerOpcionLiteral();
+
+                    int codigoEnviado = (int) (Math.random() * 99999) + 10000;
+                    System.out.println("Se está enviando un código de verificacion...");
+                    enviarCorreo(correoNuevoUsuario,"Correo de verificación","Su código de verificación es: "+ codigoEnviado);
+                    System.out.println("Revise su bandeja de entrada y escriba el código");
+                    codigoUsuario=leerOpcionNumerica();
+                    if (codigoEnviado!=codigoUsuario) System.out.println("ERROR, el código no es correcto");
+                    else{
+                        usuarios.insertarUsuarioInversor(nombre,nuevoUsuario,passNuevoUsuario,correoNuevoUsuario);
+                        System.out.println("Usuario registrado correctamente");
+                    }
+
+                }
+                // TODO: 14/02/2024 CONTINUAR CON LOS USUARIOS (NO PREOCUPARSE POR LOS ERRORES :)🩵 ) 
+
 
 
 
