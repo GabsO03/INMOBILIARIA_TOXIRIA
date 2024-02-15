@@ -67,11 +67,7 @@ public class AccountSettings {
 
     }
 
-    /**
-     * Sistema de login del administrador
-     * @author Gabriela Oria Pinto
-     * @return true si ha conseguido entrar al sistema
-     */
+
 
 
     public static int loginAdmin (String[][] datosAdmins) {
