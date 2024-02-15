@@ -44,6 +44,10 @@ public class GestionUsuarios {
         return null;
     }
 
+    public void insertarUsuarioAdmin(String nombre, String user, String contrasenia, String email){
+        arrayUsuarios[numeroUsuariosInsertados++] = new Admin(nombre, user, contrasenia, email);
+        aum
+    }
     public void insertarUsuarioGestor ( String nombre, String user, String contrasenia, String email) {
         arrayUsuarios[numeroUsuariosInsertados++] = new Gestor (nombre, user, contrasenia, email);
         aumentaTamanio();
@@ -70,21 +74,16 @@ public class GestionUsuarios {
         arrayUsuarios[pos].setEmail(email);
     }
     public int buscarUsuario(String atributo, String valor) {
-        return buscarUsuario(atributo, valor, 0);
-    }
-    public int buscarUsuario(String atributo, String valor, int posicion) {
-        int entero;
         atributo = atributo.toLowerCase();
         valor = valor.toLowerCase();
         switch (atributo) {
-            case "código" -> {
-                entero = Integer.parseInt(valor);
-                for (int i = posicion; i < arrayUsuarios.length; i++) {
-                    if (arrayUsuarios[i] != null && arrayUsuarios[i].getCodigo() == entero) return i;
+            case "contraseña" -> {
+                for (int i = 0; i < arrayUsuarios.length; i++) {
+                    if (arrayUsuarios[i] != null && arrayUsuarios[i].getContrasenia().equals(valor)) return i;
                 }
             }
             case "nombre" -> {
-                for (int i = posicion; i < arrayUsuarios.length; i++) {
+                for (int i = 0; i < arrayUsuarios.length; i++) {
                     if (arrayUsuarios[i] != null && arrayUsuarios[i].getNombre().equalsIgnoreCase(valor)) return i;
                 }
             }
@@ -94,7 +93,7 @@ public class GestionUsuarios {
                 }
             }
             case "nombre de usuario" -> {
-                for (int i = posicion; i < arrayUsuarios.length; i++) {
+                for (int i = 0; i < arrayUsuarios.length; i++) {
                     if (arrayUsuarios[i] != null && arrayUsuarios[i].getUsername().equalsIgnoreCase(valor)) return i;
                 }
             }

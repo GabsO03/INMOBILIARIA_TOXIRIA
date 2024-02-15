@@ -158,94 +158,13 @@ public class Inmobiliaria_toxiria {
                             }
                         }
 
-                    // GESTOR
-                    if ((seleccionTipoUsuario == 2) && entry) {
-                        if (!gestoresBloqueados[posicionAccesoExitoso]) {
-                            do {
-                                menuProyectosGestor();
-                                primerSubmenu = leerOpcionNumerica();
-                                if (primerSubmenu == 1) proyectos.mostrarNombreTipoProyecto();
-                                if (primerSubmenu == 2) {
-                                    String name = cambiarNombreProyecto();
-                                    String descripcion = cambiarDescripcionProyecto();
-                                    String tipo = cambiarTipoProyecto();
-                                    LocalDate fechaInicio = cambiarFechaInicio();
-                                    LocalDate fechaFin = cambiarFechaInicio();
-                                    double cantidadNecesaria = cambiarCantidadNecesaria();
-                                    double cantidadFinanciada;
-                                do {
-                                        cantidadFinanciada = cambiarCantidadFinanciada();
-                                        if (cantidadFinanciada > cantidadNecesaria)
-                                            System.out.println("El monto excede la cantidad necesaria");
-                                    } while (cantidadFinanciada > cantidadNecesaria);
-                                proyectos.crearProyecto(name, descripcion, tipo, fechaInicio, fechaFin, cantidadNecesaria, cantidadFinanciada);
-                                }
+                        // GESTOR
 
-                                if (primerSubmenu == 3) modificarCuenta(datosGestores);
-                            } while (primerSubmenu != 4);
-                        } else System.out.println("Su usuario está bloqueado, contacte con el administrador del sistema para desbloquearlo");
+
+                        //INVERSOR
+
                     }
-
-                    //INVERSOR
-                    if ((seleccionTipoUsuario == 3) && entry) {
-                        if (!inversoresBloqueados[posicionAccesoExitoso]) {
-                            do {
-                                menuInversor();
-                                primerSubmenu = leerOpcionNumerica();
-                                switch (primerSubmenu) {
-                                    case 1 -> {
-                                        /*System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto" + RESET);
-                                        for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
-                                            if (invirtioInvesorEnProyecto[0][i])
-                                                System.out.println(RED + proyectsStringData[0][i] + "\t\t\t\t" + GREEN + proyectsStringData[2][i] + RESET);
-                                        }*/
-                                    }
-                                    case 2 -> {
-                                        /*for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
-                                            if (invirtioInvesorEnProyecto[0][i])
-                                                mostrarInversionEnProyecto(proyectsStringData[0][i], proyectsStringData[2][i], cantidadesInvirtioInversoresProyectos[0][i]);
-                                        }*/
-                                    }
-                                    case 3 -> {
-                                        proyectos.mostrarProyectos(seleccionTipoUsuario);
-                                        System.out.println(RED + "¿Quieres ver más detalles sobre los proyectos?" + RESET);
-                                        respuesta = leerOpcionLiteral();
-                                        if (respuesta.equalsIgnoreCase("si")) {
-                                            proyectos.proyectosDetallados();
-                                        }
-                                        System.out.println(RED + "¿Quieres invertir en algún proyecto?" + RESET);
-                                        respuesta = leerOpcionLiteral();
-                                        if (respuesta.equalsIgnoreCase("si")) {
-                                            do {
-                                                proyectos.menuProyectos();
-                                                segundoSubmenu = leerOpcionNumerica();
-                                                if (proyectos.noEstaVacio(segundoSubmenu)) {
-                                                    proyectos.mostrarCantidades(segundoSubmenu);
-                                                    System.out.println(RED + "¿Cuánto desea invertir?" + RESET);
-                                                    respuestaDouble = leerOpcionDouble();
-                                                    if (respuestaDouble <= dineroInversores[0]) {
-                                                    /*    invirtioInvesorEnProyecto[0][segundoSubmenu] = true;
-                                                        proyectsFinantialData[1][segundoSubmenu] += respuestaDouble;
-                                                        cantidadesInvirtioInversoresProyectos[0][segundoSubmenu] += respuestaDouble;
-                                                        dineroInversores[0] -= respuestaDouble;*/
-                                                    } else
-                                                        System.out.println("No cuentas con saldo suficiente para realizar este tipo de operación");
-
-                                                } else System.out.println("Este proyecto no está disponible");
-                                            } while ((segundoSubmenu > 0 && segundoSubmenu <= proyectos.getCantidadProyectos()));
-                                        }
-                                    }
-                                    case 4 -> {
-                                        System.out.println("Tienes " + dineroInversores[0] + "€");
-                                        System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
-                                        dineroInversores[posicionAccesoExitoso] += leerOpcionDouble();
-                                    }
-                                    case 5 -> modificarCuenta(datosInversores);
-                                }
-                            } while (primerSubmenu != 6);
-                        } else System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
-                    }
-                } while (seleccionTipoUsuario != 4);
+                } while (seleccionTipoUsuario != 4) ;
             }
         }while(seleccionInicial!=3);
     }

@@ -52,11 +52,6 @@ public class AccountSettings {
 
     }
 
-    /**
-     * Nos indica si el usuario y la contraseña que estamos introduciendo son correctos o no
-     * @author Gabriela Oria Pinto
-     * @return true si el usuario y la contraseña son correctos o false si el usuario y la contraseña no son correctos
-     */
     public static boolean tokenVerified(String[][] datosNoAdmin, int pos) {
         System.out.println("Se va a enviar un código de verificacion a tu correo electronico, un momento...");
         int codigoRandom = (int) (Math.random()*9999)+1000;
@@ -101,11 +96,7 @@ public class AccountSettings {
         return i;
     }
 
-    /**
-     * Sistema de login del Gestor
-     * @author Gabriela Oria Pinto
-     * @return true si ha conseguido entrar al sistema o false si no ha conseguido entrar al sistema porque su usuario ha sido bloqueado
-     */
+
     public static int loginNoAdmin (String[][] datosNoAdmins, boolean[] usuariosBloqueados) {
         boolean correcto = false, userFound = false;
         int i = 0, intentos = 3;
@@ -133,11 +124,7 @@ public class AccountSettings {
         } while (!correcto && intentos > 0);
         return i;
     }
-    /**
-     * Función que utiliza las otras funciones de login para acceder al sistema. Esta se usa en el main
-     * @author Gabriela Oria Pinto, Adrián Contreras Bueno y Alex Godino Bailen
-     * @return true si ha conseguido entrar al sistema
-     */
+
 
     public static int login(int tipo, String[][] datosAdmin, String[][] datosGestores, String[][] datosInversores, boolean[] inversoresBloqueados, boolean[] gestoresBloqueados) {
         return switch (tipo) {
