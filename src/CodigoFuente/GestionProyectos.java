@@ -35,6 +35,7 @@ public class GestionProyectos {
             System.out.println("Escriba 0 para ver más detalles.\nEscriba -1 para salir.\nO digite la posición del proyecto que quiere eliminar o modificar");
     }
 
+
     private void crearGrafico(double cantidadNecesaria, double cantidadFinanciada) {
         int porcentaje = (int) ((int) (cantidadFinanciada * 100) / cantidadNecesaria);
         String caracterLleno = "#";

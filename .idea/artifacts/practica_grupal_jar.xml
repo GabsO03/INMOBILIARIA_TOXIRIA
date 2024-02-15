@@ -3,6 +3,9 @@
     <output-path>$PROJECT_DIR$/out/artifacts/practica_grupal_jar</output-path>
     <root id="archive" name="practica grupal.jar">
       <element id="module-output" name="practica grupal" />
+      <element id="library" level="project" name="Java EE 6-Java EE 6" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javax.mail-1.6.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/activation-1.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

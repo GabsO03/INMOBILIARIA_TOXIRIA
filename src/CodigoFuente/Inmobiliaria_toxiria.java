@@ -37,6 +37,7 @@ public class Inmobiliaria_toxiria {
     public static void main(String[] args) {
         //USUARIOS
         GestionUsuarios usuarios=new GestionUsuarios(50);
+        usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
         //BLOQUEOS
 
 
@@ -56,6 +57,10 @@ public class Inmobiliaria_toxiria {
         //REGISTRO
         String nombre, nuevoUsuario, correoNuevoUsuario,passNuevoUsuario,passRepetidaNuevoUsuario,tipoNuevoUsuario;
         boolean registroCorrecto=false;
+        //INICIO DE SESION
+        String nombreUsuario,contrasenia;
+        boolean existeUsuario=false;
+
 
 
         do {
@@ -128,76 +133,30 @@ public class Inmobiliaria_toxiria {
                     }
 
                 }
-                // TODO: 14/02/2024 CONTINUAR CON LOS USUARIOS (NO PREOCUPARSE POR LOS ERRORES :)🩵 ) 
-
-
-
-
             }
 
             if (seleccionInicial==2){
                 do {
-                    menuUser();
-                    seleccionTipoUsuario = leerOpcionNumerica();
-                    int posicionAccesoExitoso = login(seleccionTipoUsuario, datosAdmins, datosGestores, datosInversores, gestoresBloqueados, inversoresBloqueados);
-                    boolean entry = entry(seleccionTipoUsuario, posicionAccesoExitoso, cantidadGestores, cantidadInversores);
+                    System.out.print("Nombre de usuario: ");
+                    nombreUsuario = leerOpcionLiteral();
+                    System.out.print("Contraseña: ");
+                    contrasenia = leerOpcionLiteral();
+                    int posicionLogin=usuarios.existeUsuario(nombreUsuario, contrasenia);
 
-
-                    //ADMINISTRADOR
-                    if (seleccionTipoUsuario == 1) {
-                        do {
-                            menuAdministrador();
-                            primerSubmenu = leerOpcionNumerica();
-                            switch (primerSubmenu) {
-                                case 1 ->  panelControlAdmin(datosGestores, datosInversores, gestoresBloqueados, inversoresBloqueados);
-                                case 2 -> {
-                                    do {
-
-                                        proyectos.mostrarProyectos(seleccionTipoUsuario);
-
-                                        segundoSubmenu = leerOpcionNumerica();
-                                        if (segundoSubmenu > 0 && segundoSubmenu <= proyectos.getCantidadProyectos()) {
-                                            System.out.println("¿Quiere eliminar el proyecto? [S]í | [N]o");
-                                            respuesta = leerOpcionLiteral();
-
-                                            if (respuesta.equalsIgnoreCase("s")) {
-                                                proyectos.eliminarProyecto(segundoSubmenu);
-                                            } else if (respuesta.equalsIgnoreCase("n")) {
-                                                System.out.println("¿Quiere modificar el proyecto? [S]í | [N]o");
-                                                respuesta = leerOpcionLiteral();
-                                                if (respuesta.equalsIgnoreCase("s")) {
-                                                    do {
-                                                        menuModificarProyecto();
-                                                        tercersubmenu = leerOpcionNumerica();
-                                                        switch (tercersubmenu) {
-                                                            case 1 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, cambiarNombreProyecto(), null, null, null, null, 0, 0);
-                                                            case 2 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, cambiarDescripcionProyecto(), null, null, null, 0, 0);
-                                                            case 3 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, cambiarTipoProyecto(), null, null, 0, 0);
-                                                            case 4 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, null, cambiarFechaInicio(), null, 0, 0);
-                                                            case 5 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, cambiarFechaFin(), 0, 0);
-                                                            case 6 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, null, cambiarCantidadNecesaria(), 0);
-                                                            case 7 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, null, 0, cambiarCantidadFinanciada());
-
-                                                            default -> System.out.println("Invalid response");
-                                                        }
-                                                    } while (tercersubmenu != 8);
-                                                }
-                                            }
-                                        } else if (segundoSubmenu == 0)
-                                            proyectos.proyectosDetallados();
-                                    } while (segundoSubmenu != -1);
-                                }
-                                case 3 -> modificarCuenta(datosAdmins);
+                    if ( posicionLogin>= 0) {
+                        //ADMINISTRADOR
+                        String claseUsuario= usuarios.averiguarClase(posicionLogin);
+                        switch (claseUsuario){
+                            case "Admin" -> {
+                                menuAdmin(usuarios,proyectos);
                             }
-                        } while (primerSubmenu != 4);
-                    }
+                            case "Gestor" -> {
+
+                            }
+                            case "Inversor" -> {
+                                menuInversor();
+                            }
+                        }
 
                     // GESTOR
                     if ((seleccionTipoUsuario == 2) && entry) {
