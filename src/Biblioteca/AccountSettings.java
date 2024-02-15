@@ -11,6 +11,7 @@ import java.util.Properties;
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 import static Biblioteca.Lectura_De_Datos.leerOpcionNumerica;
 import static Biblioteca.Menus.menuConfiguracion;
+import static Biblioteca.funcionesCadenas.comprobarFortalezaPass;
 
 
 public class AccountSettings {
@@ -199,8 +200,17 @@ public class AccountSettings {
      * @return la contraseña introducida
      */
     public static String cambiarcontrasenia (){
-        System.out.println("Escriba la nueva contraseña");
-        return leerOpcionLiteral();
+        String passNuevoUsuario, passRepetidaNuevoUsuario;
+        do {
+            System.out.println("Escriba su contraseña: ");
+            passNuevoUsuario = leerOpcionLiteral();
+        }while(!comprobarFortalezaPass(passNuevoUsuario));
+        do {
+            System.out.println("Escriba su contraseña de nuevo: ");
+            passRepetidaNuevoUsuario = leerOpcionLiteral();
+            if (!passNuevoUsuario.equals(passRepetidaNuevoUsuario)) System.out.println("Las contraseñas no coinciden");
+        }while(!passRepetidaNuevoUsuario.equals(passNuevoUsuario));
+        return passNuevoUsuario;
     }
     /**
      * Función para modificar los datos de la cuenta
