@@ -18,7 +18,15 @@ public class Inversor extends Usuario{
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    public void setBloqueado (boolean noEntry) { bloqueado = true; }
+
+    @Override
+    public void bloqueo() {
+        this.bloqueado = true;
+    }
+    @Override
+    public void desbloqueo() {
+        this.bloqueado = false;
+    }
 
     public boolean paga(double cantidad) {
         if (saldo >= cantidad) {
@@ -47,4 +55,7 @@ public class Inversor extends Usuario{
     }
     public boolean getBloqueado() { return bloqueado; }
 
+    public String toString () {
+        return super.toString() + (bloqueado?"Bloqueado":"");
+    }
 }

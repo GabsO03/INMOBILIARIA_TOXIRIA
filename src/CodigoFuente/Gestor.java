@@ -15,4 +15,17 @@ public class Gestor extends Usuario {
 
     //getters
     public boolean getBloqueado () { return bloqueado; }
+    public String toString () {
+        return super.toString() + (bloqueado?"Bloqueado":"");
+    }
+
+    @Override
+    public void bloqueo() {
+        this.bloqueado = true;
+    }
+    @Override
+    public void desbloqueo() {
+        this.bloqueado = false;
+    }
+
 }

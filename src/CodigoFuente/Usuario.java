@@ -1,6 +1,6 @@
 package CodigoFuente;
 
-public class Usuario {
+public abstract class Usuario {
     //ATRIBUTOS
     private int codigo;
     private String nombre;

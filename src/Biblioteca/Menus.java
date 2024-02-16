@@ -1,11 +1,7 @@
 package Biblioteca;
 import CodigoFuente.*;
 
-import java.time.LocalDate;
-
 import static Biblioteca.AccountSettings.modificarCuenta;
-import static Biblioteca.Colores.RED;
-import static Biblioteca.Colores.RESET;
 import static Biblioteca.Lectura_De_Datos.*;
 import static Biblioteca.Proyectos.*;
 
@@ -73,28 +69,30 @@ public class Menus {
                         if (segundoSubmenu > 0 && segundoSubmenu <= proyectos.getCantidadProyectos()) {
                             System.out.println("¿Quiere eliminar el proyecto? [S]í | [N]o");
                             String respuesta = leerOpcionLiteral();
-
-                            if (respuesta.equalsIgnoreCase("s")) {
-                                proyectos.eliminarProyecto(segundoSubmenu);
-                            } else if (respuesta.equalsIgnoreCase("n")) {
-                                System.out.println("¿Quiere modificar el proyecto? [S]í | [N]o");
-                                respuesta = leerOpcionLiteral();
-                                if (respuesta.equalsIgnoreCase("s")) {
-                                    do {
-                                        menuModificarProyecto();
-                                        tercerSubmenu = leerOpcionNumerica();
-                                        switch (tercerSubmenu) {
-                                            case 1 -> proyectos.modificarProyecto(segundoSubmenu, cambiarNombreProyecto(), null, null, null, null, 0, 0);
-                                            case 2 -> proyectos.modificarProyecto(segundoSubmenu, null, cambiarDescripcionProyecto(), null, null, null, 0, 0);
-                                            case 3 -> proyectos.modificarProyecto(segundoSubmenu, null, null, cambiarTipoProyecto(), null, null, 0, 0);
-                                            case 4 -> proyectos.modificarProyecto(segundoSubmenu, null, null, null, cambiarFechaInicio(), null, 0, 0);
-                                            case 5 -> proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, cambiarFechaFin(), 0, 0);
-                                            case 6 -> proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, null, cambiarCantidadNecesaria(), 0);
-                                            case 7 -> proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, null, 0, cambiarCantidadFinanciada());
-
-                                            default -> System.out.println("Invalid response");
-                                        }
-                                    } while (tercerSubmenu != 8);
+                            respuesta = respuesta.toLowerCase();
+                            segundoSubmenu--;
+                            switch (respuesta) {
+                                case "s" -> proyectos.eliminarProyecto(segundoSubmenu);
+                                case "n" -> {
+                                    System.out.println("¿Quiere modificar el proyecto? [S]í | [N]o");
+                                    respuesta = leerOpcionLiteral();
+                                    if (respuesta.equalsIgnoreCase("s")) {
+                                        do {
+                                            menuModificarProyecto();
+                                            tercerSubmenu = leerOpcionNumerica();
+                                            switch (tercerSubmenu) {
+                                                case 1 -> proyectos.modificarProyecto(segundoSubmenu, cambiarNombreProyecto(), null, null, null, null, 0, 0);
+                                                case 2 -> proyectos.modificarProyecto(segundoSubmenu, null, cambiarDescripcionProyecto(), null, null, null, 0, 0);
+                                                case 3 -> proyectos.modificarProyecto(segundoSubmenu, null, null, cambiarTipoProyecto(), null, null, 0, 0);
+                                                case 4 -> proyectos.modificarProyecto(segundoSubmenu, null, null, null, cambiarFechaInicio(), null, 0, 0);
+                                                case 5 -> proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, cambiarFechaFin(), 0, 0);
+                                                case 6 -> proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, null, cambiarCantidadNecesaria(), 0);
+                                                case 7 -> proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, null, 0, cambiarCantidadFinanciada());
+                                                case 8 -> System.out.println("");
+                                                default -> System.out.println("Respuesta no válida.");
+                                            }
+                                        } while (tercerSubmenu != 8);
+                                    }
                                 }
                             }
                         } else if (segundoSubmenu == 0)

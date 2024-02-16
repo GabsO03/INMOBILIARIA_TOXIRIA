@@ -26,7 +26,7 @@ public class GestionProyectos {
         while (i < arrayProyectos.length) {
             if (arrayProyectos != null) {
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
-                System.out.print("Posición: " + i);
+                System.out.print("Posición: " + (i+1));
                 System.out.print("Nombre: " + arrayProyectos[i].getNombre());
                 System.out.print("Tipo: " + arrayProyectos[i].getTipo());
                 System.out.print("Cantidad Necesaria: " + arrayProyectos[i].getCantidadNecesaria());
