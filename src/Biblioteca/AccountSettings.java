@@ -52,11 +52,6 @@ public class AccountSettings {
 
     }
 
-    /**
-     * Función que nos envía al correo el código de verificación que necesitamos para iniciar sesión
-     * @author Adrián Contreras Bueno
-     * @return el código necesario
-     */
     public static boolean tokenVerified(String[][] datosNoAdmin, int pos) {
         System.out.println("Se va a enviar un código de verificacion a tu correo electronico, un momento...");
         int codigoRandom = (int) (Math.random()*9999)+1000;
@@ -72,11 +67,7 @@ public class AccountSettings {
 
     }
 
-    /**
-     * Sistema de login del administrador
-     * @author Gabriela Oria Pinto
-     * @return true si ha conseguido entrar al sistema
-     */
+
 
 
     public static int loginAdmin (String[][] datosAdmins) {
@@ -101,11 +92,7 @@ public class AccountSettings {
         return i;
     }
 
-    /**
-     * Sistema de login del Gestor e Inversor
-     * @author Gabriela Oria Pinto
-     * @return true si ha conseguido entrar al sistema o false si no ha conseguido entrar al sistema porque su usuario ha sido bloqueado
-     */
+
     public static int loginNoAdmin (String[][] datosNoAdmins, boolean[] usuariosBloqueados) {
         boolean correcto = false, userFound = false;
         int i = 0, intentos = 3;
@@ -133,11 +120,7 @@ public class AccountSettings {
         } while (!correcto && intentos > 0);
         return i;
     }
-    /**
-     * Función que utiliza las otras funciones de login para acceder al sistema. Esta se usa en el main
-     * @author Gabriela Oria Pinto, Adrián Contreras Bueno y Alex Godino Bailen
-     * @return true si ha conseguido entrar al sistema
-     */
+
 
     public static int login(int tipo, String[][] datosAdmin, String[][] datosGestores, String[][] datosInversores, boolean[] inversoresBloqueados, boolean[] gestoresBloqueados) {
         return switch (tipo) {
@@ -158,12 +141,6 @@ public class AccountSettings {
 
     /* ----------------------------------------------------Change----------------------------------------------------- */
 
-    /**
-     * Función para saber la posición de nuestro usuario
-     * @author Gabriela Oria Pinto
-     * @param datosAdmins array de dos dimensiones como cadena
-     * @return la posición de nuestro usuario
-     */
     public static int posicionUsuario (String[][] datosAdmins) {
         boolean correcto = false, userFound = false;
         int i = 0;
@@ -184,21 +161,10 @@ public class AccountSettings {
         } while (!correcto);
         return i;
     }
-
-    /**
-     * Función para cambiar el nombre de usuario
-     * @author Gabriela Oria Pinto
-     * @return el nombre introducido
-     */
     public static String cambiarUsuario (){
         System.out.println("Escriba el nuevo usuario");
         return leerOpcionLiteral();
     }
-    /**
-     * Función para cambiar la contraseña del usuario
-     * @author Gabriela Oria Pinto
-     * @return la contraseña introducida
-     */
     public static String cambiarcontrasenia (){
         String passNuevoUsuario, passRepetidaNuevoUsuario;
         do {
@@ -212,11 +178,6 @@ public class AccountSettings {
         }while(!passRepetidaNuevoUsuario.equals(passNuevoUsuario));
         return passNuevoUsuario;
     }
-    /**
-     * Función para modificar los datos de la cuenta
-     * @author Gabriela Oria Pinto
-     * @param datosUsuario array de dos dimensiones como cadena
-     */
     public static void modificarCuenta (String[][] datosUsuario){
         int pos = posicionUsuario(datosUsuario), opcion;
         do {

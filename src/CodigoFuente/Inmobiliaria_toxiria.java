@@ -37,6 +37,7 @@ public class Inmobiliaria_toxiria {
     public static void main(String[] args) {
         //USUARIOS
         GestionUsuarios usuarios=new GestionUsuarios(50);
+        usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
         //BLOQUEOS
 
 
@@ -56,6 +57,10 @@ public class Inmobiliaria_toxiria {
         //REGISTRO
         String nombre, nuevoUsuario, correoNuevoUsuario,passNuevoUsuario,passRepetidaNuevoUsuario,tipoNuevoUsuario;
         boolean registroCorrecto=false;
+        //INICIO DE SESION
+        String nombreUsuario,contrasenia;
+        boolean existeUsuario=false;
+
 
 
         do {
@@ -128,165 +133,38 @@ public class Inmobiliaria_toxiria {
                     }
 
                 }
-                // TODO: 14/02/2024 CONTINUAR CON LOS USUARIOS (NO PREOCUPARSE POR LOS ERRORES :)🩵 ) 
-
-
-
-
             }
 
             if (seleccionInicial==2){
                 do {
-                    menuUser();
-                    seleccionTipoUsuario = leerOpcionNumerica();
-                    int posicionAccesoExitoso = login(seleccionTipoUsuario, datosAdmins, datosGestores, datosInversores, gestoresBloqueados, inversoresBloqueados);
-                    boolean entry = entry(seleccionTipoUsuario, posicionAccesoExitoso, cantidadGestores, cantidadInversores);
+                    System.out.print("Nombre de usuario: ");
+                    nombreUsuario = leerOpcionLiteral();
+                    System.out.print("Contraseña: ");
+                    contrasenia = leerOpcionLiteral();
+                    int posicionLogin=usuarios.existeUsuario(nombreUsuario, contrasenia);
 
-
-                    //ADMINISTRADOR
-                    if (seleccionTipoUsuario == 1) {
-                        do {
-                            menuAdministrador();
-                            primerSubmenu = leerOpcionNumerica();
-                            switch (primerSubmenu) {
-                                case 1 ->  panelControlAdmin(datosGestores, datosInversores, gestoresBloqueados, inversoresBloqueados);
-                                case 2 -> {
-                                    do {
-
-                                        proyectos.mostrarProyectos(seleccionTipoUsuario);
-
-                                        segundoSubmenu = leerOpcionNumerica();
-                                        if (segundoSubmenu > 0 && segundoSubmenu <= proyectos.getCantidadProyectos()) {
-                                            System.out.println("¿Quiere eliminar el proyecto? [S]í | [N]o");
-                                            respuesta = leerOpcionLiteral();
-
-                                            if (respuesta.equalsIgnoreCase("s")) {
-                                                proyectos.eliminarProyecto(segundoSubmenu);
-                                            } else if (respuesta.equalsIgnoreCase("n")) {
-                                                System.out.println("¿Quiere modificar el proyecto? [S]í | [N]o");
-                                                respuesta = leerOpcionLiteral();
-                                                if (respuesta.equalsIgnoreCase("s")) {
-                                                    do {
-                                                        menuModificarProyecto();
-                                                        tercersubmenu = leerOpcionNumerica();
-                                                        switch (tercersubmenu) {
-                                                            case 1 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, cambiarNombreProyecto(), null, null, null, null, 0, 0);
-                                                            case 2 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, cambiarDescripcionProyecto(), null, null, null, 0, 0);
-                                                            case 3 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, cambiarTipoProyecto(), null, null, 0, 0);
-                                                            case 4 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, null, cambiarFechaInicio(), null, 0, 0);
-                                                            case 5 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, cambiarFechaFin(), 0, 0);
-                                                            case 6 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, null, cambiarCantidadNecesaria(), 0);
-                                                            case 7 ->
-                                                                    proyectos.modificarProyecto(segundoSubmenu, null, null, null, null, null, 0, cambiarCantidadFinanciada());
-
-                                                            default -> System.out.println("Invalid response");
-                                                        }
-                                                    } while (tercersubmenu != 8);
-                                                }
-                                            }
-                                        } else if (segundoSubmenu == 0)
-                                            proyectos.proyectosDetallados();
-                                    } while (segundoSubmenu != -1);
-                                }
-                                case 3 -> modificarCuenta(datosAdmins);
+                    if ( posicionLogin>= 0) {
+                        //ADMINISTRADOR
+                        String claseUsuario= usuarios.averiguarClase(posicionLogin);
+                        switch (claseUsuario){
+                            case "Admin" -> {
+                                menuAdmin(usuarios,proyectos);
                             }
-                        } while (primerSubmenu != 4);
-                    }
+                            case "Gestor" -> {
 
-                    // GESTOR
-                    if ((seleccionTipoUsuario == 2) && entry) {
-                        if (!gestoresBloqueados[posicionAccesoExitoso]) {
-                            do {
-                                menuProyectosGestor();
-                                primerSubmenu = leerOpcionNumerica();
-                                if (primerSubmenu == 1) proyectos.mostrarNombreTipoProyecto();
-                                if (primerSubmenu == 2) {
-                                    String name = cambiarNombreProyecto();
-                                    String descripcion = cambiarDescripcionProyecto();
-                                    String tipo = cambiarTipoProyecto();
-                                    LocalDate fechaInicio = cambiarFechaInicio();
-                                    LocalDate fechaFin = cambiarFechaInicio();
-                                    double cantidadNecesaria = cambiarCantidadNecesaria();
-                                    double cantidadFinanciada;
-                                do {
-                                        cantidadFinanciada = cambiarCantidadFinanciada();
-                                        if (cantidadFinanciada > cantidadNecesaria)
-                                            System.out.println("El monto excede la cantidad necesaria");
-                                    } while (cantidadFinanciada > cantidadNecesaria);
-                                proyectos.crearProyecto(name, descripcion, tipo, fechaInicio, fechaFin, cantidadNecesaria, cantidadFinanciada);
-                                }
-
-                                if (primerSubmenu == 3) modificarCuenta(datosGestores);
-                            } while (primerSubmenu != 4);
-                        } else System.out.println("Su usuario está bloqueado, contacte con el administrador del sistema para desbloquearlo");
-                    }
-
-                    //INVERSOR
-                    if ((seleccionTipoUsuario == 3) && entry) {
-                        if (!inversoresBloqueados[posicionAccesoExitoso]) {
-                            do {
+                            }
+                            case "Inversor" -> {
                                 menuInversor();
-                                primerSubmenu = leerOpcionNumerica();
-                                switch (primerSubmenu) {
-                                    case 1 -> {
-                                        /*System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto" + RESET);
-                                        for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
-                                            if (invirtioInvesorEnProyecto[0][i])
-                                                System.out.println(RED + proyectsStringData[0][i] + "\t\t\t\t" + GREEN + proyectsStringData[2][i] + RESET);
-                                        }*/
-                                    }
-                                    case 2 -> {
-                                        /*for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
-                                            if (invirtioInvesorEnProyecto[0][i])
-                                                mostrarInversionEnProyecto(proyectsStringData[0][i], proyectsStringData[2][i], cantidadesInvirtioInversoresProyectos[0][i]);
-                                        }*/
-                                    }
-                                    case 3 -> {
-                                        proyectos.mostrarProyectos(seleccionTipoUsuario);
-                                        System.out.println(RED + "¿Quieres ver más detalles sobre los proyectos?" + RESET);
-                                        respuesta = leerOpcionLiteral();
-                                        if (respuesta.equalsIgnoreCase("si")) {
-                                            proyectos.proyectosDetallados();
-                                        }
-                                        System.out.println(RED + "¿Quieres invertir en algún proyecto?" + RESET);
-                                        respuesta = leerOpcionLiteral();
-                                        if (respuesta.equalsIgnoreCase("si")) {
-                                            do {
-                                                proyectos.menuProyectos();
-                                                segundoSubmenu = leerOpcionNumerica();
-                                                if (proyectos.noEstaVacio(segundoSubmenu)) {
-                                                    proyectos.mostrarCantidades(segundoSubmenu);
-                                                    System.out.println(RED + "¿Cuánto desea invertir?" + RESET);
-                                                    respuestaDouble = leerOpcionDouble();
-                                                    if (respuestaDouble <= dineroInversores[0]) {
-                                                    /*    invirtioInvesorEnProyecto[0][segundoSubmenu] = true;
-                                                        proyectsFinantialData[1][segundoSubmenu] += respuestaDouble;
-                                                        cantidadesInvirtioInversoresProyectos[0][segundoSubmenu] += respuestaDouble;
-                                                        dineroInversores[0] -= respuestaDouble;*/
-                                                    } else
-                                                        System.out.println("No cuentas con saldo suficiente para realizar este tipo de operación");
+                            }
+                        }
 
-                                                } else System.out.println("Este proyecto no está disponible");
-                                            } while ((segundoSubmenu > 0 && segundoSubmenu <= proyectos.getCantidadProyectos()));
-                                        }
-                                    }
-                                    case 4 -> {
-                                        System.out.println("Tienes " + dineroInversores[0] + "€");
-                                        System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
-                                        dineroInversores[posicionAccesoExitoso] += leerOpcionDouble();
-                                    }
-                                    case 5 -> modificarCuenta(datosInversores);
-                                }
-                            } while (primerSubmenu != 6);
-                        } else System.out.println("Su usuario está bloqueado, contacte con el administrador para desbloquearlo");
+                        // GESTOR
+
+
+                        //INVERSOR
+
                     }
-                } while (seleccionTipoUsuario != 4);
+                } while (seleccionTipoUsuario != 4) ;
             }
         }while(seleccionInicial!=3);
     }

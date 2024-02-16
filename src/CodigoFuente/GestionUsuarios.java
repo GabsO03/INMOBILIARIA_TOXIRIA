@@ -29,14 +29,29 @@ public class GestionUsuarios {
         this.arrayUsuarios = arrayUsuarios;
     }
 
-
-    public void muestraUsuarios () {
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+    public void muestraUsuarios (int clase) {
         int i = 1;
         System.out.println("Lista de usuarios:");
         System.out.println("===============================");
         for (Usuario u : arrayUsuarios) {
-            if (u != null )System.out.println(i++ + ") " + u);
+            if (u != null) System.out.println(i++ + ") " + u);
         }
+        /*
+                                if (p != null && p.getClass().getSimpleName().equals("Alumno")) {
+                            p.asiste();
+                            //Esto para poder ejecutar métodos que solo tiene alumnos
+                            Alumno aux = (Alumno) p;
+                        }
+         */
     }
 
     public Usuario devuelveUsuario (int pos) {
@@ -44,6 +59,10 @@ public class GestionUsuarios {
         return null;
     }
 
+    public void insertarUsuarioAdmin(String nombre, String user, String contrasenia, String email){
+        arrayUsuarios[numeroUsuariosInsertados++] = new Admin(nombre, user, contrasenia, email);
+        aum
+    }
     public void insertarUsuarioGestor ( String nombre, String user, String contrasenia, String email) {
         arrayUsuarios[numeroUsuariosInsertados++] = new Gestor (nombre, user, contrasenia, email);
         aumentaTamanio();
@@ -65,36 +84,25 @@ public class GestionUsuarios {
 
     public void modificarUsuario (int pos, String nombre, String apellidos, String contrasenia, String email) {
         arrayUsuarios[pos].setNombre(nombre);
-        arrayUsuarios[pos].setApellidos(apellidos);
         arrayUsuarios[pos].setContrasenia(contrasenia);
         arrayUsuarios[pos].setEmail(email);
     }
     public int buscarUsuario(String atributo, String valor) {
-        return buscarUsuario(atributo, valor, 0);
-    }
-    public int buscarUsuario(String atributo, String valor, int posicion) {
-        int entero;
         atributo = atributo.toLowerCase();
         valor = valor.toLowerCase();
         switch (atributo) {
-            case "código" -> {
-                entero = Integer.parseInt(valor);
-                for (int i = posicion; i < arrayUsuarios.length; i++) {
-                    if (arrayUsuarios[i] != null && arrayUsuarios[i].getCodigo() == entero) return i;
+            case "contraseña" -> {
+                for (int i = 0; i < arrayUsuarios.length; i++) {
+                    if (arrayUsuarios[i] != null && arrayUsuarios[i].getContrasenia().equals(valor)) return i;
                 }
             }
             case "nombre" -> {
-                for (int i = posicion; i < arrayUsuarios.length; i++) {
+                for (int i = 0; i < arrayUsuarios.length; i++) {
                     if (arrayUsuarios[i] != null && arrayUsuarios[i].getNombre().equalsIgnoreCase(valor)) return i;
                 }
             }
-            case "apellidos" -> {
-                for (int i = posicion; i < arrayUsuarios.length; i++) {
-                    if (arrayUsuarios[i] != null && arrayUsuarios[i].getApellidos().equalsIgnoreCase(valor)) return i;
-                }
-            }
             case "nombre de usuario" -> {
-                for (int i = posicion; i < arrayUsuarios.length; i++) {
+                for (int i = 0; i < arrayUsuarios.length; i++) {
                     if (arrayUsuarios[i] != null && arrayUsuarios[i].getUsername().equalsIgnoreCase(valor)) return i;
                 }
             }
@@ -138,17 +146,6 @@ public class GestionUsuarios {
                     }
                 }
             }
-            case "apellidos" -> {
-                for (int j = 0; j < arrayUsuarios.length-1; j++) {
-                    for (int i = 0; i < arrayUsuarios.length - (1 + j); i++) {
-                        if (arrayUsuarios[i]!=null && arrayUsuarios[i + 1]!=null){
-                            if (arrayUsuarios[i].getApellidos().compareTo(arrayUsuarios[i + 1].getApellidos()) > 0) {
-                                intercambiaUsarios(i, i + 1);
-                            }
-                        }
-                    }
-                }
-            }
             case "nombre de usuario" -> {
                 for (int j = 0; j < arrayUsuarios.length; j++) {
                     for (int i = 0; i < arrayUsuarios.length - (1 + j); i++) {
@@ -163,4 +160,17 @@ public class GestionUsuarios {
             default -> System.out.println("Ese parámetro no está disponible.");
         }
     }
+
+    public int existeUsuario (String username, String contrasenia) {
+        int posUsuario = buscarUsuario("nombre de usuario", username);
+        int posContrasenia = buscarUsuario("contraseña", contrasenia);
+        if ((posUsuario >= 0 && posContrasenia >= 0) && posUsuario==posContrasenia) return posUsuario;
+        return -1;
+    }
+
+    public String averiguarClase (int pos) {
+        Usuario aux = devuelveUsuario(pos);
+        return aux.getClass().getSimpleName();
+    }
+
 }
