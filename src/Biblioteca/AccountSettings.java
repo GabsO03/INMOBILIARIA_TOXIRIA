@@ -1,5 +1,7 @@
 package Biblioteca;
 
+import CodigoFuente.GestionUsuarios;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -178,17 +180,20 @@ public class AccountSettings {
         }while(!passRepetidaNuevoUsuario.equals(passNuevoUsuario));
         return passNuevoUsuario;
     }
-    public static void modificarCuenta (String[][] datosUsuario){
-        int pos = posicionUsuario(datosUsuario), opcion;
+    public static String cambiarEmail(){
+        System.out.println("Escriba el nuevo email");
+        return leerOpcionLiteral();
+    }
+    public static void modificarCuenta (int pos, GestionUsuarios usuarios) {
+        int opcion;
         do {
             menuConfiguracion();
             opcion = leerOpcionNumerica();
             switch (opcion) {
-                case 1 -> datosUsuario[1][pos] = cambiarUsuario();
-                case 2 -> datosUsuario[2][pos] = cambiarcontrasenia();
+                case 1 -> usuarios.modificarUsuario(pos, cambiarUsuario(), null, null);
+                case 2 -> usuarios.modificarUsuario(pos, null, cambiarcontrasenia(), null);
+                case 3 -> usuarios.modificarUsuario(pos, null, null, cambiarEmail());
             }
-        } while (opcion!=3);
+        } while (opcion != 3);
     }
-
-
 }

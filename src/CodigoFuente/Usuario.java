@@ -40,4 +40,12 @@ public class Usuario {
     public String getContrasenia () { return contrasenia; }
     public String getEmail () { return email; }
     public int getCodigo () { return codigo; }
+
+    public abstract void bloqueo();
+    public abstract void desbloqueo();
+
+    public String toString () {
+        return "Nombre: " + nombre;
+    }
+
 }

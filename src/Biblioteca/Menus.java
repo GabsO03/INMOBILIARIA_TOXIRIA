@@ -1,7 +1,5 @@
 package Biblioteca;
-import CodigoFuente.GestionProyectos;
-import CodigoFuente.GestionUsuarios;
-import CodigoFuente.Usuario;
+import CodigoFuente.*;
 
 import java.time.LocalDate;
 
@@ -17,68 +15,42 @@ public class Menus {
         System.out.println("Seleccione qué quiere hacer: \n1. Registro\n2. Iniciar sesión\n3. Salir");
     }
     public static void menuProyectosGestor(){
-        System.out.println("Seleccione que desea realizar con los proyectos: \n1. Mostrar proyectos creados.\n2. Crear nuevo proyecto.\n3. Configuración.\n4. Salir");
+        System.out.println("Seleccione que desea realizar con los proyectos: \n1. Mostrar proyectos creados.\n2. Crear nuevo proyecto.\n3. Configuración de cuenta.\n4. Salir");
     }
     public static void menuAdministrador(){
         System.out.println("Seleccione dónde quiere acceder: \n1. Panel de control\n2. Proyectos\n3. Configuración\n4. Salir");
     }
     public static void menuModificarProyecto(){
-        System.out.println("Elija qué quiere modificar:\n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
+        System.out.println("Elija qué quiere modificar: \n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
                 "\n6.Fecha inicio\n7.Fecha fin\n8.Nada");
     }
-    public static void menuInversor(){
-        System.out.println("Seleccione donde quiere acceder: \n1. Panel de Control\n2. Mis inversiones\n3. Proyectos\n4. Cartera Virtual\n5. Configuración\n6. Salir");
+    public static void menuOpcinesInversor(){
+        System.out.println("Seleccione donde quiere acceder:\n1. Mis inversiones\n2. Proyectos\n3. Cartera Virtual\n4. Configuración de cuenta\n5. Salir");
     }
     public static void menuConfiguracion(){
         System.out.println("Seleccione qué quiere hacer:");
         System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3.Salir");
     }
 
-    public static void bloquearDesbloquearUsuario (int opcion, int posicion, String[][] datosGestores, String[][] datosInversores, boolean[] gestoresBloqueados,boolean[] inversoresBloqueados) {
-        switch (opcion) {
-            case 1 -> {
-                if ((posicion >= 0 && posicion<gestoresBloqueados.length) && datosGestores[0][posicion]!=null) {
-                    if (!gestoresBloqueados[posicion]) gestoresBloqueados[posicion] = true;
-                    else gestoresBloqueados[posicion]=false;
-                }
-                else System.out.println("Este usuario no existe.");
-            }
-            case 2 -> {
-                if ((posicion >= 0 && posicion<inversoresBloqueados.length) && datosInversores[0][posicion]!=null) {
-                    if (!inversoresBloqueados[posicion]) inversoresBloqueados[posicion] = true;
-                    else inversoresBloqueados[posicion]=false;
-                }
-                else System.out.println("Este usuario no existe.");
-            }
-            default -> System.out.println("");
-        }
-    }
-    public static void panelControlAdmin(){
-        int opcion;
+    public static void panelControlUsuarios(GestionUsuarios usuarios){
+        int posicion, opcion;
         do {
-            System.out.println("Menú del panel de control de usuarios, estos son los usuarios del sistema.");
-            System.out.println("Seleccione que tipo de usuario desea administrar.\n1. Gestor.\n2. Inversor.\n3. Salir");
+            System.out.println("Menú del panel de control de usuarios.");
+            usuarios.muestraUsuarios();
+            System.out.println("Introduzca el número del usuario que quieras bloquear o desbloquear");
+            posicion = leerOpcionNumerica();
+            System.out.println("1. Bloquear.\n2. Desbloquear");
             opcion = leerOpcionNumerica();
-            switch (opcion) {
-                case 1 -> {
-                    for (Usuario u : personas) {
-// AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-// AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-// AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-// AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-// AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-// AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-                    }
-                }
-                case 2 -> ;
+            usuarios.bloquearDesbloquearUsuario(opcion, posicion);
+        } while (posicion != 3);
+    }
+    public static void misInversiones(GestionInversiones inversiones, Inversor usuario){
+        Inversion[] arrayInversiones=inversiones.getInversiones();
+        for (Inversion inversion:arrayInversiones) {
+            if (inversion!=null && inversion.getInversor()==usuario){
+                System.out.println(inversion);
             }
-            if (opcion != 3) {
-
-                System.out.println("Seleccione el usuario que desea bloquear/habilitar:");
-                int posicion = leerOpcionNumerica();
-                bloquearDesbloquearUsuario(opcion, posicion, datosGestores, datosInversores, gestoresBloqueados, inversoresBloqueados);
-            }
-        } while (opcion != 3);
+        }
     }
 
     public static void menuAdmin (GestionUsuarios usuarios, GestionProyectos proyectos) {
@@ -87,7 +59,7 @@ public class Menus {
             menuAdministrador();
             primerSubmenu = leerOpcionNumerica();
             switch (primerSubmenu) {
-                case 1 -> panelControlAdmin();
+                case 1 -> panelControlUsuarios(usuarios);
                 case 2 -> {
                     do {
                         proyectos.mostrarProyectos(1);
@@ -128,78 +100,36 @@ public class Menus {
         } while (primerSubmenu != 4);
     }
 
-    public static void menuGestor(GestionUsuarios usuario, GestionProyectos proyectos){
-        int primerSubmenu, segundoSubmenu, tercerSubmenu;
+    public static void menuGestor(int pos, GestionUsuarios usuarios, GestionProyectos proyectos){
+        int primerSubmenu;
             do {
                 menuProyectosGestor();
                 primerSubmenu = leerOpcionNumerica();
                 switch (primerSubmenu){
                     case 1 ->proyectos.mostrarProyectos(0); //EL TIPO ES 0 PORQUE SI PONEMOS 1 SALE MAS INFO PARA EL ADMIN
-                    case 2 ->{
-                        proyectos.crearProyecto();
+                    case 2 ->proyectos.crearProyecto(cambiarNombreProyecto(),cambiarDescripcionProyecto(),cambiarTipoProyecto(),cambiarFechaInicio(),cambiarFechaFin(),cambiarCantidadNecesaria(),cambiarCantidadFinanciada());
+                    case 3 -> modificarCuenta(pos, usuarios);
                 }
 
             } while (primerSubmenu != 4);
-
     }
 
-    public static void menuInversor(GestionUsuarios usuarios, GestionProyectos proyectos){
-        int primerSubmenu, segundoSubmenu, tercerSubmenu;
-        String respuesta;
-        double respuestaDouble;
-            do {
-                menuInversor();
-                primerSubmenu = leerOpcionNumerica();
-                switch (primerSubmenu) {
-                    case 1 -> {
-                        /*System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto" + RESET);
-                                       for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
-                                           if (invirtioInvesorEnProyecto[0][i])
-                                               System.out.println(RED + proyectsStringData[0][i] + "\t\t\t\t" + GREEN + proyectsStringData[2][i] + RESET);
-                                       }*/
+    public static void menuInversor(int pos, GestionUsuarios usuarios, GestionProyectos proyectos, GestionInversiones inversiones, Inversor inversor){
+        int primerSubmenu;
+        do{
+            menuOpcinesInversor();
+            primerSubmenu = leerOpcionNumerica();
+            switch (primerSubmenu){
+                case 1 -> misInversiones(inversiones, inversor);
+                case 2 -> {
+                    proyectos.mostrarProyectos(0);
+                    if (Inversion.hacerInversion(proyectos)!=-1){
+                        invertir(); // TODO: 16/02/2024 QUE SIGA GABI??
                     }
-                    case 2 -> {
-                                        /*for (int i = 0; i < invirtioInvesorEnProyecto.length; i++) {
-                                            if (invirtioInvesorEnProyecto[0][i])
-                                                mostrarInversionEnProyecto(proyectsStringData[0][i], proyectsStringData[2][i], cantidadesInvirtioInversoresProyectos[0][i]);
-                                        }*/
-                    }
-                    case 3 -> {
-                        proyectos.mostrarProyectos(seleccionTipoUsuario);
-                        System.out.println(RED + "¿Quieres ver más detalles sobre los proyectos?" + RESET);
-                        respuesta = leerOpcionLiteral();
-                        if (respuesta.equalsIgnoreCase("si")) {
-                            proyectos.proyectosDetallados();
-                        }
-                        System.out.println(RED + "¿Quieres invertir en algún proyecto?" + RESET);
-                        respuesta = leerOpcionLiteral();
-                        if (respuesta.equalsIgnoreCase("si")) {
-                            do {
-                                proyectos.menuProyectos();
-                                segundoSubmenu = leerOpcionNumerica();
-                                if (proyectos.noEstaVacio(segundoSubmenu)) {
-                                    proyectos.mostrarCantidades(segundoSubmenu);
-                                    System.out.println(RED + "¿Cuánto desea invertir?" + RESET);
-                                    respuestaDouble = leerOpcionDouble();
-                                    if (respuestaDouble <= dineroInversores[0]) {
-                                                    /*    invirtioInvesorEnProyecto[0][segundoSubmenu] = true;
-                                                        proyectsFinantialData[1][segundoSubmenu] += respuestaDouble;
-                                                        cantidadesInvirtioInversoresProyectos[0][segundoSubmenu] += respuestaDouble;
-                                                        dineroInversores[0] -= respuestaDouble;*/
-                                    } else
-                                        System.out.println("No cuentas con saldo suficiente para realizar este tipo de operación");
-
-                                } else System.out.println("Este proyecto no está disponible");
-                            } while ((segundoSubmenu > 0 && segundoSubmenu <= proyectos.getCantidadProyectos()));
-                        }
-                    }
-                    case 4 -> {
-                        System.out.println("Tienes " + dineroInversores[0] + "€");
-                        System.out.print("Introduzca el saldo que quiere añadir a su cartera digital: ");
-                        dineroInversores[posicionAccesoExitoso] += leerOpcionDouble();
-                    }
-                    case 5 -> modificarCuenta(datosInversores);
                 }
-            } while (primerSubmenu != 6);
+                case 3 -> inversor.mostrarYAniadirSaldo();
+                case 4 -> modificarCuenta(pos, usuarios);
+            }
+        }while (primerSubmenu != 5);
     }
 }

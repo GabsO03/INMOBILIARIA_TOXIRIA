@@ -107,7 +107,7 @@ public class Inmobiliaria_toxiria {
 
 
                 }else {
-                    System.out.println("Escriba su nombre comlpeto: ");
+                    System.out.println("Escriba su nombre completo: ");
                     nombre=leerOpcionLiteral();
                     System.out.println("Escriba su nombre de usuario: ");
                     nuevoUsuario=leerOpcionLiteral();
@@ -145,26 +145,15 @@ public class Inmobiliaria_toxiria {
 
                     if ( posicionLogin>= 0) {
                         //ADMINISTRADOR
-                        String claseUsuario= usuarios.averiguarClase(posicionLogin);
-                        switch (claseUsuario){
-                            case "Admin" -> {
-                                menuAdmin(usuarios,proyectos);
-                            }
-                            case "Gestor" -> {
+                        String claseUsuario = usuarios.averiguarClase(posicionLogin);
+                        switch (claseUsuario) {
+                            case "Admin" -> menuAdmin(usuarios, proyectos);
 
-                            }
-                            case "Inversor" -> {
-                                menuInversor();
-                            }
+                            case "Gestor" -> menuGestor(posicionLogin, usuarios, proyectos);
+
+                            case "Inversor" -> menuInversor(posicionLogin, usuarios, proyectos, inversiones,(Inversor) usuarios.devuelveUsuario(posicionLogin));
                         }
-
-                        // GESTOR
-
-
-                        //INVERSOR
-
-                    }
-                } while (seleccionTipoUsuario != 4) ;
+                    }else System.out.println("El usuario o contraseña no es correcto");
             }
         }while(seleccionInicial!=3);
     }

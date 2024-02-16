@@ -29,29 +29,16 @@ public class GestionUsuarios {
         this.arrayUsuarios = arrayUsuarios;
     }
 
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-//ADSFDGFHGJFHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-    public void muestraUsuarios (int clase) {
+    public void muestraUsuarios () {
         int i = 1;
         System.out.println("Lista de usuarios:");
         System.out.println("===============================");
         for (Usuario u : arrayUsuarios) {
-            if (u != null) System.out.println(i++ + ") " + u);
+            if (u != null ) {
+                if (u.getClass().getSimpleName().equalsIgnoreCase("Gestor")) System.out.println(i++ + ") " + u + " - Gestor");
+                if (u.getClass().getSimpleName().equalsIgnoreCase("Inversor")) System.out.println(i++ + ") " + u + " - Gestor");
+            }
         }
-        /*
-                                if (p != null && p.getClass().getSimpleName().equals("Alumno")) {
-                            p.asiste();
-                            //Esto para poder ejecutar métodos que solo tiene alumnos
-                            Alumno aux = (Alumno) p;
-                        }
-         */
     }
 
     public Usuario devuelveUsuario (int pos) {
@@ -59,10 +46,6 @@ public class GestionUsuarios {
         return null;
     }
 
-    public void insertarUsuarioAdmin(String nombre, String user, String contrasenia, String email){
-        arrayUsuarios[numeroUsuariosInsertados++] = new Admin(nombre, user, contrasenia, email);
-        aum
-    }
     public void insertarUsuarioGestor ( String nombre, String user, String contrasenia, String email) {
         arrayUsuarios[numeroUsuariosInsertados++] = new Gestor (nombre, user, contrasenia, email);
         aumentaTamanio();
@@ -82,8 +65,8 @@ public class GestionUsuarios {
         }
     }
 
-    public void modificarUsuario (int pos, String nombre, String apellidos, String contrasenia, String email) {
-        arrayUsuarios[pos].setNombre(nombre);
+    public void modificarUsuario (int pos, String userName, String contrasenia, String email) {
+        arrayUsuarios[pos].setUsername(userName);
         arrayUsuarios[pos].setContrasenia(contrasenia);
         arrayUsuarios[pos].setEmail(email);
     }
@@ -172,5 +155,14 @@ public class GestionUsuarios {
         Usuario aux = devuelveUsuario(pos);
         return aux.getClass().getSimpleName();
     }
+
+    public void bloquearDesbloquearUsuario (int opcion, int pos) {
+        //switch 1 para bloquear y 2 para desbloquear
+        switch (opcion){
+            case 1 -> arrayUsuarios[pos].bloqueo();
+            case 2 -> arrayUsuarios[pos].desbloqueo();
+        }
+    }
+
 
 }

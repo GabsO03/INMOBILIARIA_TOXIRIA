@@ -34,7 +34,24 @@ public class Inversion {
         this.proyecto = proyecto;
     }
 
+    //Métodos
 
+    public static int hacerInversion(GestionProyectos proyectos){
+        Proyecto[] arrayProyectos = proyectos.getArrayProyectos();
+        String respuesta;
+        int opcion=-1;
+        System.out.println("¿Quieres invertir en algún proyecto?");
+        respuesta=leerOpcionLiteral();
+        if(respuesta.equalsIgnoreCase("Si")){
+            System.out.println("Introduzca el número del proyecto en el que deseas invertir");
+            opcion=leerOpcionNumerica();
+            if(opcion>arrayProyectos.length||opcion<0) {
+                System.out.println("No se ha encontrado ningún proyecto con ese número");
+                return -1;
+            }
+        }
+        return opcion;
+    }
 
     public String toString (){
         return "Nombre: " + proyecto.getNombre() + "\nTipo: "+ proyecto.getTipo() + "\nCantidad con la que ha participado: " + cantidadParticipada;
