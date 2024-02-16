@@ -1,4 +1,6 @@
 package CodigoFuente;
+import static Biblioteca.Colores.*;
+import static Biblioteca.Lectura_De_Datos.*;
 
 public class Inversion {
     //ATRIBUTOS
@@ -12,7 +14,7 @@ public class Inversion {
         this.proyecto = proyecto;
     }
 
-    public boolean financiarProyecto (double cantidadEntrante) {
+    public boolean financiarProyecto(double cantidadEntrante) {
         proyecto.setCantidadFinanciada(proyecto.getCantidadFinanciada() + cantidadEntrante);
         cantidadParticipada += cantidadEntrante;
         return inversor.paga(cantidadEntrante);
@@ -54,7 +56,7 @@ public class Inversion {
     }
 
     public String toString (){
-        return "Nombre: " + proyecto.getNombre() + "\nTipo: "+ proyecto.getTipo() + "\nCantidad con la que ha participado: " + cantidadParticipada;
+        return RED+"Nombre: " + proyecto.getNombre() + GREEN+"\nTipo: "+ proyecto.getTipo() + CYAN + "\nCantidad con la que ha participado: " + cantidadParticipada +RESET;
     }
 
 }

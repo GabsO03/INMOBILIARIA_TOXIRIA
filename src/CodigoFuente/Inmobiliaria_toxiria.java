@@ -46,8 +46,9 @@ public class Inmobiliaria_toxiria {
         proyectos.crearProyecto("Villa verde", "La villa más fea","Plusvalía", LocalDate.now(), LocalDate.now().plusMonths(5), 4521.56f, 521.56f);
         proyectos.crearProyecto("Villa azul", "La villa más bonita", "Préstamo", LocalDate.now().plusDays(5), LocalDate.now().plusMonths(9), 85112.54, 5112.54);
 
-        //INVERSOR
-        double[] dineroInversores = new double[cantidadInversores];
+        //INVERSIONES
+        GestionInversiones inversiones=new GestionInversiones((Inversor) usuarios.devuelveUsuario(posicionLogin),0);
+
         double respuestaDouble;
         String respuesta;
 
@@ -136,7 +137,6 @@ public class Inmobiliaria_toxiria {
             }
 
             if (seleccionInicial==2){
-                do {
                     System.out.print("Nombre de usuario: ");
                     nombreUsuario = leerOpcionLiteral();
                     System.out.print("Contraseña: ");

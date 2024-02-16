@@ -7,6 +7,37 @@ public class GestionInversiones {
     private int cantidadInversiones;
     private int cantidadInversionesCreadas = 0;
 
+    public Inversor getInversor() {
+        return inversor;
+    }
+
+    public void setInversor(Inversor inversor) {
+        this.inversor = inversor;
+    }
+
+    public Inversion[] getInversiones() {
+        return inversiones;
+    }
+
+    public void setInversiones(Inversion[] inversiones) {
+        this.inversiones = inversiones;
+    }
+
+    public int getCantidadInversiones() {
+        return cantidadInversiones;
+    }
+
+    public void setCantidadInversiones(int cantidadInversiones) {
+        this.cantidadInversiones = cantidadInversiones;
+    }
+
+    public int getCantidadInversionesCreadas() {
+        return cantidadInversionesCreadas;
+    }
+
+    public void setCantidadInversionesCreadas(int cantidadInversionesCreadas) {
+        this.cantidadInversionesCreadas = cantidadInversionesCreadas;
+    }
 
     public GestionInversiones (Inversor inversor, int cantidadInversiones) {
         this.inversor = inversor;

@@ -50,6 +50,10 @@ public class GestionUsuarios {
         arrayUsuarios[numeroUsuariosInsertados++] = new Gestor (nombre, user, contrasenia, email);
         aumentaTamanio();
     }
+    public void insertarUsuarioAdmin ( String nombre, String user, String contrasenia, String email) {
+        arrayUsuarios[numeroUsuariosInsertados++] = new Admin (nombre, user, contrasenia, email);
+        aumentaTamanio();
+    }
     public void insertarUsuarioInversor ( String nombre, String user, String contrasenia, String email) {
         arrayUsuarios[numeroUsuariosInsertados++] = new Inversor (nombre, user, contrasenia, email, 0);
         aumentaTamanio();

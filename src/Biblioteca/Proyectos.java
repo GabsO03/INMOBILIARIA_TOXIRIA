@@ -38,12 +38,6 @@ public class Proyectos {
     }
 
 
-    // TODO: 15/02/2024 SEGUIR CON LA CREACION DEL PROYECTO
-    public static void nuevoProyecto(){
-        String nombreProyecto, descripcionProyecto,tipoProyecto;
-        float cantidadNecesaria, cantidadFinanciada;
-        LocalDate fechaInicio, fechaFin;
-    }
 
 
 }

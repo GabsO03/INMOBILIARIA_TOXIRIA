@@ -52,6 +52,12 @@ public class Menus {
             }
         }
     }
+    public static void invertir(){
+        double cantidadInvertida;
+        System.out.println("Introduzca la cantidad que quieres invertir en el proyecto");
+        cantidadInvertida=leerOpcionDouble();
+        if(Inversion.financiarProyecto(cantidadInvertida)) System.out.println("Su inversion se ha realizado");
+    }
 
     public static void menuAdmin (GestionUsuarios usuarios, GestionProyectos proyectos) {
         int primerSubmenu, segundoSubmenu, tercerSubmenu;

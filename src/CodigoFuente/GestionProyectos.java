@@ -16,6 +16,11 @@ public class GestionProyectos {
         arrayProyectos = new Proyecto[20];
         cantidadProyectos++;
     }
+
+    public Proyecto[] getArrayProyectos() {
+        return arrayProyectos;
+    }
+
     public void mostrarProyectos(int tipo) {
         int i = 0;
         while (i < arrayProyectos.length) {
