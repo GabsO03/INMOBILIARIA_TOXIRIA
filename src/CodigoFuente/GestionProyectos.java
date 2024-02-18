@@ -26,11 +26,11 @@ public class GestionProyectos {
         while (i < arrayProyectos.length) {
             if (arrayProyectos[i] != null) {
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
-                System.out.print("Posición: " + (i+1));
-                System.out.print("\nNombre: " + arrayProyectos[i].getNombre());
-                System.out.print("\nTipo: " + arrayProyectos[i].getTipo());
-                System.out.print("\nCantidad Necesaria: " + arrayProyectos[i].getCantidadNecesaria());
-                System.out.println("\nCantidad Financiada: " + arrayProyectos[i].getCantidadFinanciada());
+                System.out.println("Posición: " + (i+1));
+                System.out.println("Nombre: " + arrayProyectos[i].getNombre());
+                System.out.println("Tipo: " + arrayProyectos[i].getTipo());
+                System.out.println("Cantidad Necesaria: " + arrayProyectos[i].getCantidadNecesaria());
+                System.out.println("Cantidad Financiada: " + arrayProyectos[i].getCantidadFinanciada());
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
             }
             i++;
@@ -61,16 +61,6 @@ public class GestionProyectos {
                 System.out.println();
             }
         }
-    }
-
-    public void mostrarNombreTipoProyecto () {
-        System.out.println(RED + "Nombre del proyecto\t\t\t" + GREEN + "Tipo del proyecto");
-        for (Proyecto p: arrayProyectos) {
-            if (p != null) System.out.println(RED + p.getNombre() + "\t\t\t\t" + GREEN + p.getTipo() + RESET);
-        }
-        System.out.println("¿Quieres ver más detalles sobre los proyectos? [S]í | [N]o");
-        String respuesta = leerOpcionLiteral();
-        if (respuesta.equalsIgnoreCase("s")) proyectosDetallados();
     }
     private void ampliar () {
         if (cantidadProyectos == arrayProyectos.length) {
@@ -154,23 +144,6 @@ public class GestionProyectos {
             default -> System.out.println("Ese parámetro no existe.");
         }
         return -1;
-    }
-
-    public void menuProyectos(){
-        System.out.println("Seleccione en qué proyecto quiere invertir: ");
-        for (int i = 0; i < arrayProyectos.length; i++) {
-            if (arrayProyectos[i]!=null) System.out.println(i + arrayProyectos[i].getNombre());
-        }
-    }
-
-    public boolean noEstaVacio (int pos) {
-        return arrayProyectos[pos] != null;
-    }
-
-    public void mostrarCantidades (int pos) {
-        System.out.println("Cantidad necesaria para financiar el proyecto: " + arrayProyectos[pos].getCantidadNecesaria());
-        System.out.println("Cantidad financiada hasta el momento: " + arrayProyectos[pos].getCantidadFinanciada());
-        System.out.println("Cantidad restante para financiar el proyecto: "+(arrayProyectos[pos].getCantidadNecesaria() - arrayProyectos[pos].getCantidadFinanciada())+"\n");
     }
 
     public Proyecto devuelveProyecto (int pos) {

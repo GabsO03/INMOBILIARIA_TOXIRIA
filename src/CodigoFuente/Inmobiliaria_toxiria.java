@@ -21,8 +21,7 @@ public class Inmobiliaria_toxiria {
         GestionUsuarios usuarios=new GestionUsuarios(50);
         usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
         usuarios.insertarUsuarioGestor("Alex","AlexGB","AlexGB123@","Alexito@gmail.com");
-     //   usuarios.insertarUsuarioInversor("Gabi","GabiOP","Usu1234-","Gabisita@gmail.com");
-        //BLOQUEOS
+        usuarios.insertarUsuarioInversor("Gabriela","GabsOP","GabsOP123@","polloto@gmail.com");
 
         //PROYECTOS
         GestionProyectos proyectos = new GestionProyectos(20);
@@ -32,6 +31,7 @@ public class Inmobiliaria_toxiria {
 
         //INVERSIONES
         GestionInversiones[] megaGestionInversiones = new GestionInversiones[50];
+        megaGestionInversiones[0] = new GestionInversiones(((Inversor)usuarios.devuelveUsuario(2)), 50);
         int cantidadGestionInversiones = 0;
 
         //Menus
@@ -70,12 +70,12 @@ public class Inmobiliaria_toxiria {
                         System.out.print("Contraseña: ");
                         contrasenia = leerOpcionLiteral();
                         posicionLogin = usuarios.existeNombreUsuario(nombreUsuario);
-                        if (posicionLogin < 0 /* Si está poniendo cualquier cosa*/) System.out.println("Ese usuario no existe.");
-                        if (posicionLogin >= 0 && !usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia)) { //Esto por si existe pero no corresponde la contraseña
+                        if (posicionLogin < 0 ) System.out.println("Ese usuario no existe.");
+                        if (posicionLogin >= 0 && !usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia)) {
                             System.out.println("El usuario o contraseña no es correcto. Intentos restantes: " + --intentos);
                         }
 
-                    } while ((posicionLogin < 0) /*No existe ese usuario*/ || (posicionLogin >= 0 && !usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia) && intentos > 0)/*Existe,pero no corresponde y se van restnado los intantos */);
+                    } while ((posicionLogin < 0) || (posicionLogin >= 0 && !usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia) && intentos > 0));
 
                     String claseUsuario = usuarios.averiguarClase(posicionLogin);
                     switch (claseUsuario) {

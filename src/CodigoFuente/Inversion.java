@@ -18,10 +18,13 @@ public class Inversion {
     }
 
     public boolean financiarProyecto(double cantidadEntrante, LocalDate fechaInversion) {
-        proyecto.setCantidadFinanciada(proyecto.getCantidadFinanciada() + cantidadEntrante);
-        cantidadParticipada += cantidadEntrante;
-        this.fechaInversion = fechaInversion;
-        return inversor.paga(cantidadEntrante);
+        if (inversor.paga(cantidadEntrante)) {
+            proyecto.setCantidadFinanciada(proyecto.getCantidadFinanciada() + cantidadEntrante);
+            cantidadParticipada += cantidadEntrante;
+            this.fechaInversion = fechaInversion;
+            return true;
+        }
+        return false;
     }
 
     public Inversor getInversor() {

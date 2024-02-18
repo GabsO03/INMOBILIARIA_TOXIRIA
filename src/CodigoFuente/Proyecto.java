@@ -49,4 +49,7 @@ public class Proyecto {
     public double getCantidadNecesaria () { return cantidadNecesaria; }
     public double getCantidadFinanciada () { return cantidadFinanciada; }
 
+    public String toString () {
+        return "Nombre: " + nombre + "\nTipo: " + tipo + "\nCantidad Necesaria: " + cantidadNecesaria + "\nCantidad Financiada: " + cantidadFinanciada + "\n";
+    }
 }

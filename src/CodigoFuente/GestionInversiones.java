@@ -47,9 +47,14 @@ public class GestionInversiones {
     }
 
     public void nuevaInversion (Inversor inversor, Proyecto proyecto, double primerIngreso, LocalDate fechaInversion) {
-        inversiones[cantidadInversionesCreadas++] = new Inversion(inversor, proyecto);
-        inversiones[cantidadInversionesCreadas].financiarProyecto(primerIngreso, fechaInversion);
-        aumentaTamanio();
+        inversiones[cantidadInversionesCreadas] = new Inversion(inversor, proyecto);
+        if (inversiones[cantidadInversionesCreadas++].financiarProyecto(primerIngreso, fechaInversion)) {
+            System.out.println("Inversión existosa, los detalles están disponibles para revisión.");
+            aumentaTamanio();
+        } else {
+            System.out.println("No cuentas con saldo suficiente para realizar esta transacción.");
+            inversiones[cantidadInversionesCreadas--] = null;
+        }
     }
 
     public void aumentaTamanio () {
