@@ -6,10 +6,6 @@ public class GestionUsuarios {
     private Usuario[] arrayUsuarios;
 
 
-    public GestionUsuarios() {
-        this.arrayUsuarios = new Usuario[15];
-    }
-
     public GestionUsuarios(int cantidadUsuarios) {
         this.arrayUsuarios = new Usuario[cantidadUsuarios];
     }
@@ -36,7 +32,7 @@ public class GestionUsuarios {
         for (Usuario u : arrayUsuarios) {
             if (u != null ) {
                 if (u.getClass().getSimpleName().equalsIgnoreCase("Gestor")) System.out.println(i++ + ") " + u + " - Gestor");
-                if (u.getClass().getSimpleName().equalsIgnoreCase("Inversor")) System.out.println(i++ + ") " + u + " - Gestor");
+                    if (u.getClass().getSimpleName().equalsIgnoreCase("Inversor")) System.out.println(i++ + ") " + u + " - Inversor");
             }
         }
     }
@@ -55,9 +51,14 @@ public class GestionUsuarios {
         aumentaTamanio();
     }
     public void insertarUsuarioInversor ( String nombre, String user, String contrasenia, String email) {
-        arrayUsuarios[numeroUsuariosInsertados++] = new Inversor (nombre, user, contrasenia, email, 0);
+        arrayUsuarios[numeroUsuariosInsertados++] = new Inversor (nombre, user, contrasenia, email);
         aumentaTamanio();
     }
+    public void insertarUsuarioInversor (Inversor inversor) {
+        arrayUsuarios[numeroUsuariosInsertados++] = inversor;
+        aumentaTamanio();
+    }
+
 
     public void aumentaTamanio () {
         if (numeroUsuariosInsertados == arrayUsuarios.length) {
@@ -98,7 +99,7 @@ public class GestionUsuarios {
         return -1;
     }
 
-    public boolean eliminarAlumno (int pos) {
+    public boolean eliminarUsuario(int pos) {
         if (arrayUsuarios[pos]!=null){
             arrayUsuarios[pos]=null;
             reorganizaArray(pos);
@@ -167,6 +168,5 @@ public class GestionUsuarios {
             case 2 -> arrayUsuarios[pos].desbloqueo();
         }
     }
-
 
 }

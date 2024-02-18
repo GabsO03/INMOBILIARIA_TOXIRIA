@@ -36,8 +36,7 @@ public class GestionProyectos {
             i++;
         }
         System.out.println("Existen " + cantidadProyectos + " habilitados.");
-        if (tipo == 1)
-            System.out.println("Escriba 0 para ver más detalles.\nEscriba -1 para salir.\nO digite la posición del proyecto que quiere eliminar o modificar");
+        if (tipo == 1) System.out.println("1. Ver más detalles.\n2. Eliminar o modificar.\n3. Salir.");
     }
 
 
@@ -172,5 +171,10 @@ public class GestionProyectos {
         System.out.println("Cantidad necesaria para financiar el proyecto: " + arrayProyectos[pos].getCantidadNecesaria());
         System.out.println("Cantidad financiada hasta el momento: " + arrayProyectos[pos].getCantidadFinanciada());
         System.out.println("Cantidad restante para financiar el proyecto: "+(arrayProyectos[pos].getCantidadNecesaria() - arrayProyectos[pos].getCantidadFinanciada())+"\n");
+    }
+
+    public Proyecto devuelveProyecto (int pos) {
+        if (arrayProyectos[pos] != null) return arrayProyectos[pos];
+        return null;
     }
 }

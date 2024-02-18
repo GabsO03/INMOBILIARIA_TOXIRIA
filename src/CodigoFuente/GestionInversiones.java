@@ -1,18 +1,20 @@
 package CodigoFuente;
 
+import java.time.LocalDate;
+
 public class GestionInversiones {
 
-    private Inversor inversor;
+    private Inversor propietario;
     private Inversion[] inversiones;
     private int cantidadInversiones;
     private int cantidadInversionesCreadas = 0;
 
-    public Inversor getInversor() {
-        return inversor;
+    public Inversor getPropietario() {
+        return propietario;
     }
 
-    public void setInversor(Inversor inversor) {
-        this.inversor = inversor;
+    public void setPropietario(Inversor propietario) {
+        this.propietario = propietario;
     }
 
     public Inversion[] getInversiones() {
@@ -40,13 +42,13 @@ public class GestionInversiones {
     }
 
     public GestionInversiones (Inversor inversor, int cantidadInversiones) {
-        this.inversor = inversor;
+        this.propietario = inversor;
         this.inversiones = new Inversion[cantidadInversiones];
     }
 
-    public void nuevaInversion (Proyecto proyecto, double primerIngreso) {
+    public void nuevaInversion (Inversor inversor, Proyecto proyecto, double primerIngreso, LocalDate fechaInversion) {
         inversiones[cantidadInversionesCreadas++] = new Inversion(inversor, proyecto);
-        inversiones[cantidadInversionesCreadas].financiarProyecto(primerIngreso);
+        inversiones[cantidadInversionesCreadas].financiarProyecto(primerIngreso, fechaInversion);
         aumentaTamanio();
     }
 
@@ -60,10 +62,33 @@ public class GestionInversiones {
         }
     }
 
-    public void actualizarInversion (int pos, double cantidadEntrante) {
-        inversiones[pos].financiarProyecto(cantidadEntrante);
+    public void actualizarInversion (int pos, double cantidadEntrante, LocalDate fechaActualizacion) {
+        inversiones[pos].financiarProyecto(cantidadEntrante, fechaActualizacion);
     }
 
+
+    public void mostrarMisInversiones () {
+        System.out.println("Mis inversiones: ");
+        System.out.println("================");
+        for (Inversion inversion : inversiones) {
+            if (inversion != null) {
+                System.out.println(inversion);
+            }
+        }
+    }
+
+    public void proyectosAunNoInvertidos (GestionProyectos todosLosProyectos) {
+        boolean esta;
+        System.out.println("Proyectos aún no invertidos: ");
+        System.out.println("============================");
+        for (int i = 0; i < inversiones.length; i++) {
+            esta = false;
+            for (int j = 0; j < inversiones.length; j++) {
+                if (inversiones[i].getProyecto().getNombre().equals(todosLosProyectos.devuelveProyecto(j).getNombre())) esta = true;
+            }
+            if (!esta) System.out.println(inversiones[i]);
+        }
+    }
 
 
 }

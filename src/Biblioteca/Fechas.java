@@ -39,7 +39,7 @@ public class Fechas {
 
     }
     public static String formatear(LocalDateTime fecha){
-        return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss"));
 
     }
 }

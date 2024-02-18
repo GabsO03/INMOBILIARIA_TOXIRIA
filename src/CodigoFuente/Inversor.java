@@ -8,9 +8,9 @@ public class Inversor extends Usuario{
 
 
     //MÉTODOS
-    public Inversor(String nombre, String usuario, String contrasenia, String email, double saldo) {
+    public Inversor(String nombre, String usuario, String contrasenia, String email) {
         super(nombre, usuario, contrasenia, email);
-        this.saldo = saldo;
+        this.saldo = 0;
         bloqueado = false;
     }
 
@@ -28,26 +28,14 @@ public class Inversor extends Usuario{
         this.bloqueado = false;
     }
 
-    public boolean paga(double cantidad) {
+    public boolean paga (double cantidad) {
         if (saldo >= cantidad) {
             saldo -= cantidad;
             return true;
         }
         return false;
     }
-    public void mostrarYAniadirSaldo(){
-        String respuesta;
-        double cantidad;
-        System.out.println("Tu saldo actual es de "+ getSaldo() );
-        System.out.println("¿Quieres añadir saldo?");
-        respuesta=leerOpcionLiteral();
-        if(respuesta.equalsIgnoreCase("Si")){
-            System.out.println("Introduce cuanto saldo quieres añadir");
-            cantidad=leerOpcionDouble();
-            setSaldo(getSaldo()+cantidad);
-            System.out.println("Tu saldo ahora es de "+getSaldo());
-        }
-    }
+
 
     //getters
     public double getSaldo() {

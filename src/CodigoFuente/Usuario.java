@@ -44,6 +44,7 @@ public abstract class Usuario {
     public abstract void bloqueo();
     public abstract void desbloqueo();
 
+
     public String toString () {
         return "Nombre: " + nombre;
     }

@@ -1,6 +1,8 @@
 package Biblioteca;
 
+import CodigoFuente.GestionInversiones;
 import CodigoFuente.GestionUsuarios;
+import CodigoFuente.Inversor;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -69,32 +71,6 @@ public class AccountSettings {
 
     }
 
-
-
-
-    public static int loginAdmin (String[][] datosAdmins) {
-        boolean correcto = false, userFound = false;
-        int i;
-        do {
-            i = 0;
-            System.out.println("Usuario");
-            String usuarioAdmin = leerOpcionLiteral();
-            System.out.println("Contraseña");
-            String contraAdmin = leerOpcionLiteral();
-            while (!userFound && i < datosAdmins[0].length) {
-                if (usuarioAdmin.equals(datosAdmins[1][i])) userFound=true;
-                else i++;
-            }
-            if (userFound&&(contraAdmin.equals(datosAdmins[2][i]))) {
-                System.out.printf("Bienvenid@ %s.\n", datosAdmins[0][i]);
-                correcto=true;
-            }
-            else System.out.println("Usuario o contraseña incorrectos, vuelva a intentarlo.");
-        } while (!correcto);
-        return i;
-    }
-
-
     public static int loginNoAdmin (String[][] datosNoAdmins, boolean[] usuariosBloqueados) {
         boolean correcto = false, userFound = false;
         int i = 0, intentos = 3;
@@ -123,46 +99,7 @@ public class AccountSettings {
         return i;
     }
 
-
-    public static int login(int tipo, String[][] datosAdmin, String[][] datosGestores, String[][] datosInversores, boolean[] inversoresBloqueados, boolean[] gestoresBloqueados) {
-        return switch (tipo) {
-            case 1 -> loginAdmin(datosAdmin);
-            case 2 -> loginNoAdmin(datosGestores, gestoresBloqueados);
-            case 3 -> loginNoAdmin(datosInversores, inversoresBloqueados);
-            default -> throw new IllegalStateException("Unexpected value: " + tipo);
-        };
-    }
-    public static boolean entry (int tipoUsuario, int posicion, int cantidadGestores, int cantidadInversore) {
-        return switch (tipoUsuario) {
-            case 2 -> posicion >= 0 && posicion < cantidadGestores;
-            case 3 -> posicion >= 0 && posicion < cantidadInversore;
-            default -> true;
-        };
-    }
-
-
     /* ----------------------------------------------------Change----------------------------------------------------- */
-
-    public static int posicionUsuario (String[][] datosAdmins) {
-        boolean correcto = false, userFound = false;
-        int i = 0;
-        do {
-            System.out.println("Introduzca su usuario y contraseña actuales.");
-            System.out.println("Usuario");
-            String usuarioAdmin = leerOpcionLiteral();
-            System.out.println("Contraseña");
-            String contraAdmin = leerOpcionLiteral();
-            while (!userFound && i < datosAdmins[0].length) {
-                if (usuarioAdmin.equals(datosAdmins[1][i])) userFound=true;
-                else i++;
-            }
-            if (userFound&&(contraAdmin.equals(datosAdmins[2][i]))) {
-                correcto=true;
-            }
-            else System.out.println("Usuario o contraseña incorrectos, vuelva a intentarlo.");
-        } while (!correcto);
-        return i;
-    }
     public static String cambiarUsuario (){
         System.out.println("Escriba el nuevo usuario");
         return leerOpcionLiteral();
@@ -195,5 +132,39 @@ public class AccountSettings {
                 case 3 -> usuarios.modificarUsuario(pos, null, null, cambiarEmail());
             }
         } while (opcion != 3);
+    }
+
+
+    public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, GestionInversiones[] megaGestionInversiones, int cantidadInversiones) {
+        System.out.println("Escriba su nombre completo: ");
+        String nombre = leerOpcionLiteral();
+        System.out.println("Escriba su nombre de usuario: ");
+        String nuevoUsuario = leerOpcionLiteral(), passNuevoUsuario, passRepetidaNuevoUsuario, correoNuevoUsuario;
+        do {
+            System.out.println("Escriba su contraseña: ");
+            passNuevoUsuario = leerOpcionLiteral();
+            System.out.println("Vuelva a escribir su contraseña: ");
+            passRepetidaNuevoUsuario = leerOpcionLiteral();
+            if (!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario))
+                System.out.println("Error, las contraseñas deben de ser iguales\nVuelva a intentarlo");
+        } while (!comprobarFortalezaPass(passNuevoUsuario) && !passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario));
+        System.out.println("Escriba su email: ");
+        correoNuevoUsuario = leerOpcionLiteral();
+        int codigoEnviado, codigoUsuario;
+        do {
+            codigoEnviado = (int) (Math.random() * 99999) + 10000;
+            System.out.println("Se está enviando un código de verificacion...");
+            enviarCorreo(correoNuevoUsuario, "Correo de verificación", "Su código de verificación es: " + codigoEnviado);
+            System.out.println("Revise su bandeja de entrada y escriba el código");
+            codigoUsuario = leerOpcionNumerica();
+            if (codigoEnviado != codigoUsuario) System.out.println("ERROR, el código no es correcto");
+        } while (codigoEnviado != codigoUsuario);
+        if (tipo.equalsIgnoreCase("G")) usuarios.insertarUsuarioGestor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
+        else {
+            Inversor aux = new Inversor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
+            usuarios.insertarUsuarioInversor(aux);
+            megaGestionInversiones[cantidadInversiones] = new GestionInversiones(aux, 50);
+        }
+        return true;
     }
 }
