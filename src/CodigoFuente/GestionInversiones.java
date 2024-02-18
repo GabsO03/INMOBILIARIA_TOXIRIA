@@ -81,12 +81,12 @@ public class GestionInversiones {
         boolean esta;
         System.out.println("Proyectos aún no invertidos: ");
         System.out.println("============================");
-        for (int i = 0; i < inversiones.length; i++) {
+        for (int i = 0; i < todosLosProyectos.getCantidadProyectos(); i++) {
             esta = false;
             for (int j = 0; j < inversiones.length; j++) {
-                if (inversiones[i].getProyecto().getNombre().equals(todosLosProyectos.devuelveProyecto(j).getNombre())) esta = true;
+                if ((todosLosProyectos.devuelveProyecto(i) != null && inversiones[i] != null) && inversiones[i].getProyecto().getNombre().equals(todosLosProyectos.devuelveProyecto(j).getNombre())) esta = true;
             }
-            if (!esta) System.out.println(inversiones[i]);
+            if (!esta) System.out.println(todosLosProyectos.devuelveProyecto(i));
         }
     }
 

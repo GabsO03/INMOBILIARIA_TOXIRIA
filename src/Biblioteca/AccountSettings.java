@@ -28,76 +28,34 @@ public class AccountSettings {
      * @param asunto como una cadena
      * @param cuerpo como una cadena
      */
-    public static void enviarCorreo(String destinatario, String asunto,String cuerpo){
-        String remitente="adrian.contreras.2706@fernando3martos.com";
-        String clave="chksotcvupynairz";
+    public static void enviarCorreo(String destinatario, String asunto,String cuerpo) {
+        String remitente = "adrian.contreras.2706@fernando3martos.com";
+        String clave = "chksotcvupynairz";
         // Propiedades de la conexion
-        Properties props =System.getProperties();
-        props.put("mail.smtp.host","smtp.gmail.com"); //Servidor de google
-        props.put("mail.smtp.user",remitente);
-        props.put("mail.smtp.clave",clave);
-        props.put("mail.smtp.starttls.enable","true");
-        props.put("mail.smtp.port","587");
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); //Servidor de google
+        props.put("mail.smtp.user", remitente);
+        props.put("mail.smtp.clave", clave);
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
 
-        Session session=Session.getDefaultInstance(props);
+        Session session = Session.getDefaultInstance(props);
         try {
-            MimeMessage message=new MimeMessage(session);
+            MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(remitente));
-            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(destinatario));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
             message.setSubject(asunto);
             message.setText(cuerpo);
-            Transport transport=session.getTransport("smtp");
-            transport.connect("smtp.gmail.com",remitente,clave);
+            Transport transport = session.getTransport("smtp");
+            transport.connect("smtp.gmail.com", remitente, clave);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
-        }catch (MessagingException me){
+        } catch (MessagingException me) {
             me.printStackTrace();
         }
 
     }
 
-    public static boolean tokenVerified(String[][] datosNoAdmin, int pos) {
-        System.out.println("Se va a enviar un código de verificacion a tu correo electronico, un momento...");
-        int codigoRandom = (int) (Math.random()*9999)+1000;
-        String codigoString=String.valueOf(codigoRandom);
-        String destinatario=datosNoAdmin[3][pos];
-        String asunto="Código de verificación inmobiliaria";
-        String cuerpo="Su código de verificación es: "+codigoString+"\nNo comparta este código con nadie";
-        enviarCorreo(destinatario,asunto,cuerpo);
-
-        System.out.println("Escriba su código de verificación que se le ha enviado al correo electrónico: ");
-        String codigo=leerOpcionLiteral();
-        return codigo.equals(codigoString);
-
-    }
-
-    public static int loginNoAdmin (String[][] datosNoAdmins, boolean[] usuariosBloqueados) {
-        boolean correcto = false, userFound = false;
-        int i = 0, intentos = 3;
-        do {
-            intentos--;
-            System.out.println("Usuario");
-            String usuarioAdmin = leerOpcionLiteral();
-            System.out.println("Contraseña");
-            String contraAdmin = leerOpcionLiteral();
-            while (!userFound && i < datosNoAdmins[0].length) {
-                if (usuarioAdmin.equals(datosNoAdmins[1][i])) userFound=true;
-                else i++;
-            }
-            if (userFound&&(contraAdmin.equals(datosNoAdmins[2][i]))) {
-                while (!tokenVerified(datosNoAdmins, i)) System.out.println("Error, código incorrecto");
-                System.out.printf("Bienvenid@ %s.\n", datosNoAdmins[0][i]);
-                correcto=true;
-            }
-            else System.out.println("Usuario o contraseña incorrectos, le quedan " + intentos + " intentos.");
-            if (intentos==0) {
-                System.out.println("Acceso denegado, tu cuenta ha sido bloqueada, espera a que el administrador te desbloquee.");
-                usuariosBloqueados[i] = true;
-                return -1;
-            }
-        } while (!correcto && intentos > 0);
-        return i;
-    }
 
     /* ----------------------------------------------------Change----------------------------------------------------- */
     public static String cambiarUsuario (){
@@ -143,11 +101,13 @@ public class AccountSettings {
         do {
             System.out.println("Escriba su contraseña: ");
             passNuevoUsuario = leerOpcionLiteral();
-            System.out.println("Vuelva a escribir su contraseña: ");
-            passRepetidaNuevoUsuario = leerOpcionLiteral();
-            if (!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario))
-                System.out.println("Error, las contraseñas deben de ser iguales\nVuelva a intentarlo");
-        } while (!comprobarFortalezaPass(passNuevoUsuario) && !passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario));
+            if (comprobarFortalezaPass(passNuevoUsuario)) {
+                System.out.println("Vuelva a escribir su contraseña: ");
+                passRepetidaNuevoUsuario = leerOpcionLiteral();
+                if (!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario))
+                    System.out.println("Error, las contraseñas deben de ser iguales\nVuelva a intentarlo");
+            }
+        } while (!comprobarFortalezaPass(passNuevoUsuario));
         System.out.println("Escriba su email: ");
         correoNuevoUsuario = leerOpcionLiteral();
         int codigoEnviado, codigoUsuario;
