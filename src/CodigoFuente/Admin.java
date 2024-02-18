@@ -8,5 +8,15 @@ public class Admin extends Usuario {
         super(nombre, usuario, contrasenia, email);
     }
 
+    @Override
+    public void bloqueo() {
+
+    }
+
+    @Override
+    public void desbloqueo() {
+
+    }
+
 
 }

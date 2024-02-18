@@ -35,7 +35,7 @@ public class Menus {
 
     public static void menuConfiguracion() {
         System.out.println("Seleccione qué quiere hacer:");
-        System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3.Salir");
+        System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3.Cambiar email\n4.Salir");
     }
 
     public static void panelControlUsuarios(GestionUsuarios usuarios) {
@@ -103,7 +103,7 @@ public class Menus {
                             }
                             case 3 -> System.out.println();
                         }
-                    } while (segundoSubmenu != -1);
+                    } while (segundoSubmenu != 3);
                 }
                 case 3 -> modificarCuenta(pos, usuarios);
             }

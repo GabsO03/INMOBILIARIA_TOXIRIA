@@ -71,13 +71,13 @@ public class GestionUsuarios {
     }
 
     public void modificarUsuario (int pos, String userName, String contrasenia, String email) {
-        arrayUsuarios[pos].setUsername(userName);
-        arrayUsuarios[pos].setContrasenia(contrasenia);
-        arrayUsuarios[pos].setEmail(email);
+       if (userName!=null)arrayUsuarios[pos].setUsername(userName);
+       if (contrasenia!=null)arrayUsuarios[pos].setContrasenia(contrasenia);
+       if (email!=null)arrayUsuarios[pos].setEmail(email);
     }
     public int buscarUsuario(String atributo, String valor) {
         atributo = atributo.toLowerCase();
-        valor = valor.toLowerCase();
+       // valor = valor.toLowerCase();
         switch (atributo) {
             case "contraseña" -> {
                 for (int i = 0; i < arrayUsuarios.length; i++) {
@@ -149,10 +149,12 @@ public class GestionUsuarios {
         }
     }
 
-    public int existeUsuario (String username, String contrasenia) {
+    public boolean correspondeUsuyContrasenia(int posicion, String contrasenia) {
+        return arrayUsuarios[posicion].getContrasenia().equals(contrasenia);
+    }
+    public int existeNombreUsuario (String username) {
         int posUsuario = buscarUsuario("nombre de usuario", username);
-        int posContrasenia = buscarUsuario("contraseña", contrasenia);
-        if ((posUsuario >= 0 && posContrasenia >= 0) && posUsuario==posContrasenia) return posUsuario;
+        if ((posUsuario >= 0)) return posUsuario;
         return -1;
     }
 

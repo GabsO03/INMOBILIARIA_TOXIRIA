@@ -24,13 +24,13 @@ public class GestionProyectos {
     public void mostrarProyectos(int tipo) {
         int i = 0;
         while (i < arrayProyectos.length) {
-            if (arrayProyectos != null) {
+            if (arrayProyectos[i] != null) {
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
                 System.out.print("Posición: " + (i+1));
-                System.out.print("Nombre: " + arrayProyectos[i].getNombre());
-                System.out.print("Tipo: " + arrayProyectos[i].getTipo());
-                System.out.print("Cantidad Necesaria: " + arrayProyectos[i].getCantidadNecesaria());
-                System.out.print("Cantidad Financiada: " + arrayProyectos[i].getCantidadFinanciada());
+                System.out.print("\nNombre: " + arrayProyectos[i].getNombre());
+                System.out.print("\nTipo: " + arrayProyectos[i].getTipo());
+                System.out.print("\nCantidad Necesaria: " + arrayProyectos[i].getCantidadNecesaria());
+                System.out.println("\nCantidad Financiada: " + arrayProyectos[i].getCantidadFinanciada());
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
             }
             i++;
