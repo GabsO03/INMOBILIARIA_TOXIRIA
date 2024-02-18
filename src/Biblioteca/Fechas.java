@@ -14,6 +14,12 @@ public class Fechas {
         if (fecha1.isBefore(fecha2)) return true;
         else return false;
     }
+    public static boolean esPosterior(LocalDateTime fecha1, LocalDateTime fecha2){
+        return fecha1.isAfter(fecha2);
+    }
+    public static boolean esPosterior(LocalDate fecha1, LocalDate fecha2){
+        return fecha1.isAfter(fecha2);
+    }
     public static long segundosRestantes(LocalDateTime fecha){
         LocalDateTime ahora= LocalDateTime.now();
         return ChronoUnit.SECONDS.between(ahora,fecha);

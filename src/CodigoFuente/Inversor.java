@@ -1,5 +1,4 @@
 package CodigoFuente;
-import static Biblioteca.Lectura_De_Datos.*;
 
 public  class Inversor extends Usuario{
     //ATRIBUTOS

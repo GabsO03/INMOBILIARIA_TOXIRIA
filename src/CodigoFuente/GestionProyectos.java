@@ -1,6 +1,9 @@
 package CodigoFuente;
 
+import Biblioteca.Fechas;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static Biblioteca.Colores.*;
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
@@ -117,10 +120,54 @@ public class GestionProyectos {
         arrayProyectos[arrayProyectos.length - 1] = null;
     }
 
-    public int buscarProyecto(String atributo, String valor) {
-        return buscarProyecto(atributo, valor, 0);
+    public void buscarProyectoRango(String atributo, String valorInicial, String valorFinal) {
+        System.out.println("Listado completo de proyectos según " + atributo + " (desde " + valorInicial + " hasta " + valorFinal + "):");
+
+        switch (atributo) {
+            case "Fecha de inicio" -> {
+                LocalDate date1 = LocalDate.parse(valorInicial, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate date2 = LocalDate.parse(valorFinal, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                for (int i = 0; i < arrayProyectos.length; i++) {
+                    if (arrayProyectos[i] != null) {
+                        if (Fechas.esPosterior(arrayProyectos[i].getFechaInicio(), date1) && Fechas.esAnterior(arrayProyectos[i].getFechaInicio(), date2)) System.out.println(arrayProyectos[i]);
+                    }
+                }
+            }
+            case "Fecha de fin" -> {
+                LocalDate date1 = LocalDate.parse(valorInicial, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate date2 = LocalDate.parse(valorFinal, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                for (int i = 0; i < arrayProyectos.length; i++) {
+                    if (arrayProyectos[i] != null) {
+                        if (Fechas.esPosterior(arrayProyectos[i].getFechaFin(), date1) && Fechas.esAnterior(arrayProyectos[i].getFechaFin(), date2)) {
+                            System.out.println(arrayProyectos[i]);
+                        }
+                    }
+                }
+            }
+            case "Cantidad necesaria" -> {
+                double v1 = Double.parseDouble(valorInicial);
+                double v2 = Double.parseDouble(valorFinal);
+                for (int i = 0; i < arrayProyectos.length; i++) {
+                    if (arrayProyectos[i] != null) {
+                        if (arrayProyectos[i].getCantidadNecesaria() >= v1 && arrayProyectos[i].getCantidadNecesaria() <= v2)
+                            System.out.println(arrayProyectos[i]);
+                    }
+                }
+            }
+            case "Cantidad financiada" -> {
+                double v1 = Double.parseDouble(valorInicial);
+                double v2 = Double.parseDouble(valorFinal);
+                for (int i = 0; i < arrayProyectos.length; i++) {
+                    if (arrayProyectos[i] != null) {
+                        if (arrayProyectos[i].getCantidadFinanciada() >= v1 && arrayProyectos[i].getCantidadFinanciada() <= v2)
+                            System.out.println(arrayProyectos[i]);
+                    }
+                }
+            }
+            default -> System.out.println("Error en datos introducidos.");
+        }
     }
-    public int buscarProyecto(String atributo, String valor, int posicion) {
+    public int buscarProyecto(String atributo, String valor) {
         int codigo;
         atributo = atributo.toLowerCase();
         valor = valor.toLowerCase();
@@ -132,13 +179,30 @@ public class GestionProyectos {
                 }
             }
             case "nombre" -> {
-                for (int i = posicion; i < arrayProyectos.length; i++) {
+                for (int i = 0; i < arrayProyectos.length; i++) {
                     if (arrayProyectos[i] != null && arrayProyectos[i].getNombre().equalsIgnoreCase(valor)) return i;
                 }
             }
             case "descripción" -> {
-                for (int i = posicion; i < arrayProyectos.length; i++) {
+                for (int i = 0; i < arrayProyectos.length; i++) {
                     if (arrayProyectos[i] != null && arrayProyectos[i].getDescripcion().equalsIgnoreCase(valor)) return i;
+                }
+            }
+            case "tipo" -> {
+                for (int i = 0; i < arrayProyectos.length; i++) {
+                    if (arrayProyectos[i] != null && arrayProyectos[i].getTipo().equalsIgnoreCase(valor)) return i;
+                }
+            }
+            case "fecha de inicio" -> {
+                LocalDate aux = LocalDate.parse(valor, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                for (int i = 0; i < arrayProyectos.length; i++) {
+                    if (arrayProyectos[i] != null && arrayProyectos[i].getFechaInicio() == aux) return i;
+                }
+            }
+            case "fecha de fin" -> {
+                LocalDate aux = LocalDate.parse(valor, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                for (int i = 0; i < arrayProyectos.length; i++) {
+                    if (arrayProyectos[i] != null && arrayProyectos[i].getFechaFin() == aux) return i;
                 }
             }
             default -> System.out.println("Ese parámetro no existe.");

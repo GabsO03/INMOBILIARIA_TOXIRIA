@@ -89,7 +89,7 @@ public class GestionInversiones {
         for (int i = 0; i < todosLosProyectos.getCantidadProyectos(); i++) {
             esta = false;
             for (int j = 0; j < inversiones.length; j++) {
-                if ((todosLosProyectos.devuelveProyecto(i) != null && inversiones[i] != null) && inversiones[i].getProyecto().getNombre().equals(todosLosProyectos.devuelveProyecto(j).getNombre())) esta = true;
+                if ((todosLosProyectos.devuelveProyecto(i) != null && inversiones[i] != null) && (todosLosProyectos.devuelveProyecto(i).getNombre().equals(inversiones[j].getProyecto().getNombre()))) esta = true;
             }
             if (!esta) System.out.println(todosLosProyectos.devuelveProyecto(i));
         }

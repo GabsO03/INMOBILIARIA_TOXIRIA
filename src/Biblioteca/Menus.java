@@ -2,13 +2,10 @@ package Biblioteca;
 import CodigoFuente.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-import static Biblioteca.AccountSettings.enviarCorreo;
 import static Biblioteca.AccountSettings.modificarCuenta;
 import static Biblioteca.Lectura_De_Datos.*;
 import static Biblioteca.Proyectos.*;
-import static Biblioteca.funcionesCadenas.comprobarFortalezaPass;
 
 
 public class Menus {
@@ -30,12 +27,12 @@ public class Menus {
     }
 
     public static void menuOpcinesInversor() {
-        System.out.println("Seleccione donde quiere acceder:\n1. Mis inversiones\n2. Invertir\n3. Cartera Virtual\n4. Configuración de cuenta\n5. Salir");
+        System.out.println("Seleccione donde quiere acceder:\n1. Mis inversiones\n2. Buscar proyecto\n3. Invertir\n4. Cartera Virtual\n5. Configuración de cuenta\n6. Salir");
     }
 
     public static void menuConfiguracion() {
         System.out.println("Seleccione qué quiere hacer:");
-        System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3.Cambiar email\n4.Salir");
+        System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3. Cambiar email\n4. Salir");
     }
 
     public static void panelControlUsuarios(GestionUsuarios usuarios) {
@@ -63,45 +60,59 @@ public class Menus {
                 case 1 -> panelControlUsuarios(usuarios);
                 case 2 -> {
                     do {
-                        proyectos.mostrarProyectos(1);
+                        System.out.println("Menú proyectos:\n1. Modificar/Eliminar proyectos\n2. Buscar proyectos\n3. Cancelar");
                         segundoSubmenu = leerOpcionNumerica();
                         switch (segundoSubmenu) {
-                            case 1 -> proyectos.proyectosDetallados();
-                            case 2 -> {
-                                System.out.println("Introduzca la posición");
-                                int posProyecto = leerOpcionNumerica();
-                                posProyecto--;
-                                if (posProyecto >= 0 && posProyecto < proyectos.getCantidadProyectos()) {
-                                    System.out.println("¿Quiere eliminar el proyecto? [S]í | [N]o");
-                                    String respuesta = leerOpcionLiteral();
-                                    respuesta = respuesta.toLowerCase();
-                                    switch (respuesta) {
-                                        case "s" -> proyectos.eliminarProyecto(posProyecto);
-                                        case "n" -> {
-                                            System.out.println("¿Quiere modificar el proyecto? [S]í | [N]o");
-                                            respuesta = leerOpcionLiteral();
-                                            if (respuesta.equalsIgnoreCase("s")) {
-                                                do {
-                                                    menuModificarProyecto();
-                                                    tercerSubmenu = leerOpcionNumerica();
-                                                    switch (tercerSubmenu) {
-                                                        case 1 -> proyectos.modificarProyecto(posProyecto, cambiarNombreProyecto(), null, null, null, null, 0, 0);
-                                                        case 2 -> proyectos.modificarProyecto(posProyecto, null, cambiarDescripcionProyecto(), null, null, null, 0, 0);
-                                                        case 3 -> proyectos.modificarProyecto(posProyecto, null, null, cambiarTipoProyecto(), null, null, 0, 0);
-                                                        case 4 -> proyectos.modificarProyecto(posProyecto, null, null, null, cambiarFechaInicio(), null, 0, 0);
-                                                        case 5 -> proyectos.modificarProyecto(posProyecto, null, null, null, null, cambiarFechaFin(), 0, 0);
-                                                        case 6 -> proyectos.modificarProyecto(posProyecto, null, null, null, null, null, cambiarCantidadNecesaria(), 0);
-                                                        case 7 -> proyectos.modificarProyecto(posProyecto, null, null, null, null, null, 0, cambiarCantidadFinanciada());
-                                                        case 8 -> System.out.println();
-                                                        default -> System.out.println("Respuesta no válida.");
+                            case 1 -> {
+                                proyectos.mostrarProyectos(1);
+                                segundoSubmenu = leerOpcionNumerica();
+                                switch (segundoSubmenu) {
+                                    case 1 -> proyectos.proyectosDetallados();
+                                    case 2 -> {
+                                        System.out.println("Introduzca la posición");
+                                        int posProyecto = leerOpcionNumerica();
+                                        posProyecto--;
+                                        if (posProyecto >= 0 && posProyecto < proyectos.getCantidadProyectos()) {
+                                            System.out.println("¿Quiere eliminar el proyecto? [S]í | [N]o");
+                                            String respuesta = leerOpcionLiteral();
+                                            respuesta = respuesta.toLowerCase();
+                                            switch (respuesta) {
+                                                case "s" -> proyectos.eliminarProyecto(posProyecto);
+                                                case "n" -> {
+                                                    System.out.println("¿Quiere modificar el proyecto? [S]í | [N]o");
+                                                    respuesta = leerOpcionLiteral();
+                                                    if (respuesta.equalsIgnoreCase("s")) {
+                                                        do {
+                                                            menuModificarProyecto();
+                                                            tercerSubmenu = leerOpcionNumerica();
+                                                            switch (tercerSubmenu) {
+                                                                case 1 ->
+                                                                        proyectos.modificarProyecto(posProyecto, cambiarNombreProyecto(), null, null, null, null, 0, 0);
+                                                                case 2 ->
+                                                                        proyectos.modificarProyecto(posProyecto, null, cambiarDescripcionProyecto(), null, null, null, 0, 0);
+                                                                case 3 ->
+                                                                        proyectos.modificarProyecto(posProyecto, null, null, cambiarTipoProyecto(), null, null, 0, 0);
+                                                                case 4 ->
+                                                                        proyectos.modificarProyecto(posProyecto, null, null, null, cambiarFechaInicio(), null, 0, 0);
+                                                                case 5 ->
+                                                                        proyectos.modificarProyecto(posProyecto, null, null, null, null, cambiarFechaFin(), 0, 0);
+                                                                case 6 ->
+                                                                        proyectos.modificarProyecto(posProyecto, null, null, null, null, null, cambiarCantidadNecesaria(), 0);
+                                                                case 7 ->
+                                                                        proyectos.modificarProyecto(posProyecto, null, null, null, null, null, 0, cambiarCantidadFinanciada());
+                                                                case 8 -> System.out.println();
+                                                                default -> System.out.println("Respuesta no válida.");
+                                                            }
+                                                        } while (tercerSubmenu != 8);
                                                     }
-                                                } while (tercerSubmenu != 8);
+                                                }
                                             }
-                                        }
+                                        } else System.out.println("Proyecto no encontrado.");
                                     }
-                                } else System.out.println("Proyecto no encontrado.");
+                                    case 3 -> System.out.println();
+                                }
                             }
-                            case 3 -> System.out.println();
+                            case 2 -> buscarProyecto(proyectos);
                         }
                     } while (segundoSubmenu != 3);
                 }
@@ -131,19 +142,49 @@ public class Menus {
         return -1;
     }
 
+    public static void buscarProyecto (GestionProyectos proyectos) {
+        int tipoBusqueda, position;
+        String atributo, valor, valorInicial, valorFinal;
+        do {
+            System.out.println("Elija el tipo de busqueda.\n1. Por atributo simple.\n2. Por rango.\n3. Cancelar");
+            tipoBusqueda = leerOpcionNumerica();
+            switch (tipoBusqueda) {
+                case 1 -> {
+                    System.out.println("Introduzca el atributo del proyecto (Nombre || Tipo || Descripcion || Fecha de inicio/fin || Cantidad necesaria/financiada):");
+                    atributo = leerOpcionLiteral();
+                    System.out.println("Introduzca el valor (fecha dd/mm/yyyy):");
+                    valor = leerOpcionLiteral();
+                    position = proyectos.buscarProyecto(atributo, valor);
+                    System.out.println(proyectos.devuelveProyecto(position));
+                }
+                case 2 -> {
+                    System.out.println("Introduzca el atributo del proyecto (Fecha de inicio/fin || Cantidad necesaria/financiada):");
+                    atributo = leerOpcionLiteral();
+                    System.out.println("Introduzca el valor inicial (fecha dd/mm/yyyy):");
+                    valorInicial = leerOpcionLiteral();
+                    System.out.println("Introduzca el valor final (fecha dd/mm/yyyy):");
+                    valorFinal = leerOpcionLiteral();
+                    proyectos.buscarProyectoRango(atributo, valorInicial, valorFinal);
+                }
+                case 3 -> System.out.println();
+                default -> System.out.println("Invalid response.");
+            }
+        } while (tipoBusqueda != 3);
+    }
+
 
     public static void mostrarYAniadirSaldo(Inversor inversor){
         String respuesta;
         double cantidad;
         System.out.println("Tu saldo actual es de " + inversor.getSaldo() );
-        System.out.println("¿Quieres añadir saldo?");
+        System.out.println("¿Quieres añadir saldo? (Sí o No)");
         respuesta=leerOpcionLiteral();
-        if(respuesta.equalsIgnoreCase("Si")){
+        if(respuesta.equalsIgnoreCase("Sí")){
             System.out.println("Introduce cuanto saldo quieres añadir");
             cantidad=leerOpcionDouble();
             inversor.setSaldo(inversor.getSaldo() + cantidad);
             System.out.println("Tu saldo ahora es de " + inversor.getSaldo());
-        }
+        } else System.out.println("Cancelando.");
     }
 
     public static void menuInversor(int pos, GestionUsuarios usuarios, GestionProyectos proyectos, GestionInversiones[] megaGestionInversiones) {
@@ -154,25 +195,25 @@ public class Menus {
             primerSubmenu = leerOpcionNumerica();
             switch (primerSubmenu) {
                 case 1 -> megaGestionInversiones[gestionIndividual].mostrarMisInversiones();
-                case 2 -> {
+                case 2 -> buscarProyecto(proyectos);
+                case 3 -> {
                     System.out.println("1. Nueva inversión\n2. Actualizar inversión\n3. Cancelar");
                     opcionInversion = leerOpcionNumerica();
                     switch (opcionInversion) {
                         case 1 -> nuevaInversion(proyectos, megaGestionInversiones[gestionIndividual], aux);
-                        case 2 -> actualizarInversion(proyectos, megaGestionInversiones[gestionIndividual], aux);
+                        case 2 -> actualizarInversion(proyectos, megaGestionInversiones[gestionIndividual]);
                         case 3 -> System.out.println();
                         default -> System.out.println("Invalid response.");
                     }
                 }
-                case 3 -> mostrarYAniadirSaldo(aux);
-                case 4 -> modificarCuenta(pos, usuarios);
+                case 4 -> mostrarYAniadirSaldo(aux);
+                case 5 -> modificarCuenta(pos, usuarios);
             }
-        } while (primerSubmenu != 5);
+        } while (primerSubmenu != 6);
     }
     public static void nuevaInversion (GestionProyectos proyectos, GestionInversiones inversiones, Inversor propietario) {
         String respuesta;
         double cantidadParticipativa;
-        String fecha;
         LocalDate date;
         System.out.println("Escriba el nombre del proyecto en el que quiere invertir");
         inversiones.proyectosAunNoInvertidos(proyectos);
@@ -181,16 +222,13 @@ public class Menus {
         if (pos >= 0) {
             System.out.println("Introduzca la cantidad que quieres invertir en el proyecto:");
             cantidadParticipativa = leerOpcionDouble();
-            System.out.println("Introduzca la fecha (dd/mm/yyyy):");
-            fecha = leerOpcionLiteral();
-            date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            date = LocalDate.now();
             inversiones.nuevaInversion(propietario, proyectos.devuelveProyecto(pos), cantidadParticipativa, date);
         } else System.out.println("Ese proyecto no existe o escribiste el nombre incorrectamente.");
     }
-    public static void actualizarInversion (GestionProyectos proyectos, GestionInversiones inversiones, Inversor propietario) {
+    public static void actualizarInversion (GestionProyectos proyectos, GestionInversiones inversiones) {
         String respuesta;
         double cantidadParticipativa;
-        String fecha;
         LocalDate fechaActualizacion;
         System.out.println("Escribe el nombre del proyecto que actualizar");
         inversiones.mostrarMisInversiones();
@@ -199,9 +237,7 @@ public class Menus {
         if (pos >= 0) {
             System.out.println("Introduzca la cantidad que quieres añadir en el proyecto:");
             cantidadParticipativa = leerOpcionDouble();
-            System.out.println("Introduzca la fecha (dd/mm/yyyy):");
-            fecha = leerOpcionLiteral();
-            fechaActualizacion = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            fechaActualizacion = LocalDate.now();
             inversiones.actualizarInversion(pos, cantidadParticipativa, fechaActualizacion);
         } else System.out.println("Ese proyecto no existe o escribiste el nombre incorrectamente.");
     }

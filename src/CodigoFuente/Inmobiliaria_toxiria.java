@@ -80,7 +80,8 @@ public class Inmobiliaria_toxiria {
                     String claseUsuario = usuarios.averiguarClase(posicionLogin);
                     switch (claseUsuario) {
                         case "Admin" -> menuAdmin(posicionLogin, usuarios, proyectos);
-                        case "Gestor" ->{Gestor aux=(Gestor) usuarios.devuelveUsuario(posicionLogin);
+                        case "Gestor" ->{
+                            Gestor aux=(Gestor) usuarios.devuelveUsuario(posicionLogin);
                            if (!usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia)) {
                                 aux.bloqueo();
                                 System.out.println("Demasiados intentos fallidos, tu usuario está bloqueado");

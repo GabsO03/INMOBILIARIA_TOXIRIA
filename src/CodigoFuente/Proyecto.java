@@ -52,4 +52,6 @@ public class Proyecto {
     public String toString () {
         return "Nombre: " + nombre + "\nTipo: " + tipo + "\nCantidad Necesaria: " + cantidadNecesaria + "\nCantidad Financiada: " + cantidadFinanciada + "\n";
     }
+
+
 }
