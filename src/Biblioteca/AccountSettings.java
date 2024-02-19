@@ -23,7 +23,6 @@ public class AccountSettings {
     /* ----------------------------------------------------Login----------------------------------------------------- */
     /**
      * Enviamos el correo a la dirección del destinatario con el asunto y cuerpo que deseemos
-     * @author Adrián Contreras Bueno
      * @param destinatario como una cadena
      * @param asunto como una cadena
      * @param cuerpo como una cadena
@@ -58,10 +57,20 @@ public class AccountSettings {
 
 
     /* ----------------------------------------------------Change----------------------------------------------------- */
+
+    /**
+     * Funcion para cambiar el nombre de usuario del Usuario
+     * @return una cadena con el nuevo nombre
+     */
     public static String cambiarUsuario (){
         System.out.println("Escriba el nuevo usuario");
         return leerOpcionLiteral();
     }
+
+    /**
+     * Funcion para cambiar la contraseña del Usuario
+     * @return una cadena con la nueva contraseña
+     */
     public static String cambiarcontrasenia (){
         String passNuevoUsuario, passRepetidaNuevoUsuario;
         do {
@@ -75,10 +84,20 @@ public class AccountSettings {
         }while(!passRepetidaNuevoUsuario.equals(passNuevoUsuario));
         return passNuevoUsuario;
     }
+    /**
+     * Funcion para cambiar el email del Usuario
+     * @return una cadena con el nuevo email
+     */
     public static String cambiarEmail(){
         System.out.println("Escriba el nuevo email");
         return leerOpcionLiteral();
     }
+
+    /**
+     * Funcion para modificar algún atributo de la cuenta del usuario
+     * @param pos como entero
+     * @param usuarios como un objeto de la clase GestionUsuarios
+     */
     public static void modificarCuenta (int pos, GestionUsuarios usuarios) {
         int opcion;
         do {
@@ -92,7 +111,14 @@ public class AccountSettings {
         } while (opcion != 4);
     }
 
-
+    /**
+     * Funcion para poder registrar a un nuevo Usuario
+     * @param tipo como cadena
+     * @param usuarios como un objeto de la clase GestionUsuarios
+     * @param megaGestionInversiones un array de un objeto de la clase GestionInversiones
+     * @param cantidadInversiones como entero
+     * @return true si se ha conseguido registrar correctamente o false si no se ha podido registrar correctamente
+     */
     public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, GestionInversiones[] megaGestionInversiones, int cantidadInversiones) {
         System.out.println("Escriba su nombre completo: ");
         String nombre = leerOpcionLiteral();

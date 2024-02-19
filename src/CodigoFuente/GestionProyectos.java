@@ -24,6 +24,10 @@ public class GestionProyectos {
         return arrayProyectos;
     }
 
+    /**
+     * Muestra todos los proyectos
+     * @param tipo como un entero
+     */
     public void mostrarProyectos(int tipo) {
         int i = 0;
         while (i < arrayProyectos.length) {
@@ -42,7 +46,11 @@ public class GestionProyectos {
         if (tipo == 1) System.out.println("1. Ver más detalles.\n2. Eliminar o modificar.\n3. Salir.");
     }
 
-
+    /**
+     * Funcion para crear el grafo de cada proyecto
+     * @param cantidadNecesaria como double
+     * @param cantidadFinanciada como double
+     */
     private void crearGrafico(double cantidadNecesaria, double cantidadFinanciada) {
         int porcentaje = (int) ((int) (cantidadFinanciada * 100) / cantidadNecesaria);
         String caracterLleno = "#";
@@ -52,6 +60,9 @@ public class GestionProyectos {
         System.out.print(caracterVacio.repeat((100 - porcentaje)));
     }
 
+    /**
+     * Funcion para mostrar todos los proyectos con más detalles
+     */
     public void proyectosDetallados() {
         for (int i = 0; i < arrayProyectos.length; i++) {
             if (arrayProyectos[i] != null) {
@@ -65,6 +76,10 @@ public class GestionProyectos {
             }
         }
     }
+
+    /**
+     * Funcion para ampliar el tamaño del array
+     */
     private void ampliar () {
         if (cantidadProyectos == arrayProyectos.length) {
             Proyecto[] aux = new Proyecto[arrayProyectos.length+20];
@@ -74,10 +89,18 @@ public class GestionProyectos {
             arrayProyectos = aux;
         }
     }
-    public void crearProyecto(Proyecto proyecto) {
-        arrayProyectos[cantidadProyectos++] = proyecto;
-    }
 
+    /**
+     * Funcion para crear un nuevo proyecto
+     * @param nombre como cadena
+     * @param descripcion como cadena
+     * @param tipo como cadena
+     * @param fechaInicio como una fecha
+     * @param fechaFin como una fecha
+     * @param cantidadNecesaria como un double
+     * @param cantidadFinanciada como un double
+     * @return devuelve true si se ha podido crear el proyecto o false si no se ha podido
+     */
     public boolean crearProyecto(String nombre, String descripcion, String tipo, LocalDate fechaInicio, LocalDate fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
         ampliar();
         if (arrayProyectos[cantidadProyectos] == null) {
@@ -87,13 +110,17 @@ public class GestionProyectos {
         return false;
     }
 
-    public boolean modificarProyecto(int pos, Proyecto proyecto) {
-        if (proyecto != null) {
-            arrayProyectos[pos] = proyecto;
-            return true;
-        }
-        return false;
-    }
+    /**
+     * Funcion para poder modificar un proyecto ya creado
+     * @param pos como entero
+     * @param nombre como cadena
+     * @param descripcion como cadena
+     * @param tipo como cadena
+     * @param fechaInicio como una fecha
+     * @param fechaFin como una fecha
+     * @param cantidadNecesaria como un double
+     * @param cantidadFinanciada como un double
+     */
     public void modificarProyecto(int pos, String nombre, String descripcion, String tipo, LocalDate fechaInicio, LocalDate fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
         if (nombre != null) arrayProyectos[pos].setNombre(nombre);
         if (descripcion != null) arrayProyectos[pos].setDescripcion(descripcion);
@@ -104,7 +131,11 @@ public class GestionProyectos {
         if (cantidadFinanciada != 0) arrayProyectos[pos].setCantidadFinanciada(cantidadFinanciada);
     }
 
-
+    /**
+     * Funcion para eliminar un proyecto
+     * @param pos
+     * @return
+     */
     public boolean eliminarProyecto(int pos) {
         if (arrayProyectos[pos] != null) {
             arrayProyectos[pos] = null;
@@ -113,6 +144,11 @@ public class GestionProyectos {
         return false;
     }
 
+    /**
+     * Funcion para cuando borramos un proyecto reorganizar el array
+     * @param pos como entero
+     */
+
     private void reorganizaArray(int pos) {
         for (int i = pos; i < arrayProyectos.length - 1; i++) {
             arrayProyectos[i] = arrayProyectos[i + 1];
@@ -120,6 +156,12 @@ public class GestionProyectos {
         arrayProyectos[arrayProyectos.length - 1] = null;
     }
 
+    /**
+     * Funcion para buscar un proyecto dentro de un rango
+     * @param atributo como cadena
+     * @param valorInicial como cadena
+     * @param valorFinal como cadena
+     */
     public void buscarProyectoRango(String atributo, String valorInicial, String valorFinal) {
         System.out.println("Listado completo de proyectos según " + atributo + " (desde " + valorInicial + " hasta " + valorFinal + "):");
 
@@ -167,6 +209,13 @@ public class GestionProyectos {
             default -> System.out.println("Error en datos introducidos.");
         }
     }
+
+    /**
+     * Funcion para buscar un proyecto dando el valor por parámetro
+     * @param atributo como cadena
+     * @param valor como cadena
+     * @return un entero con la posicion donde se encuentra el proyecto o -1 si no lo ha encontrado
+     */
     public int buscarProyecto(String atributo, String valor) {
         int codigo;
         atributo = atributo.toLowerCase();

@@ -27,6 +27,11 @@ public  class Inversor extends Usuario{
         this.bloqueado = false;
     }
 
+    /**
+     * Funcion para comprobar si el inversor puede invertir en un proyecto con cierta cantidad o no
+     * @param cantidad como double
+     * @return true si si puede invertir o false si no
+     */
     public boolean paga (double cantidad) {
         if (saldo >= cantidad) {
             saldo -= cantidad;

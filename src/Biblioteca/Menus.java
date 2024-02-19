@@ -9,32 +9,48 @@ import static Biblioteca.Proyectos.*;
 
 
 public class Menus {
+    /**
+     * Funcion que muestra el menu inicial
+     */
     public static void menuInicio() {
         System.out.println("Seleccione qué quiere hacer: \n1. Registro\n2. Iniciar sesión\n3. Salir");
     }
 
+    /**
+     * Funcion para mostrar el menu de los proyectos del gestor
+     */
     public static void menuProyectosGestor() {
         System.out.println("Seleccione que desea realizar con los proyectos: \n1. Mostrar proyectos creados.\n2. Crear nuevo proyecto.\n3. Configuración de cuenta.\n4. Salir");
     }
-
+    /**
+     * Muestra el menu del administrador
+     */
     public static void menuAdministrador() {
         System.out.println("Seleccione dónde quiere acceder: \n1. Panel de control\n2. Proyectos\n3. Configuración\n4. Salir");
     }
-
+    /**
+     * Muestra el menu para modificar algún proyecto
+     */
     public static void menuModificarProyecto() {
         System.out.println("Elija qué quiere modificar: \n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
                 "\n6.Fecha inicio\n7.Fecha fin\n8.Nada");
     }
-
+    /**
+     * Muestra el menu del inversor
+     */
     public static void menuOpcinesInversor() {
         System.out.println("Seleccione donde quiere acceder:\n1. Mis inversiones\n2. Buscar proyecto\n3. Invertir\n4. Cartera Virtual\n5. Configuración de cuenta\n6. Salir");
     }
-
+    /**
+     * Muestra el menu de la configuracion para todos los usuarios
+     */
     public static void menuConfiguracion() {
         System.out.println("Seleccione qué quiere hacer:");
         System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3. Cambiar email\n4. Salir");
     }
-
+    /**
+     * Muestra el panel de control de cada usuario
+     */
     public static void panelControlUsuarios(GestionUsuarios usuarios) {
         int posicion, opcion;
         do {
@@ -49,8 +65,9 @@ public class Menus {
             }
         } while (posicion != 0);
     }
-
-
+    /**
+     * Muestra el segundo menu del administrador
+     */
     public static void menuAdmin(int pos, GestionUsuarios usuarios, GestionProyectos proyectos) {
         int primerSubmenu, segundoSubmenu, tercerSubmenu;
         do {
@@ -120,7 +137,9 @@ public class Menus {
             }
         } while (primerSubmenu != 4);
     }
-
+    /**
+     * Muestra el segundo menu del gestor
+     */
     public static void menuGestor(int pos, GestionUsuarios usuarios, GestionProyectos proyectos) {
         int primerSubmenu;
         do {
@@ -135,6 +154,13 @@ public class Menus {
 
         } while (primerSubmenu != 4);
     }
+
+    /**
+     * Funcion para buscar las inversiones realizadas por un inversor
+     * @param megaGestionInversiones como array de objetos de la clase GestionInversiones
+     * @param inversor como objeto de la clase Inversor
+     * @return un número entero dependiendo de la posición del array donde se encuentre ese usuario o -1 si no se encuentra
+     */
     public static int encuentraGestionInversiones (GestionInversiones[] megaGestionInversiones, Inversor inversor) {
         for (int i = 0; i < megaGestionInversiones.length; i++) {
             if (megaGestionInversiones[i].getPropietario() == inversor) return i;
@@ -142,6 +168,10 @@ public class Menus {
         return -1;
     }
 
+    /**
+     * Funcion para buscar un determinado proyecto
+     * @param proyectos un objeto de la clase GestionProyectos
+     */
     public static void buscarProyecto (GestionProyectos proyectos) {
         int tipoBusqueda, position;
         String atributo, valor, valorInicial, valorFinal;
@@ -172,7 +202,10 @@ public class Menus {
         } while (tipoBusqueda != 3);
     }
 
-
+    /**
+     * Funcion para mostrar y añadir saldo al inversor
+     * @param inversor como objeto de la clase Inversor
+     */
     public static void mostrarYAniadirSaldo(Inversor inversor){
         String respuesta;
         double cantidad;
@@ -186,7 +219,9 @@ public class Menus {
             System.out.println("Tu saldo ahora es de " + inversor.getSaldo());
         } else System.out.println("Cancelando.");
     }
-
+    /**
+     * Muestra el segundo menu del inversor
+     */
     public static void menuInversor(int pos, GestionUsuarios usuarios, GestionProyectos proyectos, GestionInversiones[] megaGestionInversiones) {
         Inversor aux = (Inversor) usuarios.devuelveUsuario(pos);
         int primerSubmenu, opcionInversion, gestionIndividual = encuentraGestionInversiones(megaGestionInversiones, aux);
@@ -211,6 +246,13 @@ public class Menus {
             }
         } while (primerSubmenu != 6);
     }
+
+    /**
+     * Funcion para realizar una nueva inversion
+     * @param proyectos como objeto de la clase GestionProyectos
+     * @param inversiones proyectos como objeto de la clase GestionInversiones
+     * @param propietario proyectos como objeto de la clase Inversor
+     */
     public static void nuevaInversion (GestionProyectos proyectos, GestionInversiones inversiones, Inversor propietario) {
         String respuesta;
         double cantidadParticipativa;
@@ -226,6 +268,12 @@ public class Menus {
             inversiones.nuevaInversion(propietario, proyectos.devuelveProyecto(pos), cantidadParticipativa, date);
         } else System.out.println("Ese proyecto no existe o escribiste el nombre incorrectamente.");
     }
+
+    /**
+     * Funcion para actualizar una inversion ya realizada anteriormente
+     * @param proyectos como objeto de la clase GestionProyectos
+     * @param inversiones proyectos como objeto de la clase GestionInversiones
+     */
     public static void actualizarInversion (GestionProyectos proyectos, GestionInversiones inversiones) {
         String respuesta;
         double cantidadParticipativa;

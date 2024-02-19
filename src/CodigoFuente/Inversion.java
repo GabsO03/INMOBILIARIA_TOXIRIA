@@ -17,6 +17,12 @@ public class Inversion {
         this.proyecto = proyecto;
     }
 
+    /**
+     * Funcion para poder financiar en un proyecto
+     * @param cantidadEntrante como double
+     * @param fechaInversion como una fecha
+     * @return true si se ha podido financiar o false si no
+     */
     public boolean financiarProyecto(double cantidadEntrante, LocalDate fechaInversion) {
         if (inversor.paga(cantidadEntrante)) {
             proyecto.setCantidadFinanciada(proyecto.getCantidadFinanciada() + cantidadEntrante);

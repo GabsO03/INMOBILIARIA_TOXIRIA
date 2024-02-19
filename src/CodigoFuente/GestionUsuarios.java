@@ -25,6 +25,9 @@ public class GestionUsuarios {
         this.arrayUsuarios = arrayUsuarios;
     }
 
+    /**
+     * Muestra todos los usuarios del programa
+     */
     public void muestraUsuarios () {
         int i = 1;
         System.out.println("Lista de usuarios:");
@@ -42,24 +45,52 @@ public class GestionUsuarios {
         return null;
     }
 
+    /**
+     * Funcion para insertar un nuevo usuario
+     * @param nombre como cadena
+     * @param user como cadena
+     * @param contrasenia como cadena
+     * @param email como cadena
+     */
     public void insertarUsuarioGestor ( String nombre, String user, String contrasenia, String email) {
         arrayUsuarios[numeroUsuariosInsertados++] = new Gestor (nombre, user, contrasenia, email);
         aumentaTamanio();
     }
+    /**
+     * Funcion para insertar un nuevo admin
+     * @param nombre como cadena
+     * @param user como cadena
+     * @param contrasenia como cadena
+     * @param email como cadena
+     */
     public void insertarUsuarioAdmin ( String nombre, String user, String contrasenia, String email) {
         arrayUsuarios[numeroUsuariosInsertados++] = new Admin (nombre, user, contrasenia, email);
         aumentaTamanio();
     }
+    /**
+     * Funcion para insertar un nuevo inversor
+     * @param nombre como cadena
+     * @param user como cadena
+     * @param contrasenia como cadena
+     * @param email como cadena
+     */
     public void insertarUsuarioInversor ( String nombre, String user, String contrasenia, String email) {
         arrayUsuarios[numeroUsuariosInsertados++] = new Inversor (nombre, user, contrasenia, email);
         aumentaTamanio();
     }
+
+    /**
+     * Funcion para insertar un nuevo inversor
+     * @param inversor como un objeto de la clase Inversor
+     */
     public void insertarUsuarioInversor (Inversor inversor) {
         arrayUsuarios[numeroUsuariosInsertados++] = inversor;
         aumentaTamanio();
     }
 
-
+    /**
+     * Funcion para aumentar el tamaño del array
+     */
     public void aumentaTamanio () {
         if (numeroUsuariosInsertados == arrayUsuarios.length) {
             Usuario[] arrayAux = new Usuario[arrayUsuarios.length + 15];
@@ -70,11 +101,25 @@ public class GestionUsuarios {
         }
     }
 
+    /**
+     * Funcion para modificar un usuario que ya existe
+     * @param pos como entero
+     * @param userName como cadena
+     * @param contrasenia como cadena
+     * @param email como cadena
+     */
     public void modificarUsuario (int pos, String userName, String contrasenia, String email) {
        if (userName!=null)arrayUsuarios[pos].setUsername(userName);
        if (contrasenia!=null)arrayUsuarios[pos].setContrasenia(contrasenia);
        if (email!=null)arrayUsuarios[pos].setEmail(email);
     }
+
+    /**
+     * Funcion para buscar a un usuario que ya existe mediante un atributo
+     * @param atributo como cadena
+     * @param valor como cadena
+     * @return un entero con la posicion donde se encuentra ese usuario o -1 si no lo encuentra
+     */
     public int buscarUsuario(String atributo, String valor) {
         atributo = atributo.toLowerCase();
        // valor = valor.toLowerCase();
@@ -99,69 +144,42 @@ public class GestionUsuarios {
         return -1;
     }
 
-    public boolean eliminarUsuario(int pos) {
-        if (arrayUsuarios[pos]!=null){
-            arrayUsuarios[pos]=null;
-            reorganizaArray(pos);
-        }
-        return false;
-    }
-    public void reorganizaArray (int pos) {
-        for (int i = pos; i < arrayUsuarios.length-1; i++) {
-            arrayUsuarios[i] = arrayUsuarios[i+1];
-        }
-        arrayUsuarios[arrayUsuarios.length-1]=null;
-    }
-
-    public void intercambiaUsarios(int pos1, int pos2) {
-        Usuario aux = arrayUsuarios[pos1];
-        arrayUsuarios[pos1] = arrayUsuarios[pos2];
-        arrayUsuarios[pos2] = aux;
-    }
-
-    public void ordenaUsuarios(String atributo) {
-        atributo = atributo.toLowerCase();
-
-        switch (atributo) {
-            case "nombre" -> {
-                for (int j = 0; j < arrayUsuarios.length-1; j++) {
-                    for (int i = 0; i < arrayUsuarios.length - (1 + j); i++) {
-                        if (arrayUsuarios[i]!=null && arrayUsuarios[i + 1]!=null){
-                            if (arrayUsuarios[i].getNombre().compareTo(arrayUsuarios[i + 1].getNombre()) > 0) {
-                                intercambiaUsarios(i, i + 1);
-                            }
-                        }
-                    }
-                }
-            }
-            case "nombre de usuario" -> {
-                for (int j = 0; j < arrayUsuarios.length; j++) {
-                    for (int i = 0; i < arrayUsuarios.length - (1 + j); i++) {
-                        if (arrayUsuarios[i]!=null && arrayUsuarios[i + 1]!=null){
-                            if (arrayUsuarios[i].getUsername().equalsIgnoreCase(arrayUsuarios[i + 1].getUsername())) {
-                                intercambiaUsarios(i, i + 1);
-                            }
-                        }
-                    }
-                }
-            }
-            default -> System.out.println("Ese parámetro no está disponible.");
-        }
-    }
-
+    /**
+     * Funcion para comprobar si el nombre del usuario y la contraseña corresponden con el usuario que inicia sesion
+     * @param posicion como entero
+     * @param contrasenia como cadena
+     * @return true si si corresponde o false si no corresponde
+     */
     public boolean correspondeUsuyContrasenia(int posicion, String contrasenia) {
         return arrayUsuarios[posicion].getContrasenia().equals(contrasenia);
     }
+
+    /**
+     * Funcion que comprueba si el nombre de usuario introducido ya existe o no
+     * @param username como cadena
+     * @return la posicion del usuario con ese nombre o -1 si no existe
+     */
     public int existeNombreUsuario (String username) {
         int posUsuario = buscarUsuario("nombre de usuario", username);
         if ((posUsuario >= 0)) return posUsuario;
         return -1;
     }
 
+    /**
+     * Funcion para averiguar la clase a la que pertenece un objeto
+     * @param pos como entero
+     * @return una cadena con el nombre de la clase
+     */
     public String averiguarClase (int pos) {
         Usuario aux = devuelveUsuario(pos);
         return aux.getClass().getSimpleName();
     }
+
+    /**
+     * Funcion para bloquear o desbloqueaar usuarios
+     * @param opcion como entero
+     * @param pos como entero
+     */
 
     public void bloquearDesbloquearUsuario (int opcion, int pos) {
         //switch 1 para bloquear y 2 para desbloquear

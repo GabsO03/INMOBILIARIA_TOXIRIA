@@ -9,14 +9,10 @@ public class Admin extends Usuario {
     }
 
     @Override
-    public void bloqueo() {
-
-    }
+    public void bloqueo() {}
 
     @Override
-    public void desbloqueo() {
-
-    }
+    public void desbloqueo() {}
 
 
 }

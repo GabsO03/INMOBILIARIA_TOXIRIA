@@ -6,46 +6,25 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Fechas {
-    public static boolean esAnterior(LocalDateTime fecha1,LocalDateTime fecha2){
-        if (fecha1.isBefore(fecha2)) return true;
-        else return false;
-    }
+    /**
+     * Funcion para comprobar si una fecha es anterior a otra
+     * @param fecha1 como un LocalDate
+     * @param fecha2 como un LocalDate
+     * @return true or false dependiendo de si la fecha1 es anterior a la fecha2
+     */
     public static boolean esAnterior(LocalDate fecha1,LocalDate fecha2){
         if (fecha1.isBefore(fecha2)) return true;
         else return false;
     }
-    public static boolean esPosterior(LocalDateTime fecha1, LocalDateTime fecha2){
-        return fecha1.isAfter(fecha2);
-    }
+
+    /**
+     * Funcion para comprobar si una fecha es posterior a otra
+     * @param fecha1 como un LocalDate
+     * @param fecha2 como un LocalDate
+     * @return true or false dependiendo de si la fecha1 es posterior a la fecha2
+     */
     public static boolean esPosterior(LocalDate fecha1, LocalDate fecha2){
         return fecha1.isAfter(fecha2);
     }
-    public static long segundosRestantes(LocalDateTime fecha){
-        LocalDateTime ahora= LocalDateTime.now();
-        return ChronoUnit.SECONDS.between(ahora,fecha);
-    }
-    public static long minutosRestantes(LocalDateTime fecha){
-        LocalDateTime ahora= LocalDateTime.now();
-        return ChronoUnit.MINUTES.between(ahora,fecha);
-    }
-    public static long horasRestantes(LocalDateTime fecha){
-        LocalDateTime ahora= LocalDateTime.now();
-        return ChronoUnit.HOURS.between(ahora,fecha);
-    }
-    public static long diasRestantes(LocalDateTime fecha){
-        LocalDateTime ahora= LocalDateTime.now();
-        return ChronoUnit.DAYS.between(ahora,fecha);
-    }
-    public static long diasRestantes(LocalDate fecha){
-        LocalDate ahora= LocalDate.now();
-        return ChronoUnit.DAYS.between(ahora,fecha);
-    }
-    public static String formatear(LocalDate fecha){
-        return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-    }
-    public static String formatear(LocalDateTime fecha){
-        return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss"));
-
-    }
 }

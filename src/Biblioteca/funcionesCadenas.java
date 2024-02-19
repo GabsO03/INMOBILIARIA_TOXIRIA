@@ -4,7 +4,6 @@ public class funcionesCadenas {
 
     /**
      * Función para comprobar si nuestra contraseña cumple con ciertos requisitos
-     * @author Adrián Contreras Bueno y Alex Godino Bailen
      * @param pass como cadena
      * @return true si cumple los requisitos y false si no los cumple
      */

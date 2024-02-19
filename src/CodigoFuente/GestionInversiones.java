@@ -46,6 +46,13 @@ public class GestionInversiones {
         this.inversiones = new Inversion[cantidadInversiones];
     }
 
+    /**
+     * Funcion para realizar una nueva inversion
+     * @param inversor como objeto de la clase Inversor
+     * @param proyecto inversor como objeto de la clase Proyecto
+     * @param primerIngreso como double
+     * @param fechaInversion como una fecha
+     */
     public void nuevaInversion (Inversor inversor, Proyecto proyecto, double primerIngreso, LocalDate fechaInversion) {
         inversiones[cantidadInversionesCreadas] = new Inversion(inversor, proyecto);
         if (inversiones[cantidadInversionesCreadas++].financiarProyecto(primerIngreso, fechaInversion)) {
@@ -57,6 +64,9 @@ public class GestionInversiones {
         }
     }
 
+    /**
+     * Funcion para aumentar el tamaño del array
+     */
     public void aumentaTamanio () {
         if (cantidadInversionesCreadas == inversiones.length) {
             Inversion[] arrayAux = new Inversion[inversiones.length + 15];
@@ -67,11 +77,19 @@ public class GestionInversiones {
         }
     }
 
+    /**
+     * Actualiza una inversion ya realizada
+     * @param pos como entero
+     * @param cantidadEntrante como double
+     * @param fechaActualizacion como una fecha
+     */
     public void actualizarInversion (int pos, double cantidadEntrante, LocalDate fechaActualizacion) {
         inversiones[pos].financiarProyecto(cantidadEntrante, fechaActualizacion);
     }
 
-
+    /**
+     * Funcion para mostrar las inversiones por un inversor
+     */
     public void mostrarMisInversiones () {
         System.out.println("Mis inversiones: ");
         System.out.println("================");
@@ -82,6 +100,10 @@ public class GestionInversiones {
         }
     }
 
+    /**
+     * Funcion para mostrar los proyectos en los que aún no se han invertido
+     * @param todosLosProyectos como objeto de la clase GestionProyectos
+     */
     public void proyectosAunNoInvertidos (GestionProyectos todosLosProyectos) {
         boolean esta;
         System.out.println("Proyectos aún no invertidos: ");

@@ -9,10 +9,6 @@ public  class Gestor extends Usuario {
         super(nombre, usuario, contrasenia, email);
         bloqueado = false;
     }
-    //setters
-    public void setBloqueado (boolean noEntry) { bloqueado = true; }
-
-
     //getters
     public boolean getBloqueado () { return bloqueado; }
     public String toString () {
