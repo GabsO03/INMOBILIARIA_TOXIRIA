@@ -11,21 +11,6 @@ public class GestionUsuarios {
         this.hashMapUsuarios = new HashMap<>();
     }
 
-
-    public int getNumeroUsuariosInsertados() {
-        return numeroUsuariosInsertados;
-    }
-    public Usuario[] getArrayUsuarios() {
-        return arrayUsuarios;
-    }
-
-    public void setNumeroUsuariosInsertados(int numeroUsuariosInsertados) {
-        this.numeroUsuariosInsertados = numeroUsuariosInsertados;
-    }
-    public void setArrayUsuarios (Usuario[] arrayUsuarios) {
-        this.arrayUsuarios = arrayUsuarios;
-    }
-
     /**
      * Muestra todos los usuarios del programa
      */
@@ -115,7 +100,7 @@ public class GestionUsuarios {
 
     /**
      * Funcion para averiguar la clase a la que pertenece un objeto
-     * @param pos como entero
+     * @param userName como cadena
      * @return una cadena con el nombre de la clase
      */
     public String averiguarClase (String userName) {

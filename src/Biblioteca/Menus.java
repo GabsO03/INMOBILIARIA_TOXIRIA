@@ -90,12 +90,12 @@ public class Menus {
                                         System.out.println("Introduzca la posición");
                                         int posProyecto = leerOpcionNumerica();
                                         posProyecto--;
-                                        if (posProyecto >= 0 && posProyecto < proyectos.getCantidadProyectos()) {
+                                        if (posProyecto >= 0 && posProyecto < proyectos.tamanioArray()) {
                                             System.out.println("¿Quiere eliminar el proyecto? [S]í | [N]o");
                                             String respuesta = leerOpcionLiteral();
                                             respuesta = respuesta.toLowerCase();
                                             switch (respuesta) {
-                                                case "s" -> proyectos.eliminarProyecto(posProyecto);
+                                                case "s" -> System.out.println("El proyecto " + proyectos.eliminarProyecto(posProyecto)  + " se ha eliminado correctamente");
                                                 case "n" -> {
                                                     System.out.println("¿Quiere modificar el proyecto? [S]í | [N]o");
                                                     respuesta = leerOpcionLiteral();
@@ -266,7 +266,7 @@ public class Menus {
             System.out.println("Introduzca la cantidad que quieres invertir en el proyecto:");
             cantidadParticipativa = leerOpcionDouble();
             date = LocalDate.now();
-            inversiones.nuevaInversion(propietario, proyectos.devuelveProyecto(pos), cantidadParticipativa, date);
+            inversiones.nuevaInversion(pos, propietario, proyectos.devuelveProyecto(pos), cantidadParticipativa, date);
         } else System.out.println("Ese proyecto no existe o escribiste el nombre incorrectamente.");
     }
 

@@ -25,14 +25,14 @@ public class Inmobiliaria_toxiria {
         usuarios.insertarUsuarioInversor("Gabriela","GabsOP","GabsOP123@","polloto@gmail.com");
 
         //PROYECTOS
-        GestionProyectos proyectos = new GestionProyectos(20);
+        GestionProyectos proyectos = new GestionProyectos();
         proyectos.crearProyecto("Villa verde", "La villa más fea","Plusvalía", LocalDate.now(), LocalDate.now().plusMonths(5), 4521.56f, 521.56f);
         proyectos.crearProyecto("Villa azul", "La villa más bonita", "Préstamo", LocalDate.now().plusDays(5), LocalDate.now().plusMonths(9), 85112.54, 5112.54);
         proyectos.crearProyecto("Villa morada", "La villa más morada", "Alquiler", LocalDate.now().plusDays(5), LocalDate.now().plusMonths(9), 7650, 32);
 
         //INVERSIONES
-        GestionInversiones[] megaGestionInversiones = new GestionInversiones[50];
-        megaGestionInversiones[0] = new GestionInversiones(((Inversor)usuarios.devuelveUsuario(2)), 50);
+        ArrayList<GestionInversiones> megaGestionInversiones = new ArrayList<>();
+        megaGestionInversiones.add(new GestionInversiones(((Inversor)usuarios.devuelveUsuario(""))));
         int cantidadGestionInversiones = 0;
 
         //Menus

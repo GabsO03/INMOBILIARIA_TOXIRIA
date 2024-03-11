@@ -35,7 +35,7 @@ public class GestionProyectos {
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
             i++;
         }
-        System.out.println("Existen " + cantidadProyectos + " habilitados.");
+        System.out.println("Existen " + arrayProyectos.size() + " habilitados.");
         if (tipo == 1) System.out.println("1. Ver más detalles.\n2. Eliminar o modificar.\n3. Salir.");
     }
 
@@ -57,16 +57,14 @@ public class GestionProyectos {
      * Funcion para mostrar todos los proyectos con más detalles
      */
     public void proyectosDetallados() {
-        for (int i = 0; i < arrayProyectos.length; i++) {
-            if (arrayProyectos[i] != null) {
-                System.out.println("Proyecto " + (i + 1));
-                System.out.println("Nombre: " + arrayProyectos[i].getNombre() + "\nDescripción: " + arrayProyectos[i].getDescripcion() + "\nTipo: " + arrayProyectos[i].getTipo());
-                System.out.println("Fecha Inicial: " + arrayProyectos[i].getFechaInicio() + "\nFecha Final: " + arrayProyectos[i].getFechaFin());
-                System.out.println("Cantidad Necesaria: " + arrayProyectos[i].getCantidadNecesaria() + "\nCantidad Financiada: " + arrayProyectos[i].getCantidadFinanciada());
-                System.out.println("Gráfico:");
-                crearGrafico(arrayProyectos[i].getCantidadNecesaria(), arrayProyectos[i].getCantidadFinanciada());
-                System.out.println();
-            }
+        for (int i = 0; i < arrayProyectos.size(); i++) {
+            System.out.println("Proyecto " + (i + 1));
+            System.out.println("Nombre: " + arrayProyectos.get(i).getNombre() + "\nDescripción: " + arrayProyectos.get(i).getDescripcion() + "\nTipo: " + arrayProyectos.get(i).getTipo());
+            System.out.println("Fecha Inicial: " + arrayProyectos.get(i).getFechaInicio() + "\nFecha Final: " + arrayProyectos.get(i).getFechaFin());
+            System.out.println("Cantidad Necesaria: " + arrayProyectos.get(i).getCantidadNecesaria() + "\nCantidad Financiada: " + arrayProyectos.get(i).getCantidadFinanciada());
+            System.out.println("Gráfico:");
+            crearGrafico(arrayProyectos.get(i).getCantidadNecesaria(), arrayProyectos.get(i).getCantidadFinanciada());
+            System.out.println();
         }
     }
 
@@ -84,12 +82,7 @@ public class GestionProyectos {
      * @return devuelve true si se ha podido crear el proyecto o false si no se ha podido
      */
     public boolean crearProyecto(String nombre, String descripcion, String tipo, LocalDate fechaInicio, LocalDate fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
-        ampliar();
-        if (arrayProyectos[cantidadProyectos] == null) {
-            arrayProyectos[cantidadProyectos++] = new Proyecto(nombre, descripcion, tipo, fechaInicio, fechaFin, cantidadNecesaria, cantidadFinanciada);
-            return true;
-        }
-        return false;
+        return arrayProyectos.add(new Proyecto(nombre, descripcion, tipo, fechaInicio, fechaFin, cantidadNecesaria, cantidadFinanciada));
     }
 
     /**
@@ -115,27 +108,12 @@ public class GestionProyectos {
 
     /**
      * Funcion para eliminar un proyecto
-     * @param pos
-     * @return
-     */
-    public boolean eliminarProyecto(int pos) {
-        if (arrayProyectos[pos] != null) {
-            arrayProyectos[pos] = null;
-            reorganizaArray(pos);
-        }
-        return false;
-    }
-
-    /**
-     * Funcion para cuando borramos un proyecto reorganizar el array
      * @param pos como entero
      */
-
-    private void reorganizaArray(int pos) {
-        for (int i = pos; i < arrayProyectos.length - 1; i++) {
-            arrayProyectos[i] = arrayProyectos[i + 1];
-        }
-        arrayProyectos[arrayProyectos.length - 1] = null;
+    public String eliminarProyecto(int pos) {
+        String nombre =arrayProyectos.get(pos).getNombre();
+        arrayProyectos.remove(pos);
+        return nombre;
     }
 
     /**
@@ -158,11 +136,9 @@ public class GestionProyectos {
             case "Fecha de fin" -> {
                 LocalDate date1 = LocalDate.parse(valorInicial, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 LocalDate date2 = LocalDate.parse(valorFinal, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null) {
-                        if (Fechas.esPosterior(arrayProyectos[i].getFechaFin(), date1) && Fechas.esAnterior(arrayProyectos[i].getFechaFin(), date2)) {
-                            System.out.println(arrayProyectos[i]);
-                        }
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                    if (Fechas.esPosterior(arrayProyectos.get(i).getFechaFin(), date1) && Fechas.esAnterior(arrayProyectos.get(i).getFechaFin(), date2)) {
+                        System.out.println(arrayProyectos.get(i));
                     }
                 }
             }
@@ -177,11 +153,10 @@ public class GestionProyectos {
             case "Cantidad financiada" -> {
                 double v1 = Double.parseDouble(valorInicial);
                 double v2 = Double.parseDouble(valorFinal);
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null) {
-                        if (arrayProyectos[i].getCantidadFinanciada() >= v1 && arrayProyectos[i].getCantidadFinanciada() <= v2)
-                            System.out.println(arrayProyectos[i]);
-                    }
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                    if (arrayProyectos.get(i).getCantidadFinanciada() >= v1 && arrayProyectos.get(i).getCantidadFinanciada() <= v2)
+                        System.out.println(arrayProyectos.get(i));
+
                 }
             }
             default -> System.out.println("Error en datos introducidos.");
@@ -211,13 +186,13 @@ public class GestionProyectos {
                 }
             }
             case "descripción" -> {
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null && arrayProyectos[i].getDescripcion().equalsIgnoreCase(valor)) return i;
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                    if (arrayProyectos.get(i).getDescripcion().equalsIgnoreCase(valor)) return i;
                 }
             }
             case "tipo" -> {
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null && arrayProyectos[i].getTipo().equalsIgnoreCase(valor)) return i;
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                    if (arrayProyectos.get(i).getTipo().equalsIgnoreCase(valor)) return i;
                 }
             }
             case "fecha de inicio" -> {
@@ -228,8 +203,8 @@ public class GestionProyectos {
             }
             case "fecha de fin" -> {
                 LocalDate aux = LocalDate.parse(valor, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null && arrayProyectos[i].getFechaFin() == aux) return i;
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                    if (arrayProyectos.get(i).getFechaFin() == aux) return i;
                 }
             }
             default -> System.out.println("Ese parámetro no existe.");
@@ -238,7 +213,6 @@ public class GestionProyectos {
     }
 
     public Proyecto devuelveProyecto (int pos) {
-        if (arrayProyectos[pos] != null) return arrayProyectos[pos];
-        return null;
+        return arrayProyectos.get(pos);
     }
 }

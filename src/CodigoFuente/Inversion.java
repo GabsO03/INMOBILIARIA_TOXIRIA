@@ -35,10 +35,6 @@ public class Inversion {
         return proyecto;
     }
 
-    public void setProyecto(Proyecto proyecto) {
-        this.proyecto = proyecto;
-    }
-
     //Métodos
 
     public String toString (){

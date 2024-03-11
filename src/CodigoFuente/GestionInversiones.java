@@ -1,47 +1,19 @@
 package CodigoFuente;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class GestionInversiones {
 
     private Inversor propietario;
-    private Inversion[] inversiones;
-    private int cantidadInversiones;
-    private int cantidadInversionesCreadas = 0;
+    private ArrayList<Inversion> inversiones;
 
     public Inversor getPropietario() {
         return propietario;
     }
 
-    public void setPropietario(Inversor propietario) {
-        this.propietario = propietario;
-    }
 
-    public Inversion[] getInversiones() {
-        return inversiones;
-    }
-
-    public void setInversiones(Inversion[] inversiones) {
-        this.inversiones = inversiones;
-    }
-
-    public int getCantidadInversiones() {
-        return cantidadInversiones;
-    }
-
-    public void setCantidadInversiones(int cantidadInversiones) {
-        this.cantidadInversiones = cantidadInversiones;
-    }
-
-    public int getCantidadInversionesCreadas() {
-        return cantidadInversionesCreadas;
-    }
-
-    public void setCantidadInversionesCreadas(int cantidadInversionesCreadas) {
-        this.cantidadInversionesCreadas = cantidadInversionesCreadas;
-    }
-
-    public GestionInversiones (Inversor inversor, int cantidadInversiones) {
+    public GestionInversiones (Inversor inversor) {
         this.propietario = inversor;
         this.inversiones = new ArrayList<>();
     }
@@ -53,14 +25,13 @@ public class GestionInversiones {
      * @param primerIngreso como double
      * @param fechaInversion como una fecha
      */
-    public void nuevaInversion (Inversor inversor, Proyecto proyecto, double primerIngreso, LocalDate fechaInversion) {
-        inversiones[cantidadInversionesCreadas] = new Inversion(inversor, proyecto);
-        if (inversiones[cantidadInversionesCreadas++].financiarProyecto(primerIngreso, fechaInversion)) {
+    public void nuevaInversion (int pos,Inversor inversor, Proyecto proyecto, double primerIngreso, LocalDate fechaInversion) {
+        inversiones.add(new Inversion(inversor, proyecto));
+        if (inversiones.get(pos).financiarProyecto(primerIngreso, fechaInversion)) {
             System.out.println("Inversión existosa, los detalles están disponibles para revisión.");
-            aumentaTamanio();
         } else {
             System.out.println("No cuentas con saldo suficiente para realizar esta transacción.");
-            inversiones[cantidadInversionesCreadas--] = null;
+            inversiones.remove(pos);
         }
     }
 
@@ -71,7 +42,7 @@ public class GestionInversiones {
      * @param fechaActualizacion como una fecha
      */
     public void actualizarInversion (int pos, double cantidadEntrante, LocalDate fechaActualizacion) {
-        inversiones[pos].financiarProyecto(cantidadEntrante, fechaActualizacion);
+        inversiones.get(pos).financiarProyecto(cantidadEntrante, fechaActualizacion);
     }
 
     /**

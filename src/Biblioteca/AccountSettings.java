@@ -96,18 +96,17 @@ public class AccountSettings {
 
     /**
      * Funcion para modificar algún atributo de la cuenta del usuario
-     * @param pos como entero
+     * @param userName como cadena
      * @param usuarios como un objeto de la clase GestionUsuarios
      */
-    public static void modificarCuenta (int pos, GestionUsuarios usuarios) {
+    public static void modificarCuenta (String userName, GestionUsuarios usuarios) {
         int opcion;
         do {
             menuConfiguracion();
             opcion = leerOpcionNumerica();
             switch (opcion) {
-                case 1 -> usuarios.modificarUsuario(pos, cambiarUsuario(), null, null);
-                case 2 -> usuarios.modificarUsuario(pos, null, cambiarcontrasenia(), null);
-                case 3 -> usuarios.modificarUsuario(pos, null, null, cambiarEmail());
+                case 1 -> usuarios.modificarUsuario(userName,  cambiarcontrasenia(), null);
+                case 2 -> usuarios.modificarUsuario(userName, null,  cambiarEmail());
             }
         } while (opcion != 3);
     }
