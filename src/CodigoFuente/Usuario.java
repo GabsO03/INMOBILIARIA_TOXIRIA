@@ -2,20 +2,17 @@ package CodigoFuente;
 
 public abstract class Usuario {
     //ATRIBUTOS
-    private int codigo;
     private String nombre;
     private String username;
     private String contrasenia;
     private String email;
-    private int usuariosRegistrados = 8450;
 
     //MÉTODOS
 
 
-    public Usuario(String nombre, String usuario, String contrasenia, String email) {
-        this.codigo = usuariosRegistrados++;
+    public Usuario(String nombre, String username, String contrasenia, String email) {
         this.nombre = nombre;
-        this.username = usuario;
+        this.username = username;
         this.contrasenia = contrasenia;
         this.email = email;
     }
@@ -32,14 +29,12 @@ public abstract class Usuario {
     public void setContrasenia (String contrasenia) { this.contrasenia = contrasenia; }
     public void setEmail (String email) { this.email = email; }
 
-    public void setCodigo (int codigo) { this.codigo = codigo; }
 
     //getters
     public String getNombre () { return nombre; }
     public String getUsername() { return username; }
     public String getContrasenia () { return contrasenia; }
     public String getEmail () { return email; }
-    public int getCodigo () { return codigo; }
 
     public abstract void bloqueo();
     public abstract void desbloqueo();

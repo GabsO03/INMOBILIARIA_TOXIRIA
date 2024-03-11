@@ -32,8 +32,7 @@ public class Inmobiliaria_toxiria {
 
         //INVERSIONES
         ArrayList<GestionInversiones> megaGestionInversiones = new ArrayList<>();
-        megaGestionInversiones.add(new GestionInversiones(((Inversor)usuarios.devuelveUsuario(""))));
-        int cantidadGestionInversiones = 0;
+        megaGestionInversiones.add(new GestionInversiones(((Inversor)usuarios.devuelveUsuario("Gabriela"))));
 
         //Menus
         int seleccionInicial;
@@ -58,7 +57,7 @@ public class Inmobiliaria_toxiria {
                             if (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"))
                                 System.out.println("Error, tiene que escribir 'G' o 'I'");
                         } while (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"));
-                        registroCorrecto = registroUsuarioNuevo(tipoNuevoUsuario, usuarios, megaGestionInversiones, cantidadGestionInversiones++);
+                        registroCorrecto = registroUsuarioNuevo(tipoNuevoUsuario, usuarios, megaGestionInversiones);
                         if (registroCorrecto) System.out.println("Usuario registrado correctamente");
                         else System.out.println("Hubo un error, intente de nuevo.");
                     } while (!registroCorrecto);

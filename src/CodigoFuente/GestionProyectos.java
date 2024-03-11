@@ -6,19 +6,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import static Biblioteca.Colores.*;
-import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
-
 public class GestionProyectos {
     private ArrayList<Proyecto> arrayProyectos;
 
     public GestionProyectos() {
         arrayProyectos=new ArrayList<>();
     }
-
-    public int tamanioArray(){
+    public int getCantidadProyectos(){
         return arrayProyectos.size();
     }
+
     /**
      * Muestra todos los proyectos
      * @param tipo como un entero

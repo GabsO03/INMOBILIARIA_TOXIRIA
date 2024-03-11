@@ -1,6 +1,7 @@
 package CodigoFuente;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Proyecto {
     //ATRIBUTOS
@@ -13,6 +14,7 @@ public class Proyecto {
     private double cantidadNecesaria;
     private double cantidadFinanciada;
     private static int cantidadProyectos = 2580;
+    private HashMap<Inversor, Double> inversiones;
 
     //MÉTODOS
 
@@ -26,8 +28,8 @@ public class Proyecto {
         this.fechaFin = fechaFin;
         this.cantidadNecesaria = cantidadNecesaria;
         this.cantidadFinanciada = cantidadFinanciada;
+        inversiones = new HashMap<>();
     }
-
     //setters
     public void setNombre (String nombre) { this.nombre = nombre; }
     public void setDescripcion (String descripcion) { this.descripcion = descripcion; }
@@ -52,6 +54,7 @@ public class Proyecto {
     public String toString () {
         return "Nombre: " + nombre + "\nTipo: " + tipo + "\nCantidad Necesaria: " + cantidadNecesaria + "\nCantidad Financiada: " + cantidadFinanciada + "\n";
     }
+
 
 
 }

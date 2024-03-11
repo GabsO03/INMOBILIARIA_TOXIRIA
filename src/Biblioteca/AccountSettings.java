@@ -116,14 +116,16 @@ public class AccountSettings {
      * @param tipo como cadena
      * @param usuarios como un objeto de la clase GestionUsuarios
      * @param megaGestionInversiones un array de un objeto de la clase GestionInversiones
-     * @param cantidadInversiones como entero
      * @return true si se ha conseguido registrar correctamente o false si no se ha podido registrar correctamente
      */
-    public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, ArrayList<GestionInversiones> megaGestionInversiones, int cantidadInversiones) {
+    public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, ArrayList<GestionInversiones> megaGestionInversiones){
         System.out.println("Escriba su nombre completo: ");
-        String nombre = leerOpcionLiteral();
-        System.out.println("Escriba su nombre de usuario: ");
-        String nuevoUsuario = leerOpcionLiteral(), passNuevoUsuario, passRepetidaNuevoUsuario, correoNuevoUsuario;
+        String nombre = leerOpcionLiteral(), passNuevoUsuario, passRepetidaNuevoUsuario, correoNuevoUsuario, nuevoUsuario;
+        do {
+            System.out.println("Escriba su nombre de usuario: ");
+            nuevoUsuario = leerOpcionLiteral();
+            if (usuarios.existeNombreUsuario(nuevoUsuario)) System.out.println("Ese nombre de usuario ya existe");
+        } while (usuarios.existeNombreUsuario(nuevoUsuario));
         do {
             System.out.println("Escriba su contraseña: ");
             passNuevoUsuario = leerOpcionLiteral();
@@ -146,11 +148,12 @@ public class AccountSettings {
             codigoUsuario = leerOpcionNumerica();
             if (codigoEnviado != codigoUsuario) System.out.println("ERROR, el código no es correcto");
         } while (codigoEnviado != codigoUsuario);
-        if (tipo.equalsIgnoreCase("G")) usuarios.insertarUsuarioGestor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
+        if (tipo.equalsIgnoreCase("G"))
+            usuarios.insertarUsuarioGestor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
         else {
             Inversor aux = new Inversor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
             usuarios.insertarUsuarioInversor(aux);
-            megaGestionInversiones[cantidadInversiones] = new GestionInversiones(aux, 50);
+            megaGestionInversiones.add(new GestionInversiones(aux));
         }
         return true;
     }

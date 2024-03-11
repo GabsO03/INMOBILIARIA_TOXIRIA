@@ -90,7 +90,7 @@ public class Menus {
                                         System.out.println("Introduzca la posición");
                                         int posProyecto = leerOpcionNumerica();
                                         posProyecto--;
-                                        if (posProyecto >= 0 && posProyecto < proyectos.tamanioArray()) {
+                                        if (posProyecto >= 0 && posProyecto < proyectos.getCantidadProyectos()) {
                                             System.out.println("¿Quiere eliminar el proyecto? [S]í | [N]o");
                                             String respuesta = leerOpcionLiteral();
                                             respuesta = respuesta.toLowerCase();
@@ -164,7 +164,7 @@ public class Menus {
      */
     public static int encuentraGestionInversiones (ArrayList<GestionInversiones> megaGestionInversiones, Inversor inversor) {
         for (int i = 0; i < megaGestionInversiones.size(); i++) {
-            if (megaGestionInversiones.get(i).getPropietario() == inversor) return i;
+            if (megaGestionInversiones.get(i).getInversor() == inversor) return i;
         }
         return -1;
     }
@@ -230,14 +230,14 @@ public class Menus {
             menuOpcinesInversor();
             primerSubmenu = leerOpcionNumerica();
             switch (primerSubmenu) {
-                case 1 -> megaGestionInversiones[gestionIndividual].mostrarMisInversiones();
+                case 1 -> megaGestionInversiones.get(gestionIndividual).mostrarMisInversiones();
                 case 2 -> buscarProyecto(proyectos);
                 case 3 -> {
                     System.out.println("1. Nueva inversión\n2. Actualizar inversión\n3. Cancelar");
                     opcionInversion = leerOpcionNumerica();
                     switch (opcionInversion) {
-                        case 1 -> nuevaInversion(proyectos, megaGestionInversiones[gestionIndividual], aux);
-                        case 2 -> actualizarInversion(proyectos, megaGestionInversiones[gestionIndividual]);
+                        case 1 -> nuevaInversion(proyectos, megaGestionInversiones.get(gestionIndividual));
+                        case 2 -> actualizarInversion(proyectos, megaGestionInversiones.get(gestionIndividual));
                         case 3 -> System.out.println();
                         default -> System.out.println("Invalid response.");
                     }
@@ -252,12 +252,10 @@ public class Menus {
      * Funcion para realizar una nueva inversion
      * @param proyectos como objeto de la clase GestionProyectos
      * @param inversiones proyectos como objeto de la clase GestionInversiones
-     * @param propietario proyectos como objeto de la clase Inversor
      */
-    public static void nuevaInversion (GestionProyectos proyectos, GestionInversiones inversiones, Inversor propietario) {
+    public static void nuevaInversion (GestionProyectos proyectos, GestionInversiones inversiones) {
         String respuesta;
         double cantidadParticipativa;
-        LocalDate date;
         System.out.println("Escriba el nombre del proyecto en el que quiere invertir");
         inversiones.proyectosAunNoInvertidos(proyectos);
         respuesta = leerOpcionLiteral();
@@ -265,8 +263,11 @@ public class Menus {
         if (pos >= 0) {
             System.out.println("Introduzca la cantidad que quieres invertir en el proyecto:");
             cantidadParticipativa = leerOpcionDouble();
-            date = LocalDate.now();
-            inversiones.nuevaInversion(pos, propietario, proyectos.devuelveProyecto(pos), cantidadParticipativa, date);
+            if (inversiones.nuevaInversion(proyectos.devuelveProyecto(pos), cantidadParticipativa))
+                System.out.println("Inversión existosa, los detalles están disponibles para revisión.");
+            else
+                System.out.println("No cuentas con saldo suficiente para realizar esta transacción.");
+
         } else System.out.println("Ese proyecto no existe o escribiste el nombre incorrectamente.");
     }
 
@@ -278,7 +279,6 @@ public class Menus {
     public static void actualizarInversion (GestionProyectos proyectos, GestionInversiones inversiones) {
         String respuesta;
         double cantidadParticipativa;
-        LocalDate fechaActualizacion;
         System.out.println("Escribe el nombre del proyecto que actualizar");
         inversiones.mostrarMisInversiones();
         respuesta = leerOpcionLiteral();
@@ -286,8 +286,7 @@ public class Menus {
         if (pos >= 0) {
             System.out.println("Introduzca la cantidad que quieres añadir en el proyecto:");
             cantidadParticipativa = leerOpcionDouble();
-            fechaActualizacion = LocalDate.now();
-            inversiones.actualizarInversion(pos, cantidadParticipativa, fechaActualizacion);
+            inversiones.actualizarInversion(pos, cantidadParticipativa);
         } else System.out.println("Ese proyecto no existe o escribiste el nombre incorrectamente.");
     }
 
