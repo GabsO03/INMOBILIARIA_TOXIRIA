@@ -10,6 +10,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
@@ -108,7 +109,7 @@ public class AccountSettings {
                 case 2 -> usuarios.modificarUsuario(pos, null, cambiarcontrasenia(), null);
                 case 3 -> usuarios.modificarUsuario(pos, null, null, cambiarEmail());
             }
-        } while (opcion != 4);
+        } while (opcion != 3);
     }
 
     /**
@@ -119,7 +120,7 @@ public class AccountSettings {
      * @param cantidadInversiones como entero
      * @return true si se ha conseguido registrar correctamente o false si no se ha podido registrar correctamente
      */
-    public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, GestionInversiones[] megaGestionInversiones, int cantidadInversiones) {
+    public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, ArrayList<GestionInversiones> megaGestionInversiones, int cantidadInversiones) {
         System.out.println("Escriba su nombre completo: ");
         String nombre = leerOpcionLiteral();
         System.out.println("Escriba su nombre de usuario: ");

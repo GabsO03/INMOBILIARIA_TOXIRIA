@@ -43,7 +43,7 @@ public class GestionInversiones {
 
     public GestionInversiones (Inversor inversor, int cantidadInversiones) {
         this.propietario = inversor;
-        this.inversiones = new Inversion[cantidadInversiones];
+        this.inversiones = new ArrayList<>();
     }
 
     /**
@@ -65,19 +65,6 @@ public class GestionInversiones {
     }
 
     /**
-     * Funcion para aumentar el tamaño del array
-     */
-    public void aumentaTamanio () {
-        if (cantidadInversionesCreadas == inversiones.length) {
-            Inversion[] arrayAux = new Inversion[inversiones.length + 15];
-            for (int i = 0; i < inversiones.length; i++) {
-                arrayAux[i] = inversiones[i];
-            }
-            inversiones = arrayAux;
-        }
-    }
-
-    /**
      * Actualiza una inversion ya realizada
      * @param pos como entero
      * @param cantidadEntrante como double
@@ -94,9 +81,7 @@ public class GestionInversiones {
         System.out.println("Mis inversiones: ");
         System.out.println("================");
         for (Inversion inversion : inversiones) {
-            if (inversion != null) {
                 System.out.println(inversion);
-            }
         }
     }
 
@@ -110,8 +95,8 @@ public class GestionInversiones {
         System.out.println("============================");
         for (int i = 0; i < todosLosProyectos.getCantidadProyectos(); i++) {
             esta = false;
-            for (int j = 0; j < inversiones.length; j++) {
-                if ((todosLosProyectos.devuelveProyecto(i) != null && inversiones[i] != null) && (todosLosProyectos.devuelveProyecto(i).getNombre().equals(inversiones[j].getProyecto().getNombre()))) esta = true;
+            for (int j = 0; j < inversiones.size(); j++) {
+                if ((todosLosProyectos.devuelveProyecto(i) != null && inversiones.get(j) != null) && (todosLosProyectos.devuelveProyecto(i).getNombre().equals(inversiones.get(j).getProyecto().getNombre()))) esta = true;
             }
             if (!esta) System.out.println(todosLosProyectos.devuelveProyecto(i));
         }

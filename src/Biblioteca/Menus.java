@@ -2,6 +2,7 @@ package Biblioteca;
 import CodigoFuente.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static Biblioteca.AccountSettings.modificarCuenta;
 import static Biblioteca.Lectura_De_Datos.*;
@@ -46,7 +47,7 @@ public class Menus {
      */
     public static void menuConfiguracion() {
         System.out.println("Seleccione qué quiere hacer:");
-        System.out.println("1. Cambiar usuario\n2. Cambiar contraseña\n3. Cambiar email\n4. Salir");
+        System.out.println("1. Cambiar contraseña\n2. Cambiar email\n3. Salir");
     }
     /**
      * Muestra el panel de control de cada usuario
@@ -68,7 +69,7 @@ public class Menus {
     /**
      * Muestra el segundo menu del administrador
      */
-    public static void menuAdmin(int pos, GestionUsuarios usuarios, GestionProyectos proyectos) {
+    public static void menuAdmin(String username, GestionUsuarios usuarios, GestionProyectos proyectos) {
         int primerSubmenu, segundoSubmenu, tercerSubmenu;
         do {
             menuAdministrador();
@@ -133,14 +134,14 @@ public class Menus {
                         }
                     } while (segundoSubmenu != 3);
                 }
-                case 3 -> modificarCuenta(pos, usuarios);
+                case 3 -> modificarCuenta(username, usuarios);
             }
         } while (primerSubmenu != 4);
     }
     /**
      * Muestra el segundo menu del gestor
      */
-    public static void menuGestor(int pos, GestionUsuarios usuarios, GestionProyectos proyectos) {
+    public static void menuGestor(String username, GestionUsuarios usuarios, GestionProyectos proyectos) {
         int primerSubmenu;
         do {
             menuProyectosGestor();
@@ -149,7 +150,7 @@ public class Menus {
                 case 1 -> proyectos.mostrarProyectos(0); //EL TIPO ES 0 PORQUE SI PONEMOS 1 SALE MAS INFO PARA EL ADMIN
                 case 2 ->
                         proyectos.crearProyecto(cambiarNombreProyecto(), cambiarDescripcionProyecto(), cambiarTipoProyecto(), cambiarFechaInicio(), cambiarFechaFin(), cambiarCantidadNecesaria(), cambiarCantidadFinanciada());
-                case 3 -> modificarCuenta(pos, usuarios);
+                case 3 -> modificarCuenta(username, usuarios);
             }
 
         } while (primerSubmenu != 4);
@@ -161,9 +162,9 @@ public class Menus {
      * @param inversor como objeto de la clase Inversor
      * @return un número entero dependiendo de la posición del array donde se encuentre ese usuario o -1 si no se encuentra
      */
-    public static int encuentraGestionInversiones (GestionInversiones[] megaGestionInversiones, Inversor inversor) {
-        for (int i = 0; i < megaGestionInversiones.length; i++) {
-            if (megaGestionInversiones[i].getPropietario() == inversor) return i;
+    public static int encuentraGestionInversiones (ArrayList<GestionInversiones> megaGestionInversiones, Inversor inversor) {
+        for (int i = 0; i < megaGestionInversiones.size(); i++) {
+            if (megaGestionInversiones.get(i).getPropietario() == inversor) return i;
         }
         return -1;
     }
@@ -222,8 +223,8 @@ public class Menus {
     /**
      * Muestra el segundo menu del inversor
      */
-    public static void menuInversor(int pos, GestionUsuarios usuarios, GestionProyectos proyectos, GestionInversiones[] megaGestionInversiones) {
-        Inversor aux = (Inversor) usuarios.devuelveUsuario(pos);
+    public static void menuInversor(String username, GestionUsuarios usuarios, GestionProyectos proyectos, ArrayList<GestionInversiones> megaGestionInversiones) {
+        Inversor aux = (Inversor) usuarios.devuelveUsuario(username);
         int primerSubmenu, opcionInversion, gestionIndividual = encuentraGestionInversiones(megaGestionInversiones, aux);
         do {
             menuOpcinesInversor();
@@ -242,7 +243,7 @@ public class Menus {
                     }
                 }
                 case 4 -> mostrarYAniadirSaldo(aux);
-                case 5 -> modificarCuenta(pos, usuarios);
+                case 5 -> modificarCuenta(username, usuarios);
             }
         } while (primerSubmenu != 6);
     }

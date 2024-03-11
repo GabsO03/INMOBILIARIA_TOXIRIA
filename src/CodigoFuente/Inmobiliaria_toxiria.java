@@ -3,6 +3,7 @@ package CodigoFuente;
 
 //COLORES
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 //MENUS
 import static Biblioteca.AccountSettings.registroUsuarioNuevo;
@@ -18,7 +19,7 @@ public class Inmobiliaria_toxiria {
 
     public static void main(String[] args) {
         //USUARIOS
-        GestionUsuarios usuarios=new GestionUsuarios(50);
+        GestionUsuarios usuarios=new GestionUsuarios();
         usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
         usuarios.insertarUsuarioGestor("Alex","AlexGB","AlexGB123@","Alexito@gmail.com");
         usuarios.insertarUsuarioInversor("Gabriela","GabsOP","GabsOP123@","polloto@gmail.com");
@@ -63,42 +64,42 @@ public class Inmobiliaria_toxiria {
                     } while (!registroCorrecto);
                 }
                 case 2 -> {
-                    int posicionLogin, intentos=3;
+                    int intentos=3;
                     do {
                         System.out.print("Nombre de usuario: ");
                         nombreUsuario = leerOpcionLiteral();
                         System.out.print("Contraseña: ");
                         contrasenia = leerOpcionLiteral();
-                        posicionLogin = usuarios.existeNombreUsuario(nombreUsuario);
-                        if (posicionLogin < 0 ) System.out.println("Ese usuario no existe.");
-                        if (posicionLogin >= 0 && !usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia)) {
+
+                        if (!usuarios.existeNombreUsuario(nombreUsuario)) System.out.println("Ese usuario no existe.");
+                        if (usuarios.existeNombreUsuario(nombreUsuario) && !usuarios.correspondeUsuyContrasenia(nombreUsuario, contrasenia)) {
                             System.out.println("El usuario o contraseña no es correcto. Intentos restantes: " + --intentos);
                         }
 
-                    } while ((posicionLogin < 0) || (posicionLogin >= 0 && !usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia) && intentos > 0));
+                    } while (!(usuarios.existeNombreUsuario(nombreUsuario)) || (usuarios.existeNombreUsuario(nombreUsuario) && !usuarios.correspondeUsuyContrasenia(nombreUsuario, contrasenia) && intentos > 0));
 
-                    String claseUsuario = usuarios.averiguarClase(posicionLogin);
+                    String claseUsuario = usuarios.averiguarClase(nombreUsuario);
                     switch (claseUsuario) {
-                        case "Admin" -> menuAdmin(posicionLogin, usuarios, proyectos);
+                        case "Admin" -> menuAdmin(nombreUsuario, usuarios, proyectos);
                         case "Gestor" ->{
-                            Gestor aux=(Gestor) usuarios.devuelveUsuario(posicionLogin);
-                           if (!usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia)) {
+                            Gestor aux=(Gestor) usuarios.devuelveUsuario(nombreUsuario);
+                           if (!usuarios.correspondeUsuyContrasenia(nombreUsuario, contrasenia)) {
                                 aux.bloqueo();
                                 System.out.println("Demasiados intentos fallidos, tu usuario está bloqueado");
                             }
                             else {
-                                if (!aux.getBloqueado()) menuGestor(posicionLogin, usuarios, proyectos);
+                                if (!aux.getBloqueado()) menuGestor(nombreUsuario, usuarios, proyectos);
                                 else System.out.println("No puedes iniciar sesión porque tu usuario está bloqueado");
                             }
                         }
                         case "Inversor" -> {
-                            Inversor aux=(Inversor) usuarios.devuelveUsuario(posicionLogin);
-                            if (!usuarios.correspondeUsuyContrasenia(posicionLogin, contrasenia)) {
+                            Inversor aux=(Inversor) usuarios.devuelveUsuario(nombreUsuario);
+                            if (!usuarios.correspondeUsuyContrasenia(nombreUsuario, contrasenia)) {
                                 aux.bloqueo();
                                 System.out.println("Demasiados intentos fallidos, tu usuario está bloqueado");
                             } else {
                                 if (!aux.getBloqueado())
-                                    menuInversor(posicionLogin, usuarios, proyectos, megaGestionInversiones);
+                                    menuInversor(nombreUsuario, usuarios, proyectos, megaGestionInversiones);
                                 else System.out.println("No puedes iniciar sesión porque tu usuario está bloqueado");
                             }
                         }

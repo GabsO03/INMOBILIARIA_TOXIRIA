@@ -4,42 +4,35 @@ import Biblioteca.Fechas;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import static Biblioteca.Colores.*;
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 
 public class GestionProyectos {
-    private Proyecto[] arrayProyectos;
-    private static int cantidadProyectos = 0;
+    private ArrayList<Proyecto> arrayProyectos;
 
-    public int getCantidadProyectos() {
-        return cantidadProyectos;
-    }
-    public GestionProyectos(int cantidadProyectos) {
-        arrayProyectos = new Proyecto[20];
-        cantidadProyectos++;
+    public GestionProyectos() {
+        arrayProyectos=new ArrayList<>();
     }
 
-    public Proyecto[] getArrayProyectos() {
-        return arrayProyectos;
+    public int tamanioArray(){
+        return arrayProyectos.size();
     }
-
     /**
      * Muestra todos los proyectos
      * @param tipo como un entero
      */
     public void mostrarProyectos(int tipo) {
         int i = 0;
-        while (i < arrayProyectos.length) {
-            if (arrayProyectos[i] != null) {
+        while (i < arrayProyectos.size()) {
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
                 System.out.println("Posición: " + (i+1));
-                System.out.println("Nombre: " + arrayProyectos[i].getNombre());
-                System.out.println("Tipo: " + arrayProyectos[i].getTipo());
-                System.out.println("Cantidad Necesaria: " + arrayProyectos[i].getCantidadNecesaria());
-                System.out.println("Cantidad Financiada: " + arrayProyectos[i].getCantidadFinanciada());
+                System.out.println("Nombre: " + arrayProyectos.get(i).getNombre());
+                System.out.println("Tipo: " + arrayProyectos.get(i).getTipo());
+                System.out.println("Cantidad Necesaria: " + arrayProyectos.get(i).getCantidadNecesaria());
+                System.out.println("Cantidad Financiada: " + arrayProyectos.get(i).getCantidadFinanciada());
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
-            }
             i++;
         }
         System.out.println("Existen " + cantidadProyectos + " habilitados.");
@@ -77,18 +70,7 @@ public class GestionProyectos {
         }
     }
 
-    /**
-     * Funcion para ampliar el tamaño del array
-     */
-    private void ampliar () {
-        if (cantidadProyectos == arrayProyectos.length) {
-            Proyecto[] aux = new Proyecto[arrayProyectos.length+20];
-            for (int i = 0; i < arrayProyectos.length; i++) {
-                aux[i] = arrayProyectos[i];
-            }
-            arrayProyectos = aux;
-        }
-    }
+
 
     /**
      * Funcion para crear un nuevo proyecto
@@ -122,13 +104,13 @@ public class GestionProyectos {
      * @param cantidadFinanciada como un double
      */
     public void modificarProyecto(int pos, String nombre, String descripcion, String tipo, LocalDate fechaInicio, LocalDate fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
-        if (nombre != null) arrayProyectos[pos].setNombre(nombre);
-        if (descripcion != null) arrayProyectos[pos].setDescripcion(descripcion);
-        if (tipo != null)  arrayProyectos[pos].setTipo(tipo);
-        if (fechaInicio != null) arrayProyectos[pos].setFechaInicio(fechaInicio);
-        if (fechaFin != null) arrayProyectos[pos].setFechaFin(fechaFin);
-        if (cantidadNecesaria != 0) arrayProyectos[pos].setCantidadNecesaria(cantidadNecesaria);
-        if (cantidadFinanciada != 0) arrayProyectos[pos].setCantidadFinanciada(cantidadFinanciada);
+        if (nombre != null) arrayProyectos.get(pos).setNombre(nombre);
+        if (descripcion != null) arrayProyectos.get(pos).setDescripcion(descripcion);
+        if (tipo != null)  arrayProyectos.get(pos).setTipo(tipo);
+        if (fechaInicio != null) arrayProyectos.get(pos).setFechaInicio(fechaInicio);
+        if (fechaFin != null) arrayProyectos.get(pos).setFechaFin(fechaFin);
+        if (cantidadNecesaria != 0) arrayProyectos.get(pos).setCantidadNecesaria(cantidadNecesaria);
+        if (cantidadFinanciada != 0) arrayProyectos.get(pos).setCantidadFinanciada(cantidadFinanciada);
     }
 
     /**
@@ -169,10 +151,8 @@ public class GestionProyectos {
             case "Fecha de inicio" -> {
                 LocalDate date1 = LocalDate.parse(valorInicial, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 LocalDate date2 = LocalDate.parse(valorFinal, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null) {
-                        if (Fechas.esPosterior(arrayProyectos[i].getFechaInicio(), date1) && Fechas.esAnterior(arrayProyectos[i].getFechaInicio(), date2)) System.out.println(arrayProyectos[i]);
-                    }
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                        if (Fechas.esPosterior(arrayProyectos.get(i).getFechaInicio(), date1) && Fechas.esAnterior(arrayProyectos.get(i).getFechaInicio(), date2)) System.out.println(arrayProyectos.get(i));
                 }
             }
             case "Fecha de fin" -> {
@@ -189,11 +169,9 @@ public class GestionProyectos {
             case "Cantidad necesaria" -> {
                 double v1 = Double.parseDouble(valorInicial);
                 double v2 = Double.parseDouble(valorFinal);
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null) {
-                        if (arrayProyectos[i].getCantidadNecesaria() >= v1 && arrayProyectos[i].getCantidadNecesaria() <= v2)
-                            System.out.println(arrayProyectos[i]);
-                    }
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                        if (arrayProyectos.get(i).getCantidadNecesaria() >= v1 && arrayProyectos.get(i).getCantidadNecesaria() <= v2)
+                            System.out.println(arrayProyectos.get(i));
                 }
             }
             case "Cantidad financiada" -> {
@@ -223,13 +201,13 @@ public class GestionProyectos {
         switch (atributo) {
             case "código" -> {
                 codigo = Integer.parseInt(valor);
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null && arrayProyectos[i].getCodigo() == codigo) return i;
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                    if (arrayProyectos.get(i).getCodigo() == codigo) return i;
                 }
             }
             case "nombre" -> {
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null && arrayProyectos[i].getNombre().equalsIgnoreCase(valor)) return i;
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                    if (arrayProyectos.get(i).getNombre().equalsIgnoreCase(valor)) return i;
                 }
             }
             case "descripción" -> {
@@ -244,8 +222,8 @@ public class GestionProyectos {
             }
             case "fecha de inicio" -> {
                 LocalDate aux = LocalDate.parse(valor, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                for (int i = 0; i < arrayProyectos.length; i++) {
-                    if (arrayProyectos[i] != null && arrayProyectos[i].getFechaInicio() == aux) return i;
+                for (int i = 0; i < arrayProyectos.size(); i++) {
+                    if (arrayProyectos.get(i).getFechaInicio() == aux) return i;
                 }
             }
             case "fecha de fin" -> {

@@ -6,14 +6,12 @@ import static Biblioteca.Lectura_De_Datos.*;
 
 public class Inversion {
     //ATRIBUTOS
-    private Inversor inversor;
     private Proyecto proyecto;
     private double cantidadParticipada;
     private LocalDate fechaInversion;
 
     //MÉTODOS
     public Inversion (Inversor inversor, Proyecto proyecto) {
-        this.inversor = inversor;
         this.proyecto = proyecto;
     }
 
@@ -31,14 +29,6 @@ public class Inversion {
             return true;
         }
         return false;
-    }
-
-    public Inversor getInversor() {
-        return inversor;
-    }
-
-    public void setInversor(Inversor inversor) {
-        this.inversor = inversor;
     }
 
     public Proyecto getProyecto() {
