@@ -32,7 +32,8 @@ public class Inmobiliaria_toxiria {
 
         //INVERSIONES
         ArrayList<GestionInversiones> megaGestionInversiones = new ArrayList<>();
-        megaGestionInversiones.add(new GestionInversiones(((Inversor)usuarios.devuelveUsuario("Gabriela"))));
+        GestionInversiones inversiones=new GestionInversiones(((Inversor)usuarios.devuelveUsuario("Gabriela")));
+        megaGestionInversiones.add(inversiones);
 
         //Menus
         int seleccionInicial;
@@ -42,6 +43,11 @@ public class Inmobiliaria_toxiria {
         boolean registroCorrecto;
         //INICIO DE SESION
         String nombreUsuario,contrasenia;
+
+        //GUARDAR ARCHIVO JSON
+        GestionApp aplicacion=new GestionApp(proyectos,usuarios,inversiones);
+        // aplicacion.guardarAJSON(aplicacion);
+
 
 
 

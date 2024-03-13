@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GestionUsuarios {
-
+    //La clave será el nombre de usuario y el valor el propio usuario
     private HashMap<String,Usuario> hashMapUsuarios;
 
     public GestionUsuarios() {
@@ -18,10 +18,16 @@ public class GestionUsuarios {
         int i = 1;
         System.out.println("Lista de usuarios:");
         System.out.println("===============================");
-        for (Map.Entry u : hashMapUsuarios.entrySet()) {
-            if (u.getClass().getSimpleName().equalsIgnoreCase("Gestor")) System.out.println(i++ + ") " + u + " - Gestor");
-            if (u.getClass().getSimpleName().equalsIgnoreCase("Inversor")) System.out.println(i++ + ") " + u + " - Inversor");
+        for (Map.Entry<String, Usuario> entry : hashMapUsuarios.entrySet()) {
+            Usuario u = entry.getValue();
+            if (u.getClass().getSimpleName().equalsIgnoreCase("Gestor")) {
+                System.out.println(i++ + ") " + u + " - Gestor");
+            }
+            if (u.getClass().getSimpleName().equalsIgnoreCase("Inversor")) {
+                System.out.println(i++ + ") " + u + " - Inversor");
+            }
         }
+
     }
 
     public Usuario devuelveUsuario (String username ) {
