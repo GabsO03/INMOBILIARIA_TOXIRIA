@@ -1,8 +1,5 @@
 package Biblioteca;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static Biblioteca.Lectura_De_Datos.leerOpcionDouble;
 import static Biblioteca.Lectura_De_Datos.leerOpcionLiteral;
 
@@ -51,16 +48,16 @@ public class Proyectos {
      * Modifica la fecha inicial de un proyecto
      * @return una fecha con la nueva fecha inicial
      */
-    public static LocalDate cambiarFechaInicio(){
+    public static String cambiarFechaInicio(){
         System.out.println("Escriba la nueva fecha de inicio (dd/mm/aaaa)");
-        return LocalDate.parse(leerOpcionLiteral(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return leerOpcionLiteral();
     }
     /**
      * Modifica la fecha final de un proyecto
      * @return una fecha con la nueva fecha final
      */
-    public static LocalDate cambiarFechaFin(){
+    public static String cambiarFechaFin(){
         System.out.println("Escriba la nueva fecha de fin (dd/mm/aaaa)");
-        return LocalDate.parse(leerOpcionLiteral(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return leerOpcionLiteral();
     }
 }

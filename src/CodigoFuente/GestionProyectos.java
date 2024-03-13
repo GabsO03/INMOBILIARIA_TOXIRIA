@@ -3,7 +3,6 @@ package CodigoFuente;
 import Biblioteca.Fechas;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class GestionProyectos {
@@ -78,7 +77,7 @@ public class GestionProyectos {
      * @param cantidadFinanciada como un double
      * @return devuelve true si se ha podido crear el proyecto o false si no se ha podido
      */
-    public boolean crearProyecto(String nombre, String descripcion, String tipo, LocalDate fechaInicio, LocalDate fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
+    public boolean crearProyecto(String nombre, String descripcion, String tipo, String fechaInicio, String fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
         return arrayProyectos.add(new Proyecto(nombre, descripcion, tipo, fechaInicio, fechaFin, cantidadNecesaria, cantidadFinanciada));
     }
 
@@ -88,12 +87,12 @@ public class GestionProyectos {
      * @param nombre como cadena
      * @param descripcion como cadena
      * @param tipo como cadena
-     * @param fechaInicio como una fecha
-     * @param fechaFin como una fecha
+     * @param fechaInicio como cadena
+     * @param fechaFin como cadena
      * @param cantidadNecesaria como un double
      * @param cantidadFinanciada como un double
      */
-    public void modificarProyecto(int pos, String nombre, String descripcion, String tipo, LocalDate fechaInicio, LocalDate fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
+    public void modificarProyecto(int pos, String nombre, String descripcion, String tipo, String fechaInicio, String fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
         if (nombre != null) arrayProyectos.get(pos).setNombre(nombre);
         if (descripcion != null) arrayProyectos.get(pos).setDescripcion(descripcion);
         if (tipo != null)  arrayProyectos.get(pos).setTipo(tipo);
@@ -124,17 +123,19 @@ public class GestionProyectos {
 
         switch (atributo) {
             case "Fecha de inicio" -> {
-                LocalDate date1 = LocalDate.parse(valorInicial, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                LocalDate date2 = LocalDate.parse(valorFinal, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate date1 = Fechas.cadenaAfecha(valorInicial);
+                LocalDate date2 = Fechas.cadenaAfecha(valorFinal);
                 for (int i = 0; i < arrayProyectos.size(); i++) {
-                        if (Fechas.esPosterior(arrayProyectos.get(i).getFechaInicio(), date1) && Fechas.esAnterior(arrayProyectos.get(i).getFechaInicio(), date2)) System.out.println(arrayProyectos.get(i));
+                    LocalDate fechaProyecto = Fechas.cadenaAfecha(arrayProyectos.get(i).getFechaInicio());
+                        if (Fechas.esPosterior(fechaProyecto, date1) && Fechas.esAnterior(fechaProyecto, date2)) System.out.println(arrayProyectos.get(i));
                 }
             }
             case "Fecha de fin" -> {
-                LocalDate date1 = LocalDate.parse(valorInicial, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                LocalDate date2 = LocalDate.parse(valorFinal, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate date1 = Fechas.cadenaAfecha(valorInicial);
+                LocalDate date2 = Fechas.cadenaAfecha(valorFinal);
                 for (int i = 0; i < arrayProyectos.size(); i++) {
-                    if (Fechas.esPosterior(arrayProyectos.get(i).getFechaFin(), date1) && Fechas.esAnterior(arrayProyectos.get(i).getFechaFin(), date2)) {
+                    LocalDate fechaProyecto = Fechas.cadenaAfecha(arrayProyectos.get(i).getFechaFin());
+                    if (Fechas.esPosterior(fechaProyecto, date1) && Fechas.esAnterior(fechaProyecto, date2)) {
                         System.out.println(arrayProyectos.get(i));
                     }
                 }
@@ -193,15 +194,17 @@ public class GestionProyectos {
                 }
             }
             case "fecha de inicio" -> {
-                LocalDate aux = LocalDate.parse(valor, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate aux = Fechas.cadenaAfecha(valor);
                 for (int i = 0; i < arrayProyectos.size(); i++) {
-                    if (arrayProyectos.get(i).getFechaInicio() == aux) return i;
+                    LocalDate fechaProyecto = Fechas.cadenaAfecha(arrayProyectos.get(i).getFechaInicio());
+                    if (fechaProyecto == aux) return i;
                 }
             }
             case "fecha de fin" -> {
-                LocalDate aux = LocalDate.parse(valor, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate aux = Fechas.cadenaAfecha(valor);
                 for (int i = 0; i < arrayProyectos.size(); i++) {
-                    if (arrayProyectos.get(i).getFechaFin() == aux) return i;
+                    LocalDate fechaProyecto = Fechas.cadenaAfecha(arrayProyectos.get(i).getFechaFin());
+                    if (fechaProyecto == aux) return i;
                 }
             }
             default -> System.out.println("Ese parámetro no existe.");

@@ -2,7 +2,6 @@ package CodigoFuente;
 
 
 //COLORES
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 //MENUS
@@ -26,9 +25,9 @@ public class Inmobiliaria_toxiria {
 
         //PROYECTOS
         GestionProyectos proyectos = new GestionProyectos();
-        proyectos.crearProyecto("Villa verde", "La villa más fea","Plusvalía", LocalDate.now(), LocalDate.now().plusMonths(5), 4521.56f, 521.56f);
-        proyectos.crearProyecto("Villa azul", "La villa más bonita", "Préstamo", LocalDate.now().plusDays(5), LocalDate.now().plusMonths(9), 85112.54, 5112.54);
-        proyectos.crearProyecto("Villa morada", "La villa más morada", "Alquiler", LocalDate.now().plusDays(5), LocalDate.now().plusMonths(9), 7650, 32);
+        proyectos.crearProyecto("Villa verde", "La villa más fea","Plusvalía", "01/01/2003", "01/01/2024", 4521.56f, 521.56f);
+        proyectos.crearProyecto("Villa azul", "La villa más bonita", "Préstamo", "26/06/2003", "26/06/2024", 85112.54, 5112.54);
+        proyectos.crearProyecto("Villa morada", "La villa más morada", "Alquiler", "04/03/2004", "04/03/2024", 7650, 32);
 
         //INVERSIONES
         ArrayList<GestionInversiones> megaGestionInversiones = new ArrayList<>();
@@ -45,11 +44,7 @@ public class Inmobiliaria_toxiria {
         String nombreUsuario,contrasenia;
 
         //GUARDAR ARCHIVO JSON
-        GestionApp aplicacion=new GestionApp(proyectos,usuarios,inversiones);
-        // aplicacion.guardarAJSON(aplicacion);
-
-
-
+        GestionApp aplicacion=new GestionApp(proyectos,usuarios);
 
         do {
             menuInicio();
@@ -110,7 +105,10 @@ public class Inmobiliaria_toxiria {
                         }
                     }
                 }
-                case 3 -> System.out.println("Saliendo de la operación.");
+                case 3 -> {
+                    System.out.println("Saliendo de la operación.");
+                    aplicacion.guardarAJSON(aplicacion);
+                }
                 default -> System.out.println("Invalid response");
             }
         }while(seleccionInicial!=3);

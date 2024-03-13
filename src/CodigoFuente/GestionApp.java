@@ -3,18 +3,25 @@ package CodigoFuente;
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class GestionApp {
 
     private GestionProyectos gestionProyectos;
     private GestionUsuarios gestionUsuarios;
-    private GestionInversiones gestionInversiones;
+    private ArrayList<GestionInversiones> gestionInversiones;
 
-    public GestionApp(GestionProyectos gestionProyectos, GestionUsuarios gestionUsuarios, GestionInversiones gestionInversiones) {
+    public GestionApp(GestionProyectos gestionProyectos, GestionUsuarios gestionUsuarios) {
         this.gestionProyectos = gestionProyectos;
         this.gestionUsuarios = gestionUsuarios;
-        this.gestionInversiones = gestionInversiones;
+        this.gestionInversiones = new ArrayList<>();
     }
+    public GestionApp() {
+        this.gestionProyectos = new GestionProyectos();
+        this.gestionUsuarios = new GestionUsuarios();
+        this.gestionInversiones = new ArrayList<>();
+    }
+
     public  String crearJSON(GestionApp gestionApp){
         Gson gson=new Gson();
         return gson.toJson(gestionApp);
@@ -34,6 +41,5 @@ public class GestionApp {
         Gson gson = new Gson();
         BufferedReader buffer = new BufferedReader(new FileReader(nombreArchivo+".json"));
         return gson.fromJson(buffer, this.getClass());
-
     }
 }

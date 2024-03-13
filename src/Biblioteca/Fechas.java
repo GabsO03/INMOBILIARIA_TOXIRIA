@@ -27,4 +27,12 @@ public class Fechas {
         return fecha1.isAfter(fecha2);
     }
 
+    public static String fechaACadena (LocalDate fecha) {
+        return String.valueOf(fecha);
+    }
+    public static LocalDate cadenaAfecha (String fecha) {
+        return LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+
 }

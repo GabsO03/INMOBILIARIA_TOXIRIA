@@ -1,18 +1,20 @@
 package CodigoFuente;
 import java.time.LocalDate;
+import Biblioteca.Fechas;
 
 import static Biblioteca.Colores.*;
-import static Biblioteca.Lectura_De_Datos.*;
 
 public class Inversion {
     //ATRIBUTOS
     private Proyecto proyecto;
     private double cantidadParticipada;
-    private LocalDate fechaInversion;
+    private String fechaInicio;
+    private String ultimaActualizacion;
     //MÉTODOS
     public Inversion (Proyecto proyecto, double cantidadEntrante) {
         this.proyecto = proyecto;
         cantidadParticipada = 0;
+        fechaInicio = Fechas.fechaACadena(LocalDate.now());
         financiarProyecto(cantidadEntrante);
     }
 
@@ -24,7 +26,7 @@ public class Inversion {
     public void financiarProyecto(double cantidadEntrante) {
         proyecto.setCantidadFinanciada(proyecto.getCantidadFinanciada() + cantidadEntrante);
         cantidadParticipada += cantidadEntrante;
-        this.fechaInversion = LocalDate.now();
+        this.ultimaActualizacion = Fechas.fechaACadena(LocalDate.now());
     }
 
     public Proyecto getProyecto() {
@@ -34,7 +36,7 @@ public class Inversion {
     //Métodos
 
     public String toString (){
-        return RED+"Proyecto: " + proyecto.getNombre() + GREEN+"\nTipo: "+ proyecto.getTipo() + CYAN + "\nCantidad con la que ha participado: " + cantidadParticipada + "\nFecha de la inversión: " + fechaInversion + RESET;
+        return RED+"Proyecto: " + proyecto.getNombre() + GREEN+"\nTipo: "+ proyecto.getTipo() + CYAN + "\nCantidad con la que ha participado: " + cantidadParticipada + "\nFecha de la primera inversión: " + fechaInicio + "\nFecha de la última inversión: " + ultimaActualizacion + RESET;
     }
 
 }

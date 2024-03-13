@@ -70,6 +70,4 @@ public class GestionInversiones {
             if (!esta) System.out.println(todosLosProyectos.devuelveProyecto(i));
         }
     }
-
-
 }
