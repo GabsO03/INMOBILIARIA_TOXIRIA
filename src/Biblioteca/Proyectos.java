@@ -46,7 +46,7 @@ public class Proyectos {
     }
     /**
      * Modifica la fecha inicial de un proyecto
-     * @return una fecha con la nueva fecha inicial
+     * @return una cadena con la nueva fecha inicial
      */
     public static String cambiarFechaInicio(){
         System.out.println("Escriba la nueva fecha de inicio (dd/mm/aaaa)");
@@ -54,7 +54,7 @@ public class Proyectos {
     }
     /**
      * Modifica la fecha final de un proyecto
-     * @return una fecha con la nueva fecha final
+     * @return una cadena con la nueva fecha final
      */
     public static String cambiarFechaFin(){
         System.out.println("Escriba la nueva fecha de fin (dd/mm/aaaa)");

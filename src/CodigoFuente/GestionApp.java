@@ -22,6 +22,9 @@ public class GestionApp {
         this.gestionInversiones = new ArrayList<>();
     }
 
+    public ArrayList<GestionInversiones> devuelveGestionInversiones() {
+        return gestionInversiones;
+    }
     public  String crearJSON(GestionApp gestionApp){
         Gson gson=new Gson();
         return gson.toJson(gestionApp);

@@ -4,7 +4,7 @@ import Biblioteca.Fechas;
 
 import static Biblioteca.Colores.*;
 
-public class Inversion {
+public class Inversion implements Inversible {
     //ATRIBUTOS
     private Proyecto proyecto;
     private double cantidadParticipada;
@@ -39,4 +39,13 @@ public class Inversion {
         return RED+"Proyecto: " + proyecto.getNombre() + GREEN+"\nTipo: "+ proyecto.getTipo() + CYAN + "\nCantidad con la que ha participado: " + cantidadParticipada + "\nFecha de la primera inversión: " + fechaInicio + "\nFecha de la última inversión: " + ultimaActualizacion + RESET;
     }
 
+    @Override
+    public void aumentaInversion() {
+
+    }
+
+    @Override
+    public void disminuyeInversion() {
+
+    }
 }

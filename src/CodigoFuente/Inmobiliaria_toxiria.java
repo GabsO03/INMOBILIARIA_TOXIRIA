@@ -1,9 +1,5 @@
 package CodigoFuente;
 
-
-//COLORES
-import java.util.ArrayList;
-
 //MENUS
 import static Biblioteca.AccountSettings.registroUsuarioNuevo;
 
@@ -30,9 +26,7 @@ public class Inmobiliaria_toxiria {
         proyectos.crearProyecto("Villa morada", "La villa más morada", "Alquiler", "04/03/2004", "04/03/2024", 7650, 32);
 
         //INVERSIONES
-        ArrayList<GestionInversiones> megaGestionInversiones = new ArrayList<>();
         GestionInversiones inversiones=new GestionInversiones(((Inversor)usuarios.devuelveUsuario("Gabriela")));
-        megaGestionInversiones.add(inversiones);
 
         //Menus
         int seleccionInicial;
@@ -45,6 +39,7 @@ public class Inmobiliaria_toxiria {
 
         //GUARDAR ARCHIVO JSON
         GestionApp aplicacion=new GestionApp(proyectos,usuarios);
+        aplicacion.devuelveGestionInversiones().add(inversiones);
 
         do {
             menuInicio();
@@ -58,7 +53,7 @@ public class Inmobiliaria_toxiria {
                             if (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"))
                                 System.out.println("Error, tiene que escribir 'G' o 'I'");
                         } while (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"));
-                        registroCorrecto = registroUsuarioNuevo(tipoNuevoUsuario, usuarios, megaGestionInversiones);
+                        registroCorrecto = registroUsuarioNuevo(tipoNuevoUsuario, usuarios, aplicacion.devuelveGestionInversiones());
                         if (registroCorrecto) System.out.println("Usuario registrado correctamente");
                         else System.out.println("Hubo un error, intente de nuevo.");
                     } while (!registroCorrecto);
@@ -99,7 +94,7 @@ public class Inmobiliaria_toxiria {
                                 System.out.println("Demasiados intentos fallidos, tu usuario está bloqueado");
                             } else {
                                 if (!aux.getBloqueado())
-                                    menuInversor(nombreUsuario, usuarios, proyectos, megaGestionInversiones);
+                                    menuInversor(nombreUsuario, usuarios, proyectos, aplicacion.devuelveGestionInversiones());
                                 else System.out.println("No puedes iniciar sesión porque tu usuario está bloqueado");
                             }
                         }

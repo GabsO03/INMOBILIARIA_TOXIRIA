@@ -1,5 +1,6 @@
 package Biblioteca;
 
+import CodigoFuente.GestionApp;
 import CodigoFuente.GestionInversiones;
 import CodigoFuente.GestionUsuarios;
 import CodigoFuente.Inversor;
@@ -118,7 +119,7 @@ public class AccountSettings {
      * @param megaGestionInversiones un array de un objeto de la clase GestionInversiones
      * @return true si se ha conseguido registrar correctamente o false si no se ha podido registrar correctamente
      */
-    public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, ArrayList<GestionInversiones> megaGestionInversiones){
+    public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, ArrayList<GestionInversiones> gestionInversiones){
         System.out.println("Escriba su nombre completo: ");
         String nombre = leerOpcionLiteral(), passNuevoUsuario, passRepetidaNuevoUsuario, correoNuevoUsuario, nuevoUsuario;
         do {
@@ -153,7 +154,7 @@ public class AccountSettings {
         else {
             Inversor aux = new Inversor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
             usuarios.insertarUsuarioInversor(aux);
-            megaGestionInversiones.add(new GestionInversiones(aux));
+            gestionInversiones.add(new GestionInversiones(aux));
         }
         return true;
     }

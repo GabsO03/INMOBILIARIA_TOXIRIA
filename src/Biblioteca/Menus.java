@@ -223,21 +223,21 @@ public class Menus {
     /**
      * Muestra el segundo menu del inversor
      */
-    public static void menuInversor(String username, GestionUsuarios usuarios, GestionProyectos proyectos, ArrayList<GestionInversiones> megaGestionInversiones) {
+    public static void menuInversor(String username, GestionUsuarios usuarios, GestionProyectos proyectos, ArrayList<GestionInversiones> gestionInversiones) {
         Inversor aux = (Inversor) usuarios.devuelveUsuario(username);
-        int primerSubmenu, opcionInversion, gestionIndividual = encuentraGestionInversiones(megaGestionInversiones, aux);
+        int primerSubmenu, opcionInversion, gestionIndividual = encuentraGestionInversiones(gestionInversiones, aux);
         do {
             menuOpcinesInversor();
             primerSubmenu = leerOpcionNumerica();
             switch (primerSubmenu) {
-                case 1 -> megaGestionInversiones.get(gestionIndividual).mostrarMisInversiones();
+                case 1 -> gestionInversiones.get(gestionIndividual).mostrarMisInversiones();
                 case 2 -> buscarProyecto(proyectos);
                 case 3 -> {
                     System.out.println("1. Nueva inversión\n2. Actualizar inversión\n3. Cancelar");
                     opcionInversion = leerOpcionNumerica();
                     switch (opcionInversion) {
-                        case 1 -> nuevaInversion(proyectos, megaGestionInversiones.get(gestionIndividual));
-                        case 2 -> actualizarInversion(proyectos, megaGestionInversiones.get(gestionIndividual));
+                        case 1 -> nuevaInversion(proyectos, gestionInversiones.get(gestionIndividual));
+                        case 2 -> actualizarInversion(proyectos, gestionInversiones.get(gestionIndividual));
                         case 3 -> System.out.println();
                         default -> System.out.println("Invalid response.");
                     }
