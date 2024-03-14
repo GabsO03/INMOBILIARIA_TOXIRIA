@@ -27,7 +27,6 @@ public class GestionUsuarios {
                 System.out.println(i++ + ") " + u + " - Inversor");
             }
         }
-
     }
 
     public Usuario devuelveUsuario (String username ) {
@@ -103,7 +102,6 @@ public class GestionUsuarios {
     public boolean existeNombreUsuario (String username) {
         return hashMapUsuarios.containsKey(username);
     }
-
     /**
      * Funcion para averiguar la clase a la que pertenece un objeto
      * @param userName como cadena
@@ -117,15 +115,27 @@ public class GestionUsuarios {
     /**
      * Funcion para bloquear o desbloqueaar usuarios
      * @param opcion como entero
-     * @param pos como entero
+     * @param usuario como cadena
      */
 
-    public void bloquearDesbloquearUsuario (int opcion, int pos) {
-        //switch 1 para bloquear y 2 para desbloquear
-        switch (opcion){
-            case 1 -> hashMapUsuarios.get(pos).bloqueo();
-            case 2 -> hashMapUsuarios.get(pos).desbloqueo();
+    //switch (opcion) 1 para bloquear y 2 para desbloquear
+    public void bloquearDesbloquearUsuario (int opcion, String usuario) {
+        String clase = hashMapUsuarios.get(usuario).getClass().getSimpleName();
+        switch (clase) {
+            case "Inversor" -> {
+                Inversor aux = (Inversor) hashMapUsuarios.get(usuario);
+                switch (opcion) {
+                    case 1 -> aux.bloqueo();
+                    case 2 -> aux.desbloqueo();
+                }
+            }
+            case "Gestor" -> {
+                Gestor aux = (Gestor) hashMapUsuarios.get(usuario);
+                switch (opcion) {
+                    case 1 -> aux.bloqueo();
+                    case 2 -> aux.desbloqueo();
+                }
+            }
         }
     }
-
 }

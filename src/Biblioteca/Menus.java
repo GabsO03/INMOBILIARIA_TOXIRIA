@@ -1,7 +1,6 @@
 package Biblioteca;
 import CodigoFuente.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static Biblioteca.AccountSettings.modificarCuenta;
@@ -33,7 +32,7 @@ public class Menus {
      * Muestra el menu para modificar algún proyecto
      */
     public static void menuModificarProyecto() {
-        System.out.println("Elija qué quiere modificar: \n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
+        System.out.println("Elija qué quiere modificar:\n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
                 "\n6.Fecha inicio\n7.Fecha fin\n8.Nada");
     }
     /**

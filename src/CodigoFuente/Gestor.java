@@ -1,6 +1,6 @@
 package CodigoFuente;
 
-public  class Gestor extends Usuario {
+public  class Gestor extends Usuario implements Bloqueable {
     //ATRIBUTOS
     private boolean bloqueado;
 

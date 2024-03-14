@@ -15,7 +15,7 @@ public class Inversion implements Inversible {
         this.proyecto = proyecto;
         cantidadParticipada = 0;
         fechaInicio = Fechas.fechaACadena(LocalDate.now());
-        financiarProyecto(cantidadEntrante);
+        aumentaInversion(cantidadEntrante);
     }
 
     /**
@@ -23,11 +23,6 @@ public class Inversion implements Inversible {
      * @param cantidadEntrante como double
      * @return true si se ha podido financiar o false si no
      */
-    public void financiarProyecto(double cantidadEntrante) {
-        proyecto.setCantidadFinanciada(proyecto.getCantidadFinanciada() + cantidadEntrante);
-        cantidadParticipada += cantidadEntrante;
-        this.ultimaActualizacion = Fechas.fechaACadena(LocalDate.now());
-    }
 
     public Proyecto getProyecto() {
         return proyecto;
@@ -40,12 +35,10 @@ public class Inversion implements Inversible {
     }
 
     @Override
-    public void aumentaInversion() {
-
+    public void aumentaInversion(double cantidadEntrante) {
+        proyecto.setCantidadFinanciada(proyecto.getCantidadFinanciada() + cantidadEntrante);
+        cantidadParticipada += cantidadEntrante;
+        this.ultimaActualizacion = Fechas.fechaACadena(LocalDate.now());
     }
 
-    @Override
-    public void disminuyeInversion() {
-
-    }
 }
