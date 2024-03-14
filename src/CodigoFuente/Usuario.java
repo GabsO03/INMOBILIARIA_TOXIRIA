@@ -36,9 +36,6 @@ public abstract class Usuario {
     public String getContrasenia () { return contrasenia; }
     public String getEmail () { return email; }
 
-    public abstract void bloqueo();
-    public abstract void desbloqueo();
-
 
     public String toString () {
         return "Nombre: " + nombre;
