@@ -1,6 +1,6 @@
 package CodigoFuente;
 
-public  class Inversor extends Usuario{
+public class Inversor extends Usuario implements Bloqueable {
     //ATRIBUTOS
     private double saldo;
     private boolean bloqueado;
@@ -18,14 +18,6 @@ public  class Inversor extends Usuario{
         this.saldo = saldo;
     }
 
-    @Override
-    public void bloqueo() {
-        this.bloqueado = true;
-    }
-    @Override
-    public void desbloqueo() {
-        this.bloqueado = false;
-    }
 
     /**
      * Funcion para comprobar si el inversor puede invertir en un proyecto con cierta cantidad o no
@@ -41,11 +33,21 @@ public  class Inversor extends Usuario{
     }
 
 
+
     //getters
     public double getSaldo() {
         return saldo;
     }
     public boolean getBloqueado() { return bloqueado; }
+    @Override
+    public void bloqueo() {
+        this.bloqueado = true;
+    }
+    @Override
+    public void desbloqueo() {
+        this.bloqueado = false;
+    }
+
 
     public String toString () {
         return super.toString() + (bloqueado?"Bloqueado":"");

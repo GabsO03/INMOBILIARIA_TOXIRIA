@@ -1,6 +1,8 @@
 package CodigoFuente;
 
 //MENUS
+import java.io.FileNotFoundException;
+
 import static Biblioteca.AccountSettings.registroUsuarioNuevo;
 
 //LEER TEXTO
@@ -12,7 +14,7 @@ import static Biblioteca.Menus.*;
 
 public class Inmobiliaria_toxiria {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         //USUARIOS
         GestionUsuarios usuarios=new GestionUsuarios();
         usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
@@ -38,8 +40,10 @@ public class Inmobiliaria_toxiria {
         String nombreUsuario,contrasenia;
 
         //GUARDAR ARCHIVO JSON
-        GestionApp aplicacion=new GestionApp(proyectos,usuarios);
+        GestionApp aplicacion = new GestionApp(proyectos,usuarios);
         aplicacion.devuelveGestionInversiones().add(inversiones);
+        //GestionApp actualizado = aplicacion.recuperarJSON("GestionApp");
+
 
         do {
             menuInicio();
@@ -102,7 +106,7 @@ public class Inmobiliaria_toxiria {
                 }
                 case 3 -> {
                     System.out.println("Saliendo de la operación.");
-                    aplicacion.guardarAJSON(aplicacion);
+                    //aplicacion.guardarAJSON(aplicacion);
                 }
                 default -> System.out.println("Invalid response");
             }
