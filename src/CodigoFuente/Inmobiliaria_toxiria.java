@@ -15,20 +15,6 @@ import static Biblioteca.Menus.*;
 public class Inmobiliaria_toxiria {
 
     public static void main(String[] args) throws FileNotFoundException {
-        //USUARIOS
-        GestionUsuarios usuarios=new GestionUsuarios();
-        usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
-        usuarios.insertarUsuarioGestor("Alex","AlexGB","AlexGB123@","Alexito@gmail.com");
-        usuarios.insertarUsuarioInversor("Gabriela","GabsOP","GabsOP123@","polloto@gmail.com");
-
-        //PROYECTOS
-        GestionProyectos proyectos = new GestionProyectos();
-        proyectos.crearProyecto("Villa verde", "La villa más fea","Plusvalía", "01/01/2003", "01/01/2024", 4521.56f, 521.56f);
-        proyectos.crearProyecto("Villa azul", "La villa más bonita", "Préstamo", "26/06/2003", "26/06/2024", 85112.54, 5112.54);
-        proyectos.crearProyecto("Villa morada", "La villa más morada", "Alquiler", "04/03/2004", "04/03/2024", 7650, 32);
-
-        //INVERSIONES
-        GestionInversiones inversiones=new GestionInversiones(((Inversor)usuarios.devuelveUsuario("Gabriela")));
 
         //Menus
         int seleccionInicial;
@@ -40,9 +26,19 @@ public class Inmobiliaria_toxiria {
         String nombreUsuario,contrasenia;
 
         //GUARDAR ARCHIVO JSON
-        GestionApp aplicacion = new GestionApp(proyectos,usuarios);
-        aplicacion.devuelveGestionInversiones().add(inversiones);
-        //GestionApp actualizado = aplicacion.recuperarJSON("GestionApp");
+        GestionApp aplicacion = new GestionApp();
+        GestionUsuarios usuarios= aplicacion.getGestionUsuarios();
+        GestionProyectos proyectos = aplicacion.getGestionProyectos();
+        //USUARIOS
+        /*usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
+        usuarios.insertarUsuarioGestor("Alex","AlexGB","AlexGB123@","Alexito@gmail.com");
+        usuarios.insertarUsuarioInversor("Gabriela","GabsOP","GabsOP123@","polloto@gmail.com");
+        //PROYECTOS
+        proyectos.crearProyecto("Villa verde", "La villa más fea","Plusvalía", "01/01/2003", "01/01/2024", 4521.56f, 521.56f);
+        proyectos.crearProyecto("Villa azul", "La villa más bonita", "Préstamo", "26/06/2003", "26/06/2024", 85112.54, 5112.54);
+        proyectos.crearProyecto("Villa morada", "La villa más morada", "Alquiler", "04/03/2004", "04/03/2024", 7650, 32);
+        aplicacion.devuelveGestionInversiones().add(new GestionInversiones(((Inversor)usuarios.devuelveUsuario("GabsOP"))));*/
+        aplicacion.recuperarJSON();
 
 
         do {
@@ -87,7 +83,7 @@ public class Inmobiliaria_toxiria {
                                 System.out.println("Demasiados intentos fallidos, tu usuario está bloqueado");
                             }
                             else {
-                                if (!aux.getBloqueado()) menuGestor(nombreUsuario, usuarios, proyectos);
+                                if (!aux.isBloqueado()) menuGestor(nombreUsuario, usuarios, proyectos);
                                 else System.out.println("No puedes iniciar sesión porque tu usuario está bloqueado");
                             }
                         }
@@ -106,7 +102,7 @@ public class Inmobiliaria_toxiria {
                 }
                 case 3 -> {
                     System.out.println("Saliendo de la operación.");
-                    //aplicacion.guardarAJSON(aplicacion);
+                    aplicacion.guardarAJSON();
                 }
                 default -> System.out.println("Invalid response");
             }

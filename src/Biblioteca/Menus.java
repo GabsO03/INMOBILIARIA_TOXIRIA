@@ -52,18 +52,19 @@ public class Menus {
      * Muestra el panel de control de cada usuario
      */
     public static void panelControlUsuarios(GestionUsuarios usuarios) {
-        int posicion, opcion;
+        int opcion;
+        String nombreUsuario;
         do {
             System.out.println("Menú del panel de control de usuarios.");
             usuarios.muestraUsuarios();
-            System.out.println("Introduzca el número del usuario que quieras bloquear o desbloquear (0 para cancelar)");
-            posicion = leerOpcionNumerica();
-            if (posicion != 0){
+            System.out.println("Introduzca el nombre de usuario del usuario que quieras bloquear o desbloquear ('Cancelar' para salir)");
+            nombreUsuario = leerOpcionLiteral();
+            if (!nombreUsuario.equalsIgnoreCase("Cancelar")){
                 System.out.println("1. Bloquear.\n2. Desbloquear\n3. Cancelar");
                 opcion = leerOpcionNumerica();
-                if (opcion == 1 || opcion == 2) usuarios.bloquearDesbloquearUsuario(opcion, posicion);
+                if (opcion == 1 || opcion == 2) usuarios.bloquearDesbloquearUsuario(opcion, nombreUsuario);
             }
-        } while (posicion != 0);
+        } while (!nombreUsuario.equalsIgnoreCase("Cancelar"));
     }
     /**
      * Muestra el segundo menu del administrador
@@ -163,7 +164,7 @@ public class Menus {
      */
     public static int encuentraGestionInversiones (ArrayList<GestionInversiones> megaGestionInversiones, Inversor inversor) {
         for (int i = 0; i < megaGestionInversiones.size(); i++) {
-            if (megaGestionInversiones.get(i).getInversor() == inversor) return i;
+            if (megaGestionInversiones.get(i).getInversor().getUsername().equals(inversor.getUsername())) return i;
         }
         return -1;
     }
@@ -223,8 +224,8 @@ public class Menus {
      * Muestra el segundo menu del inversor
      */
     public static void menuInversor(String username, GestionUsuarios usuarios, GestionProyectos proyectos, ArrayList<GestionInversiones> gestionInversiones) {
-        Inversor aux = (Inversor) usuarios.devuelveUsuario(username);
-        int primerSubmenu, opcionInversion, gestionIndividual = encuentraGestionInversiones(gestionInversiones, aux);
+        //Inversor aux = (Inversor) usuarios.devuelveUsuario(username);
+        int primerSubmenu, opcionInversion, gestionIndividual = encuentraGestionInversiones(gestionInversiones,(Inversor) usuarios.devuelveUsuario(username));
         do {
             menuOpcinesInversor();
             primerSubmenu = leerOpcionNumerica();
@@ -241,7 +242,7 @@ public class Menus {
                         default -> System.out.println("Invalid response.");
                     }
                 }
-                case 4 -> mostrarYAniadirSaldo(aux);
+                case 4 -> mostrarYAniadirSaldo((Inversor) usuarios.devuelveUsuario(username));
                 case 5 -> modificarCuenta(username, usuarios);
             }
         } while (primerSubmenu != 6);

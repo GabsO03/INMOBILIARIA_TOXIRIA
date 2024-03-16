@@ -1,5 +1,7 @@
 package CodigoFuente;
 
+import java.io.PushbackInputStream;
+
 public abstract class Usuario {
     //ATRIBUTOS
     private String nombre;
@@ -38,7 +40,7 @@ public abstract class Usuario {
 
 
     public String toString () {
-        return "Nombre: " + nombre;
+        return "Nombre de usuario: " + username + " | Nombre: " + nombre;
     }
 
 }

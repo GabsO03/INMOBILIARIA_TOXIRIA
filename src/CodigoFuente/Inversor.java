@@ -1,5 +1,9 @@
 package CodigoFuente;
 
+import com.google.gson.Gson;
+
+import java.io.*;
+
 public class Inversor extends Usuario implements Bloqueable {
     //ATRIBUTOS
     private double saldo;
@@ -32,8 +36,6 @@ public class Inversor extends Usuario implements Bloqueable {
         return false;
     }
 
-
-
     //getters
     public double getSaldo() {
         return saldo;
@@ -47,9 +49,28 @@ public class Inversor extends Usuario implements Bloqueable {
     public void desbloqueo() {
         this.bloqueado = false;
     }
-
-
     public String toString () {
         return super.toString() + (bloqueado?"Bloqueado":"");
+    }
+
+    public String crearJSON(){
+        Gson gson=new Gson();
+        return gson.toJson(this);
+    }
+    public void guardarAJSON(){
+        String jsonCreado = crearJSON();
+        try{
+            FileWriter fichero = new FileWriter("I" + getNombre() + ".json");
+            PrintWriter pw = new PrintWriter(fichero);
+            pw.println(jsonCreado);
+            fichero.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static Inversor recuperarJSON(String nombre) throws FileNotFoundException {
+        Gson gson = new Gson();
+        BufferedReader buffer = new BufferedReader(new FileReader(nombre + ".json"));
+        return gson.fromJson(buffer, Inversor.class);
     }
 }

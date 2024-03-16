@@ -1,6 +1,5 @@
 package Biblioteca;
 
-import CodigoFuente.GestionApp;
 import CodigoFuente.GestionInversiones;
 import CodigoFuente.GestionUsuarios;
 import CodigoFuente.Inversor;
@@ -116,7 +115,7 @@ public class AccountSettings {
      * Funcion para poder registrar a un nuevo Usuario
      * @param tipo como cadena
      * @param usuarios como un objeto de la clase GestionUsuarios
-     * @param megaGestionInversiones un array de un objeto de la clase GestionInversiones
+     * @param gestionInversiones un array de un objeto de la clase GestionInversiones
      * @return true si se ha conseguido registrar correctamente o false si no se ha podido registrar correctamente
      */
     public static boolean registroUsuarioNuevo(String tipo, GestionUsuarios usuarios, ArrayList<GestionInversiones> gestionInversiones){

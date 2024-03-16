@@ -1,7 +1,9 @@
 package CodigoFuente;
 
 import Biblioteca.Fechas;
+import com.google.gson.Gson;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -214,5 +216,26 @@ public class GestionProyectos {
 
     public Proyecto devuelveProyecto (int pos) {
         return arrayProyectos.get(pos);
+    }
+
+    public String crearJSON(){
+        Gson gson=new Gson();
+        return gson.toJson(this);
+    }
+    public void guardarAJSON(){
+        String jsonCreado = crearJSON();
+        try{
+            FileWriter fichero = new FileWriter("GestionProyectos.json");
+            PrintWriter pw = new PrintWriter(fichero);
+            pw.println(jsonCreado);
+            fichero.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static GestionProyectos recuperarJSON() throws FileNotFoundException {
+        Gson gson = new Gson();
+        BufferedReader buffer = new BufferedReader(new FileReader("GestionProyectos.json"));
+        return gson.fromJson(buffer, GestionProyectos.class);
     }
 }

@@ -1,5 +1,8 @@
 package CodigoFuente;
 
+import com.google.gson.Gson;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class GestionInversiones {
@@ -37,7 +40,7 @@ public class GestionInversiones {
      */
     public void actualizarInversion (int pos, double cantidadEntrante) {
         if (inversor.paga(cantidadEntrante)) {
-            inversiones.get(pos).financiarProyecto(cantidadEntrante);
+            inversiones.get(pos).aumentaInversion(cantidadEntrante);
             System.out.println("Inversión existosa, los detalles están disponibles para revisión.");
         } else {
             System.out.println("No cuentas con saldo suficiente para realizar esta transacción.");

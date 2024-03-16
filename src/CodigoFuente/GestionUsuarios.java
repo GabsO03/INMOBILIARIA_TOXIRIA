@@ -1,14 +1,21 @@
 package CodigoFuente;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.*;
+import java.util.ArrayList;
 import  java.util.HashMap;
 import java.util.Map;
 
 public class GestionUsuarios {
     //La clave será el nombre de usuario y el valor el propio usuario
     private HashMap<String,Usuario> hashMapUsuarios;
+    private ArrayList<String> nombresFicheros;
 
     public GestionUsuarios() {
         this.hashMapUsuarios = new HashMap<>();
+        this.nombresFicheros = new ArrayList<>();
     }
 
     /**
@@ -21,10 +28,12 @@ public class GestionUsuarios {
         for (Map.Entry<String, Usuario> entry : hashMapUsuarios.entrySet()) {
             Usuario u = entry.getValue();
             if (u.getClass().getSimpleName().equalsIgnoreCase("Gestor")) {
-                System.out.println(i++ + ") " + u + " - Gestor");
+                Gestor aux = (Gestor) u;
+                System.out.println(i++ + ") " + aux + " - Gestor");
             }
             if (u.getClass().getSimpleName().equalsIgnoreCase("Inversor")) {
-                System.out.println(i++ + ") " + u + " - Inversor");
+                Inversor aux = (Inversor) u;
+                System.out.println(i++ + ") " + aux + " - Inversor");
             }
         }
     }
@@ -42,6 +51,10 @@ public class GestionUsuarios {
      */
     public void insertarUsuarioGestor (String nombre, String user, String contrasenia, String email) {
         hashMapUsuarios.put(user,new Gestor (nombre, user, contrasenia, email));
+        nombresFicheros.add("G" + nombre);
+    }
+    public void insertarUsuarioGestor (Gestor gestor) {
+        hashMapUsuarios.put(gestor.getUsername(), gestor);
     }
     /**
      * Funcion para insertar un nuevo admin
@@ -52,6 +65,10 @@ public class GestionUsuarios {
      */
     public void insertarUsuarioAdmin ( String nombre, String user, String contrasenia, String email) {
         hashMapUsuarios.put(user, new Admin (nombre, user, contrasenia, email));
+        nombresFicheros.add("A" + nombre);
+    }
+    public void insertarUsuarioAdmin (Admin admin) {
+        hashMapUsuarios.put(admin.getUsername(), admin);
     }
     /**
      * Funcion para insertar un nuevo inversor
@@ -62,6 +79,7 @@ public class GestionUsuarios {
      */
     public void insertarUsuarioInversor ( String nombre, String user, String contrasenia, String email) {
         hashMapUsuarios.put(user,new Inversor (nombre, user, contrasenia, email));
+        nombresFicheros.add("I" + nombre);
     }
 
     /**
@@ -115,22 +133,22 @@ public class GestionUsuarios {
     /**
      * Funcion para bloquear o desbloqueaar usuarios
      * @param opcion como entero
-     * @param usuario como cadena
+     * @param username como cadena
      */
 
     //switch (opcion) 1 para bloquear y 2 para desbloquear
-    public void bloquearDesbloquearUsuario (int opcion, String usuario) {
-        String clase = hashMapUsuarios.get(usuario).getClass().getSimpleName();
+    public void bloquearDesbloquearUsuario (int opcion, String username) {
+        String clase = hashMapUsuarios.get(username).getClass().getSimpleName();
         switch (clase) {
             case "Inversor" -> {
-                Inversor aux = (Inversor) hashMapUsuarios.get(usuario);
+                Inversor aux = (Inversor) hashMapUsuarios.get(username);
                 switch (opcion) {
                     case 1 -> aux.bloqueo();
                     case 2 -> aux.desbloqueo();
                 }
             }
             case "Gestor" -> {
-                Gestor aux = (Gestor) hashMapUsuarios.get(usuario);
+                Gestor aux = (Gestor) hashMapUsuarios.get(username);
                 switch (opcion) {
                     case 1 -> aux.bloqueo();
                     case 2 -> aux.desbloqueo();
@@ -138,4 +156,55 @@ public class GestionUsuarios {
             }
         }
     }
+    public String crearJSONNombresFicheros(){
+        Gson gson=new Gson();
+        return gson.toJson(nombresFicheros);
+    }
+    public void guardarAJSONNombresFicheros(){
+        String jsonCreado = crearJSONNombresFicheros();
+        try{
+            FileWriter fichero = new FileWriter("ListaNombresUsuarios.json");
+            PrintWriter pw = new PrintWriter(fichero);
+            pw.println(jsonCreado);
+            fichero.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void guardarUsuariosJson () {
+        for (Map.Entry usuario: hashMapUsuarios.entrySet()) {
+            String clase = usuario.getValue().getClass().getSimpleName();
+            switch (clase) {
+                case "Admin" -> {
+                    Admin aux = (Admin) usuario.getValue();
+                    aux.guardarAJSON();
+                }
+                case "Gestor" -> {
+                    Gestor aux = (Gestor) usuario.getValue();
+                    aux.guardarAJSON();
+                }
+                case "Inversor" -> {
+                    Inversor aux = (Inversor) usuario.getValue();
+                    aux.guardarAJSON();
+                }
+            }
+        }
+        guardarAJSONNombresFicheros();
+    }
+    public static ArrayList<String> recuperarListaNombresUsuarios() throws FileNotFoundException {
+        Gson gson = new Gson();
+        BufferedReader buffer = new BufferedReader(new FileReader( "ListaNombresUsuarios.json"));
+        return gson.fromJson(buffer, new TypeToken<ArrayList<String>>(){}.getType());
+
+    }
+
+    public void recuperarUsuariosJson () throws FileNotFoundException {
+        this.nombresFicheros = recuperarListaNombresUsuarios();
+        for (int i = 0; i < nombresFicheros.size(); i++) {
+            if (nombresFicheros.get(i).startsWith("A")) insertarUsuarioAdmin(Admin.recuperarJSON(nombresFicheros.get(i)));
+            if (nombresFicheros.get(i).startsWith("G")) insertarUsuarioGestor(Gestor.recuperarJSON(nombresFicheros.get(i)));
+            if (nombresFicheros.get(i).startsWith("I")) insertarUsuarioInversor(Inversor.recuperarJSON(nombresFicheros.get(i)));
+        }
+    }
+    
 }
