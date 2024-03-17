@@ -35,10 +35,18 @@ public class GestionApp {
         return gestionProyectos;
     }
 
+    /**
+     * Funcion para crear un Json de los Inversores
+     * @return una cadena con el Json creado
+     */
     public String crearJSONInversiones (){
         Gson gson=new Gson();
         return gson.toJson(gestionesInversiones);
     }
+
+    /**
+     * Funcion para guardar un Json creado para las Inversiones
+     */
     public void guardarJSONInversiones () {
         String jsonCreado = crearJSONInversiones();
         try{
@@ -51,17 +59,30 @@ public class GestionApp {
         }
     }
 
+    /**
+     * Funcion para recuperar el Json de los Inversores
+     * @return un Json de una coleccion de objetos de la clase GestionInversiones
+     * @throws FileNotFoundException
+     */
     public ArrayList<GestionInversiones> recuperarJSONInversiones() throws FileNotFoundException {
         Gson gson = new Gson();
         BufferedReader buffer = new BufferedReader(new FileReader("GestionesInversiones.json"));
         return gson.fromJson(buffer, new TypeToken<ArrayList<GestionInversiones>>(){}.getType());
     }
 
+    /**
+     * Funcion para guardar un Json creado
+     */
     public void guardarAJSON(){
         gestionProyectos.guardarAJSON();
         gestionUsuarios.guardarUsuariosJson();
         guardarJSONInversiones();
     }
+
+    /**
+     * Funcion para recuperar el Json creado
+     * @throws FileNotFoundException
+     */
     public void recuperarJSON() throws FileNotFoundException {
         gestionProyectos = GestionProyectos.recuperarJSON();
         gestionesInversiones = recuperarJSONInversiones();

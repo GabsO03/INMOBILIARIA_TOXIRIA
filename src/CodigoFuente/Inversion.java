@@ -17,23 +17,19 @@ public class Inversion implements Inversible {
         fechaInicio = Fechas.fechaACadena(LocalDate.now());
         aumentaInversion(cantidadEntrante);
     }
-
-    /**
-     * Funcion para poder financiar en un proyecto
-     * @param cantidadEntrante como double
-     * @return true si se ha podido financiar o false si no
-     */
-
     public Proyecto getProyecto() {
         return proyecto;
     }
 
     //Métodos
-
     public String toString (){
         return RED+"Proyecto: " + proyecto.getNombre() + GREEN+"\nTipo: "+ proyecto.getTipo() + CYAN + "\nCantidad con la que ha participado: " + cantidadParticipada + "\nFecha de la primera inversión: " + fechaInicio + "\nFecha de la última inversión: " + ultimaActualizacion + RESET;
     }
 
+    /**
+     * Funcion para aumentar la inversion realizada anteriormente
+     * @param cantidadEntrante como double
+     */
     @Override
     public void aumentaInversion(double cantidadEntrante) {
         proyecto.setCantidadFinanciada(proyecto.getCantidadFinanciada() + cantidadEntrante);

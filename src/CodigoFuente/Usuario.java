@@ -9,9 +9,7 @@ public abstract class Usuario {
     private String contrasenia;
     private String email;
 
-    //MÉTODOS
-
-
+    //CONSTRUCTORES
     public Usuario(String nombre, String username, String contrasenia, String email) {
         this.nombre = nombre;
         this.username = username;

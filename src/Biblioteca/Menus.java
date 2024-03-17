@@ -48,8 +48,10 @@ public class Menus {
         System.out.println("Seleccione qué quiere hacer:");
         System.out.println("1. Cambiar contraseña\n2. Cambiar email\n3. Salir");
     }
+
     /**
      * Muestra el panel de control de cada usuario
+     * @param usuarios como un objeto de la clase GesionUsuarios
      */
     public static void panelControlUsuarios(GestionUsuarios usuarios) {
         int opcion;
@@ -66,8 +68,12 @@ public class Menus {
             }
         } while (!nombreUsuario.equalsIgnoreCase("Cancelar"));
     }
+
     /**
      * Muestra el segundo menu del administrador
+     * @param username como String
+     * @param usuarios como un objeto de la clase GestionUsuarios
+     * @param proyectos como un objeto de la clase GestionProyectos
      */
     public static void menuAdmin(String username, GestionUsuarios usuarios, GestionProyectos proyectos) {
         int primerSubmenu, segundoSubmenu, tercerSubmenu;
@@ -138,8 +144,12 @@ public class Menus {
             }
         } while (primerSubmenu != 4);
     }
+
     /**
      * Muestra el segundo menu del gestor
+     * @param username como String
+     * @param usuarios como un objeto de la clase GestionUsuarios
+     * @param proyectos como un objeto de la clase GestionProyectos
      */
     public static void menuGestor(String username, GestionUsuarios usuarios, GestionProyectos proyectos) {
         int primerSubmenu;
@@ -220,8 +230,13 @@ public class Menus {
             System.out.println("Tu saldo ahora es de " + inversor.getSaldo());
         } else System.out.println("Cancelando.");
     }
+
     /**
      * Muestra el segundo menu del inversor
+     * @param username como String
+     * @param usuarios como objeto de la clase GestionUsuarios
+     * @param proyectos como objeto de la clase GestionProyectos
+     * @param gestionInversiones como una coleccion de objetos de la clase GestionInversiones
      */
     public static void menuInversor(String username, GestionUsuarios usuarios, GestionProyectos proyectos, ArrayList<GestionInversiones> gestionInversiones) {
         //Inversor aux = (Inversor) usuarios.devuelveUsuario(username);

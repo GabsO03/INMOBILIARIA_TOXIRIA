@@ -28,10 +28,18 @@ public class Gestor extends Usuario implements Bloqueable {
         this.bloqueado = false;
     }
 
+    /**
+     * Funcion para crear un Json
+     * @return
+     */
     public String crearJSON(){
         Gson gson=new Gson();
         return gson.toJson(this);
     }
+
+    /**
+     * Funcion para guardar un Json creado
+     */
     public void guardarAJSON(){
         String jsonCreado = crearJSON();
         try{
@@ -43,11 +51,16 @@ public class Gestor extends Usuario implements Bloqueable {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Funcion para recuperar el Json de los Gestores
+     * @param nombre como String
+     * @return Json creado para la clase Gestor
+     * @throws FileNotFoundException
+     */
     public static Gestor recuperarJSON(String nombre) throws FileNotFoundException {
         Gson gson = new Gson();
         BufferedReader buffer = new BufferedReader(new FileReader(nombre + ".json"));
         return gson.fromJson(buffer, Gestor.class);
     }
-
-
 }

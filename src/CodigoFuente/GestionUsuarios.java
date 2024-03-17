@@ -38,12 +38,17 @@ public class GestionUsuarios {
         }
     }
 
+    /**
+     * Funcion para devolver un objeto de la clase Usuario
+     * @param username como String
+     * @return un objeto de la clase Usuario
+     */
     public Usuario devuelveUsuario (String username ) {
         return hashMapUsuarios.get(username);
     }
 
     /**
-     * Funcion para insertar un nuevo usuario
+     * Funcion para insertar un nuevo usuario gestor
      * @param nombre como cadena
      * @param user como cadena
      * @param contrasenia como cadena
@@ -115,7 +120,7 @@ public class GestionUsuarios {
     /**
      * Funcion que comprueba si el nombre de usuario introducido ya existe o no
      * @param username como cadena
-     * @return la posicion del usuario con ese nombre o -1 si no existe
+     * @return true or false dependiendo de si existe o no el nombre del usuario
      */
     public boolean existeNombreUsuario (String username) {
         return hashMapUsuarios.containsKey(username);
@@ -135,8 +140,6 @@ public class GestionUsuarios {
      * @param opcion como entero
      * @param username como cadena
      */
-
-    //switch (opcion) 1 para bloquear y 2 para desbloquear
     public void bloquearDesbloquearUsuario (int opcion, String username) {
         String clase = hashMapUsuarios.get(username).getClass().getSimpleName();
         switch (clase) {
@@ -156,10 +159,19 @@ public class GestionUsuarios {
             }
         }
     }
+
+    /**
+     * Funcion para crear un Json con los nombres de los ficheros
+     * @return una cadena con los nombres de los ficheros
+     */
     public String crearJSONNombresFicheros(){
         Gson gson=new Gson();
         return gson.toJson(nombresFicheros);
     }
+
+    /**
+     * Funcion para guardar a Json los nombres de ficheros creados
+     */
     public void guardarAJSONNombresFicheros(){
         String jsonCreado = crearJSONNombresFicheros();
         try{
@@ -171,6 +183,10 @@ public class GestionUsuarios {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Funcion para guardar un Usuario a Json
+     */
     public void guardarUsuariosJson () {
         for (Map.Entry usuario: hashMapUsuarios.entrySet()) {
             String clase = usuario.getValue().getClass().getSimpleName();
@@ -191,6 +207,12 @@ public class GestionUsuarios {
         }
         guardarAJSONNombresFicheros();
     }
+
+    /**
+     * Funcion para recuperar el Json creado con los nombres de Usuario
+     * @return una coleccion de cadena con los nombres de los ficheros del Json
+     * @throws FileNotFoundException
+     */
     public static ArrayList<String> recuperarListaNombresUsuarios() throws FileNotFoundException {
         Gson gson = new Gson();
         BufferedReader buffer = new BufferedReader(new FileReader( "ListaNombresUsuarios.json"));
@@ -198,6 +220,10 @@ public class GestionUsuarios {
 
     }
 
+    /**
+     * Funcion para recuperar el Json de Usuarios creado
+     * @throws FileNotFoundException
+     */
     public void recuperarUsuariosJson () throws FileNotFoundException {
         this.nombresFicheros = recuperarListaNombresUsuarios();
         for (int i = 0; i < nombresFicheros.size(); i++) {

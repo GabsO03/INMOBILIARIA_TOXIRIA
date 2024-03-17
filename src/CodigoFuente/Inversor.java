@@ -41,6 +41,7 @@ public class Inversor extends Usuario implements Bloqueable {
         return saldo;
     }
     public boolean getBloqueado() { return bloqueado; }
+
     @Override
     public void bloqueo() {
         this.bloqueado = true;
@@ -53,10 +54,18 @@ public class Inversor extends Usuario implements Bloqueable {
         return super.toString() + (bloqueado?"Bloqueado":"");
     }
 
+    /**
+     * Funcion para crear un Json
+     * @return una cadena con el Json creado
+     */
     public String crearJSON(){
         Gson gson=new Gson();
         return gson.toJson(this);
     }
+
+    /**
+     * Funcion para guardar un Json creado
+     */
     public void guardarAJSON(){
         String jsonCreado = crearJSON();
         try{
@@ -68,6 +77,13 @@ public class Inversor extends Usuario implements Bloqueable {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Funcion para recuperar el Json de los Inversores
+     * @param nombre como String
+     * @return Json creado para la clase Inversor
+     * @throws FileNotFoundException
+     */
     public static Inversor recuperarJSON(String nombre) throws FileNotFoundException {
         Gson gson = new Gson();
         BufferedReader buffer = new BufferedReader(new FileReader(nombre + ".json"));

@@ -14,7 +14,6 @@ public class GestionInversiones {
         return inversor;
     }
 
-
     public GestionInversiones (Inversor inversor) {
         this.inversor = inversor;
         this.inversiones = new ArrayList<>();

@@ -65,16 +65,13 @@ public class GestionProyectos {
             System.out.println();
         }
     }
-
-
-
     /**
      * Funcion para crear un nuevo proyecto
      * @param nombre como cadena
      * @param descripcion como cadena
      * @param tipo como cadena
-     * @param fechaInicio como una fecha
-     * @param fechaFin como una fecha
+     * @param fechaInicio como una cadena
+     * @param fechaFin como una cadena
      * @param cantidadNecesaria como un double
      * @param cantidadFinanciada como un double
      * @return devuelve true si se ha podido crear el proyecto o false si no se ha podido
@@ -107,6 +104,7 @@ public class GestionProyectos {
     /**
      * Funcion para eliminar un proyecto
      * @param pos como entero
+     * @return una cadena con el nombre del proyecto eliminado
      */
     public String eliminarProyecto(int pos) {
         String nombre =arrayProyectos.get(pos).getNombre();
@@ -214,14 +212,26 @@ public class GestionProyectos {
         return -1;
     }
 
+    /**
+     * Funcion que devuelve un proyecto
+     * @param pos como entero
+     * @return un objeto de la clase Proyecto
+     */
     public Proyecto devuelveProyecto (int pos) {
         return arrayProyectos.get(pos);
     }
 
+    /**
+     * Funcion para crear un Json
+     * @return una cadena con el Json creado
+     */
     public String crearJSON(){
         Gson gson=new Gson();
         return gson.toJson(this);
     }
+    /**
+     * Funcion para guardar un Json creado
+     */
     public void guardarAJSON(){
         String jsonCreado = crearJSON();
         try{
@@ -233,6 +243,11 @@ public class GestionProyectos {
             e.printStackTrace();
         }
     }
+    /**
+     * Funcion para recuperar el Json de los proyectos
+     * @return Json creado para la clase GestionProyectos
+     * @throws FileNotFoundException
+     */
     public static GestionProyectos recuperarJSON() throws FileNotFoundException {
         Gson gson = new Gson();
         BufferedReader buffer = new BufferedReader(new FileReader("GestionProyectos.json"));

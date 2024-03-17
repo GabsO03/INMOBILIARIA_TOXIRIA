@@ -13,8 +13,7 @@ public class Fechas {
      * @return true or false dependiendo de si la fecha1 es anterior a la fecha2
      */
     public static boolean esAnterior(LocalDate fecha1,LocalDate fecha2){
-        if (fecha1.isBefore(fecha2)) return true;
-        else return false;
+        return fecha1.isBefore(fecha2);
     }
 
     /**
@@ -27,9 +26,20 @@ public class Fechas {
         return fecha1.isAfter(fecha2);
     }
 
+    /**
+     * Funcion para convertir una fecha a cadena
+     * @param fecha como un LocalDate
+     * @return un String con la fecha convertida en String
+     */
     public static String fechaACadena (LocalDate fecha) {
         return String.valueOf(fecha);
     }
+
+    /**
+     * Funcion para convertir una cadena a una fecha
+     * @param fecha como un String
+     * @return un LocalDate con la fecha convertida en LocalDate
+     */
     public static LocalDate cadenaAfecha (String fecha) {
         return LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
