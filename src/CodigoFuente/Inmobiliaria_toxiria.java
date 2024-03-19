@@ -54,7 +54,8 @@ public class Inmobiliaria_toxiria {
                                 System.out.println("Error, tiene que escribir 'G' o 'I'");
                         } while (!tipoNuevoUsuario.equalsIgnoreCase("G") && !tipoNuevoUsuario.equalsIgnoreCase("I"));
                         registroCorrecto = registroUsuarioNuevo(tipoNuevoUsuario, usuarios, aplicacion.devuelveGestionInversiones());
-                        if (registroCorrecto) System.out.println("Usuario registrado correctamente");
+                        if (registroCorrecto)
+                            System.out.println("Usuario registrado correctamente");
                         else System.out.println("Hubo un error, intente de nuevo.");
                     } while (!registroCorrecto);
                 }
@@ -70,7 +71,6 @@ public class Inmobiliaria_toxiria {
                         if (usuarios.existeNombreUsuario(nombreUsuario) && !usuarios.correspondeUsuyContrasenia(nombreUsuario, contrasenia)) {
                             System.out.println("El usuario o contraseña no es correcto. Intentos restantes: " + --intentos);
                         }
-
                     } while (!(usuarios.existeNombreUsuario(nombreUsuario)) || (usuarios.existeNombreUsuario(nombreUsuario) && !usuarios.correspondeUsuyContrasenia(nombreUsuario, contrasenia) && intentos > 0));
 
                     String claseUsuario = usuarios.averiguarClase(nombreUsuario);
@@ -83,7 +83,7 @@ public class Inmobiliaria_toxiria {
                                 System.out.println("Demasiados intentos fallidos, tu usuario está bloqueado");
                             }
                             else {
-                                if (!aux.isBloqueado()) menuGestor(nombreUsuario, usuarios, proyectos);
+                                if (!aux.isBloqueado()) menuGestor(nombreUsuario, usuarios, proyectos, aplicacion);
                                 else System.out.println("No puedes iniciar sesión porque tu usuario está bloqueado");
                             }
                         }

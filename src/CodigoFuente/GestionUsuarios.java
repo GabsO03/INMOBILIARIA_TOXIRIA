@@ -93,6 +93,7 @@ public class GestionUsuarios {
      */
     public void insertarUsuarioInversor (Inversor inversor) {
         hashMapUsuarios.put(inversor.getUsername(), inversor);
+        //nombresFicheros.add("I" + inversor.getNombre());
     }
 
     /**

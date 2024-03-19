@@ -151,18 +151,21 @@ public class Menus {
      * @param usuarios como un objeto de la clase GestionUsuarios
      * @param proyectos como un objeto de la clase GestionProyectos
      */
-    public static void menuGestor(String username, GestionUsuarios usuarios, GestionProyectos proyectos) {
+    public static void menuGestor(String username, GestionUsuarios usuarios, GestionProyectos proyectos, GestionApp aplicacion) {
         int primerSubmenu;
         do {
             menuProyectosGestor();
             primerSubmenu = leerOpcionNumerica();
             switch (primerSubmenu) {
                 case 1 -> proyectos.mostrarProyectos(0); //EL TIPO ES 0 PORQUE SI PONEMOS 1 SALE MAS INFO PARA EL ADMIN
-                case 2 ->
-                        proyectos.crearProyecto(cambiarNombreProyecto(), cambiarDescripcionProyecto(), cambiarTipoProyecto(), cambiarFechaInicio(), cambiarFechaFin(), cambiarCantidadNecesaria(), cambiarCantidadFinanciada());
+                case 2 -> {
+                    proyectos.crearProyecto(cambiarNombreProyecto(), cambiarDescripcionProyecto(), cambiarTipoProyecto(), cambiarFechaInicio(), cambiarFechaFin(), cambiarCantidadNecesaria(), cambiarCantidadFinanciada());
+                    aplicacion.guardarAJSON();
+                }
                 case 3 -> modificarCuenta(username, usuarios);
+                case 4 -> System.out.println("Saliendo");
+                default -> System.out.println("Invalid response");
             }
-
         } while (primerSubmenu != 4);
     }
 
@@ -196,7 +199,9 @@ public class Menus {
                     System.out.println("Introduzca el valor (fecha dd/mm/yyyy):");
                     valor = leerOpcionLiteral();
                     position = proyectos.buscarProyecto(atributo, valor);
-                    System.out.println(proyectos.devuelveProyecto(position));
+                    if (position >= 0)
+                        System.out.println(proyectos.devuelveProyecto(position));
+                    else System.out.println("Ese proyecto no existe.");
                 }
                 case 2 -> {
                     System.out.println("Introduzca el atributo del proyecto (Fecha de inicio/fin || Cantidad necesaria/financiada):");
