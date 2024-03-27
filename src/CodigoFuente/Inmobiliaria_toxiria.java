@@ -27,10 +27,11 @@ public class Inmobiliaria_toxiria {
 
         //GUARDAR ARCHIVO JSON
         GestionApp aplicacion = new GestionApp();
+        aplicacion.recuperarJSON();
         GestionUsuarios usuarios= aplicacion.getGestionUsuarios();
         GestionProyectos proyectos = aplicacion.getGestionProyectos();
-        //USUARIOS
-        /*usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
+        /*/USUARIOS
+        usuarios.insertarUsuarioAdmin("Adrian","AdrianCB27","AdrianCon123@","contrerasbuenoadrian@gmail.com");
         usuarios.insertarUsuarioGestor("Alex","AlexGB","AlexGB123@","Alexito@gmail.com");
         usuarios.insertarUsuarioInversor("Gabriela","GabsOP","GabsOP123@","polloto@gmail.com");
         //PROYECTOS
@@ -38,7 +39,6 @@ public class Inmobiliaria_toxiria {
         proyectos.crearProyecto("Villa azul", "La villa más bonita", "Préstamo", "26/06/2003", "26/06/2024", 85112.54, 5112.54);
         proyectos.crearProyecto("Villa morada", "La villa más morada", "Alquiler", "04/03/2004", "04/03/2024", 7650, 32);
         aplicacion.devuelveGestionInversiones().add(new GestionInversiones(((Inversor)usuarios.devuelveUsuario("GabsOP"))));*/
-        aplicacion.recuperarJSON();
 
 
         do {

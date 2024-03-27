@@ -1,5 +1,9 @@
 package CodigoFuente;
 
+import Biblioteca.Fechas;
+
+import java.time.LocalDate;
+
 public class Proyecto {
     //ATRIBUTOS
     private int codigo;
@@ -15,15 +19,15 @@ public class Proyecto {
     //MÉTODOS
 
     //constructores
-    public Proyecto(String nombre, String descripcion, String tipo, String fechaInicio, String fechaFin, double cantidadNecesaria, double cantidadFinanciada) {
+    public Proyecto(String nombre, String descripcion, String tipo, String fechaFin, double cantidadNecesaria) {
         this.codigo = cantidadProyectos++;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.tipo = tipo;
-        this.fechaInicio = fechaInicio;
+        this.fechaInicio = Fechas.fechaACadena(LocalDate.now());
         this.fechaFin = fechaFin;
         this.cantidadNecesaria = cantidadNecesaria;
-        this.cantidadFinanciada = cantidadFinanciada;
+        this.cantidadFinanciada = 0;
     }
     //setters
     public void setNombre (String nombre) { this.nombre = nombre; }

@@ -4,8 +4,11 @@ import CodigoFuente.*;
 import java.util.ArrayList;
 
 import static Biblioteca.AccountSettings.modificarCuenta;
+import static Biblioteca.InversionesVista.*;
 import static Biblioteca.Lectura_De_Datos.*;
-import static Biblioteca.Proyectos.*;
+import static Biblioteca.ProyectosVista.*;
+import static Biblioteca.UsuariosVista.mostrarYAniadirSaldo;
+import static Biblioteca.UsuariosVista.panelControlUsuarios;
 
 
 public class Menus {
@@ -32,8 +35,7 @@ public class Menus {
      * Muestra el menu para modificar algún proyecto
      */
     public static void menuModificarProyecto() {
-        System.out.println("Elija qué quiere modificar:\n1.Nombre\n2.Descripcion\n3.Tipo\n4.Cantidad necesaria\n5.Cantidad Financiada" +
-                "\n6.Fecha inicio\n7.Fecha fin\n8.Nada");
+        System.out.println("Elija qué quiere modificar:\n1. Nombre\n2. Descripcion\n3. Tipo\n4. Cantidad necesaria\n5. Fecha fin\n6. Nada");
     }
     /**
      * Muestra el menu del inversor
@@ -46,34 +48,10 @@ public class Menus {
      */
     public static void menuConfiguracion() {
         System.out.println("Seleccione qué quiere hacer:");
-        System.out.println("1. Cambiar contraseña\n2. Cambiar email\n3. Salir");
+        System.out.println("1. Cambiar nombre de usuario\n2. Cambiar contraseña\n3. Cambiar email\n4. Salir");
     }
-
-    /**
-     * Muestra el panel de control de cada usuario
-     * @param usuarios como un objeto de la clase GesionUsuarios
-     */
-    public static void panelControlUsuarios(GestionUsuarios usuarios) {
-        int opcion;
-        String nombreUsuario;
-        do {
-            System.out.println("Menú del panel de control de usuarios.");
-            usuarios.muestraUsuarios();
-            System.out.println("Introduzca el nombre de usuario del usuario que quieras bloquear o desbloquear ('Cancelar' para salir)");
-            nombreUsuario = leerOpcionLiteral();
-            if (!nombreUsuario.equalsIgnoreCase("Cancelar")){
-                System.out.println("1. Bloquear.\n2. Desbloquear\n3. Cancelar");
-                opcion = leerOpcionNumerica();
-                if (opcion == 1 || opcion == 2) usuarios.bloquearDesbloquearUsuario(opcion, nombreUsuario);
-            }
-        } while (!nombreUsuario.equalsIgnoreCase("Cancelar"));
-    }
-
     /**
      * Muestra el segundo menu del administrador
-     * @param username como String
-     * @param usuarios como un objeto de la clase GestionUsuarios
-     * @param proyectos como un objeto de la clase GestionProyectos
      */
     public static void menuAdmin(String username, GestionUsuarios usuarios, GestionProyectos proyectos) {
         int primerSubmenu, segundoSubmenu, tercerSubmenu;
@@ -88,10 +66,10 @@ public class Menus {
                         segundoSubmenu = leerOpcionNumerica();
                         switch (segundoSubmenu) {
                             case 1 -> {
-                                proyectos.mostrarProyectos(1);
+                                mostrarProyectos(1, proyectos);
                                 segundoSubmenu = leerOpcionNumerica();
                                 switch (segundoSubmenu) {
-                                    case 1 -> proyectos.proyectosDetallados();
+                                    case 1 -> proyectosDetallados(proyectos);
                                     case 2 -> {
                                         System.out.println("Introduzca la posición");
                                         int posProyecto = leerOpcionNumerica();
@@ -117,17 +95,13 @@ public class Menus {
                                                                 case 3 ->
                                                                         proyectos.modificarProyecto(posProyecto, null, null, cambiarTipoProyecto(), null, null, 0, 0);
                                                                 case 4 ->
-                                                                        proyectos.modificarProyecto(posProyecto, null, null, null, cambiarFechaInicio(), null, 0, 0);
-                                                                case 5 ->
                                                                         proyectos.modificarProyecto(posProyecto, null, null, null, null, cambiarFechaFin(), 0, 0);
-                                                                case 6 ->
+                                                                case 5 ->
                                                                         proyectos.modificarProyecto(posProyecto, null, null, null, null, null, cambiarCantidadNecesaria(), 0);
-                                                                case 7 ->
-                                                                        proyectos.modificarProyecto(posProyecto, null, null, null, null, null, 0, cambiarCantidadFinanciada());
-                                                                case 8 -> System.out.println();
+                                                                case 6 -> System.out.println();
                                                                 default -> System.out.println("Respuesta no válida.");
                                                             }
-                                                        } while (tercerSubmenu != 8);
+                                                        } while (tercerSubmenu != 6);
                                                     }
                                                 }
                                             }
@@ -144,12 +118,8 @@ public class Menus {
             }
         } while (primerSubmenu != 4);
     }
-
     /**
      * Muestra el segundo menu del gestor
-     * @param username como String
-     * @param usuarios como un objeto de la clase GestionUsuarios
-     * @param proyectos como un objeto de la clase GestionProyectos
      */
     public static void menuGestor(String username, GestionUsuarios usuarios, GestionProyectos proyectos, GestionApp aplicacion) {
         int primerSubmenu;
@@ -157,9 +127,9 @@ public class Menus {
             menuProyectosGestor();
             primerSubmenu = leerOpcionNumerica();
             switch (primerSubmenu) {
-                case 1 -> proyectos.mostrarProyectos(0); //EL TIPO ES 0 PORQUE SI PONEMOS 1 SALE MAS INFO PARA EL ADMIN
+                case 1 -> mostrarProyectos(0, proyectos); //EL TIPO ES 0 PORQUE SI PONEMOS 1 SALE MAS INFO PARA EL ADMIN
                 case 2 -> {
-                    proyectos.crearProyecto(cambiarNombreProyecto(), cambiarDescripcionProyecto(), cambiarTipoProyecto(), cambiarFechaInicio(), cambiarFechaFin(), cambiarCantidadNecesaria(), cambiarCantidadFinanciada());
+                    proyectos.crearProyecto(cambiarNombreProyecto(), cambiarDescripcionProyecto(), cambiarTipoProyecto(), cambiarFechaFin(), cambiarCantidadNecesaria());
                     aplicacion.guardarAJSON();
                 }
                 case 3 -> modificarCuenta(username, usuarios);
@@ -183,74 +153,15 @@ public class Menus {
     }
 
     /**
-     * Funcion para buscar un determinado proyecto
-     * @param proyectos un objeto de la clase GestionProyectos
-     */
-    public static void buscarProyecto (GestionProyectos proyectos) {
-        int tipoBusqueda, position;
-        String atributo, valor, valorInicial, valorFinal;
-        do {
-            System.out.println("Elija el tipo de busqueda.\n1. Por atributo simple.\n2. Por rango.\n3. Cancelar");
-            tipoBusqueda = leerOpcionNumerica();
-            switch (tipoBusqueda) {
-                case 1 -> {
-                    System.out.println("Introduzca el atributo del proyecto (Nombre || Tipo || Descripcion || Fecha de inicio/fin || Cantidad necesaria/financiada):");
-                    atributo = leerOpcionLiteral();
-                    System.out.println("Introduzca el valor (fecha dd/mm/yyyy):");
-                    valor = leerOpcionLiteral();
-                    position = proyectos.buscarProyecto(atributo, valor);
-                    if (position >= 0)
-                        System.out.println(proyectos.devuelveProyecto(position));
-                    else System.out.println("Ese proyecto no existe.");
-                }
-                case 2 -> {
-                    System.out.println("Introduzca el atributo del proyecto (Fecha de inicio/fin || Cantidad necesaria/financiada):");
-                    atributo = leerOpcionLiteral();
-                    System.out.println("Introduzca el valor inicial (fecha dd/mm/yyyy):");
-                    valorInicial = leerOpcionLiteral();
-                    System.out.println("Introduzca el valor final (fecha dd/mm/yyyy):");
-                    valorFinal = leerOpcionLiteral();
-                    proyectos.buscarProyectoRango(atributo, valorInicial, valorFinal);
-                }
-                case 3 -> System.out.println();
-                default -> System.out.println("Invalid response.");
-            }
-        } while (tipoBusqueda != 3);
-    }
-
-    /**
-     * Funcion para mostrar y añadir saldo al inversor
-     * @param inversor como objeto de la clase Inversor
-     */
-    public static void mostrarYAniadirSaldo(Inversor inversor){
-        String respuesta;
-        double cantidad;
-        System.out.println("Tu saldo actual es de " + inversor.getSaldo() );
-        System.out.println("¿Quieres añadir saldo? (Sí o No)");
-        respuesta=leerOpcionLiteral();
-        if(respuesta.equalsIgnoreCase("Sí")){
-            System.out.println("Introduce cuanto saldo quieres añadir");
-            cantidad=leerOpcionDouble();
-            inversor.setSaldo(inversor.getSaldo() + cantidad);
-            System.out.println("Tu saldo ahora es de " + inversor.getSaldo());
-        } else System.out.println("Cancelando.");
-    }
-
-    /**
      * Muestra el segundo menu del inversor
-     * @param username como String
-     * @param usuarios como objeto de la clase GestionUsuarios
-     * @param proyectos como objeto de la clase GestionProyectos
-     * @param gestionInversiones como una coleccion de objetos de la clase GestionInversiones
      */
     public static void menuInversor(String username, GestionUsuarios usuarios, GestionProyectos proyectos, ArrayList<GestionInversiones> gestionInversiones) {
-        //Inversor aux = (Inversor) usuarios.devuelveUsuario(username);
         int primerSubmenu, opcionInversion, gestionIndividual = encuentraGestionInversiones(gestionInversiones,(Inversor) usuarios.devuelveUsuario(username));
         do {
             menuOpcinesInversor();
             primerSubmenu = leerOpcionNumerica();
             switch (primerSubmenu) {
-                case 1 -> gestionInversiones.get(gestionIndividual).mostrarMisInversiones();
+                case 1 -> System.out.println(gestionInversiones.get(gestionIndividual).devuelveMisInversiones());
                 case 2 -> buscarProyecto(proyectos);
                 case 3 -> {
                     System.out.println("1. Nueva inversión\n2. Actualizar inversión\n3. Cancelar");
@@ -268,46 +179,6 @@ public class Menus {
         } while (primerSubmenu != 6);
     }
 
-    /**
-     * Funcion para realizar una nueva inversion
-     * @param proyectos como objeto de la clase GestionProyectos
-     * @param inversiones proyectos como objeto de la clase GestionInversiones
-     */
-    public static void nuevaInversion (GestionProyectos proyectos, GestionInversiones inversiones) {
-        String respuesta;
-        double cantidadParticipativa;
-        System.out.println("Escriba el nombre del proyecto en el que quiere invertir");
-        inversiones.proyectosAunNoInvertidos(proyectos);
-        respuesta = leerOpcionLiteral();
-        int pos = proyectos.buscarProyecto("nombre", respuesta);
-        if (pos >= 0) {
-            System.out.println("Introduzca la cantidad que quieres invertir en el proyecto:");
-            cantidadParticipativa = leerOpcionDouble();
-            if (inversiones.nuevaInversion(proyectos.devuelveProyecto(pos), cantidadParticipativa))
-                System.out.println("Inversión existosa, los detalles están disponibles para revisión.");
-            else
-                System.out.println("No cuentas con saldo suficiente para realizar esta transacción.");
 
-        } else System.out.println("Ese proyecto no existe o escribiste el nombre incorrectamente.");
-    }
-
-    /**
-     * Funcion para actualizar una inversion ya realizada anteriormente
-     * @param proyectos como objeto de la clase GestionProyectos
-     * @param inversiones proyectos como objeto de la clase GestionInversiones
-     */
-    public static void actualizarInversion (GestionProyectos proyectos, GestionInversiones inversiones) {
-        String respuesta;
-        double cantidadParticipativa;
-        System.out.println("Escribe el nombre del proyecto que actualizar");
-        inversiones.mostrarMisInversiones();
-        respuesta = leerOpcionLiteral();
-        int pos = proyectos.buscarProyecto("nombre", respuesta);
-        if (pos >= 0) {
-            System.out.println("Introduzca la cantidad que quieres añadir en el proyecto:");
-            cantidadParticipativa = leerOpcionDouble();
-            inversiones.actualizarInversion(pos, cantidadParticipativa);
-        } else System.out.println("Ese proyecto no existe o escribiste el nombre incorrectamente.");
-    }
 
 }

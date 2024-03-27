@@ -105,10 +105,17 @@ public class AccountSettings {
             menuConfiguracion();
             opcion = leerOpcionNumerica();
             switch (opcion) {
-                case 1 -> usuarios.modificarUsuario(userName,  cambiarcontrasenia(), null);
-                case 2 -> usuarios.modificarUsuario(userName, null,  cambiarEmail());
+                case 1 -> {
+                    String newUser;
+                    do {
+                        newUser = cambiarUsuario();
+                    } while (usuarios.existeNombreUsuario(newUser));
+                    usuarios.modificarUsuario(userName, newUser, null, null);
+                }
+                case 2 -> usuarios.modificarUsuario(userName, null,  cambiarcontrasenia(), null);
+                case 3 -> usuarios.modificarUsuario(userName, null, null,  cambiarEmail());
             }
-        } while (opcion != 3);
+        } while (opcion != 4);
     }
 
     /**
@@ -131,9 +138,11 @@ public class AccountSettings {
             passNuevoUsuario = leerOpcionLiteral();
             if (comprobarFortalezaPass(passNuevoUsuario)) {
                 System.out.println("Vuelva a escribir su contraseña: ");
-                passRepetidaNuevoUsuario = leerOpcionLiteral();
-                if (!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario))
-                    System.out.println("Error, las contraseñas deben de ser iguales\nVuelva a intentarlo");
+                do {
+                    passRepetidaNuevoUsuario = leerOpcionLiteral();
+                    if (!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario))
+                        System.out.println("Error, las contraseñas deben de ser iguales\nVuelva a intentarlo");
+                } while (!passNuevoUsuario.equalsIgnoreCase(passRepetidaNuevoUsuario));
             }
         } while (!comprobarFortalezaPass(passNuevoUsuario));
         System.out.println("Escriba su email: ");
@@ -151,9 +160,8 @@ public class AccountSettings {
         if (tipo.equalsIgnoreCase("G"))
             usuarios.insertarUsuarioGestor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
         else {
-            Inversor aux = new Inversor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
-            usuarios.insertarUsuarioInversor(aux);
-            gestionInversiones.add(new GestionInversiones(aux));
+            usuarios.insertarUsuarioInversor(nombre, nuevoUsuario, passNuevoUsuario, correoNuevoUsuario);
+            gestionInversiones.add(new GestionInversiones((Inversor) usuarios.devuelveUsuario(nuevoUsuario)));
         }
         return true;
     }

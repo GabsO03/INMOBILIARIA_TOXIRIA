@@ -1,8 +1,5 @@
 package CodigoFuente;
 
-import com.google.gson.Gson;
-
-import java.io.*;
 import java.util.ArrayList;
 
 public class GestionInversiones {
@@ -37,22 +34,22 @@ public class GestionInversiones {
      * @param pos como entero
      * @param cantidadEntrante como double
      */
-    public void actualizarInversion (int pos, double cantidadEntrante) {
+    public boolean actualizarInversion (int pos, double cantidadEntrante) {
         if (inversor.paga(cantidadEntrante)) {
             inversiones.get(pos).aumentaInversion(cantidadEntrante);
-            System.out.println("Inversión existosa, los detalles están disponibles para revisión.");
-        } else {
-            System.out.println("No cuentas con saldo suficiente para realizar esta transacción.");
+            return true;
         }
+        return false;
     }
+
 
     /**
      * Funcion para mostrar las inversiones por un inversor
      */
-    public void mostrarMisInversiones () {
-        System.out.println("Mis inversiones: ");
-        System.out.println("================");
-        for (Inversion inversion : inversiones) System.out.println(inversion);
+    public String devuelveMisInversiones() {
+        String cadena = "Mis inversiones:\n================";
+        for (Inversion inversion : inversiones) cadena = cadena.concat("\n" + inversion);
+        return cadena;
     }
 
     /**
@@ -61,15 +58,14 @@ public class GestionInversiones {
      */
     public void proyectosAunNoInvertidos (GestionProyectos todosLosProyectos) {
         boolean esta;
-        System.out.println("Proyectos aún no invertidos: ");
-        System.out.println("============================");
+        String cadena = "Proyectos aún no invertidos:\n============================";
         for (int i = 0; i < todosLosProyectos.getCantidadProyectos(); i++) {
             esta = false;
             for (Inversion inversiones : inversiones) {
                 if (todosLosProyectos.devuelveProyecto(i).getNombre().equals(inversiones.getProyecto().getNombre()))
                     esta = true;
             }
-            if (!esta) System.out.println(todosLosProyectos.devuelveProyecto(i));
+            if (!esta) cadena = cadena.concat("\n" + todosLosProyectos.devuelveProyecto(i));
         }
     }
 }

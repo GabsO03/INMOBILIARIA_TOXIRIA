@@ -21,21 +21,21 @@ public class GestionUsuarios {
     /**
      * Muestra todos los usuarios del programa
      */
-    public void muestraUsuarios () {
+    public String devuelveListaUsuarios() {
         int i = 1;
-        System.out.println("Lista de usuarios:");
-        System.out.println("===============================");
+        String cadena = "Lista de usuarios:\n===============================";
         for (Map.Entry<String, Usuario> entry : hashMapUsuarios.entrySet()) {
             Usuario u = entry.getValue();
             if (u.getClass().getSimpleName().equalsIgnoreCase("Gestor")) {
                 Gestor aux = (Gestor) u;
-                System.out.println(i++ + ") " + aux + " - Gestor");
+                cadena = cadena.concat("\n" + i++ + ") " + aux + " - Gestor");
             }
             if (u.getClass().getSimpleName().equalsIgnoreCase("Inversor")) {
                 Inversor aux = (Inversor) u;
-                System.out.println(i++ + ") " + aux + " - Inversor");
+                cadena = cadena.concat("\n" + i++ + ") " + aux + " - Inversor");
             }
         }
+        return cadena;
     }
 
     /**
@@ -102,8 +102,8 @@ public class GestionUsuarios {
      * @param contrasenia como cadena
      * @param email como cadena
      */
-    public void modificarUsuario (String userName, String contrasenia, String email) {
-       if (userName!=null) hashMapUsuarios.get(userName).setUsername(userName);
+    public void modificarUsuario (String userName, String newUser, String contrasenia, String email) {
+       if (newUser!=null) hashMapUsuarios.get(userName).setUsername(newUser);
        if (contrasenia!=null) hashMapUsuarios.get(userName).setContrasenia(contrasenia);
        if (email!=null) hashMapUsuarios.get(userName).setEmail(email);
     }
@@ -218,7 +218,6 @@ public class GestionUsuarios {
         Gson gson = new Gson();
         BufferedReader buffer = new BufferedReader(new FileReader( "ListaNombresUsuarios.json"));
         return gson.fromJson(buffer, new TypeToken<ArrayList<String>>(){}.getType());
-
     }
 
     /**
